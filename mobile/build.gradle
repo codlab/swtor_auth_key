@@ -1,0 +1,50 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
+
+    defaultConfig {
+        applicationId "eu.codlab.swtor"
+        minSdkVersion 15
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+}
+
+apply plugin: 'com.neenbedankt.android-apt'
+
+dependencies {
+    compile files("libs/swtor.jar")
+    wearApp project(':wear')
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-core:2.0.0-beta'
+    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.google.android.gms:play-services:8.3.0'
+    compile 'com.android.support:design:23.1.1'
+
+    apt 'com.github.Raizlabs.DBFlow:dbflow-processor:3.0.0-beta1'
+    compile "com.github.Raizlabs.DBFlow:dbflow-core:3.0.0-beta1"
+    compile "com.github.Raizlabs.DBFlow:dbflow:3.0.0-beta1"
+
+    compile 'com.squareup.retrofit2:retrofit:2.0.0-beta3'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta3'
+
+    compile 'com.alexandrepiveteau:material-tutorial:1.1.0'
+
+}
+
+afterEvaluate {
+    test.dependsOn clean
+}
