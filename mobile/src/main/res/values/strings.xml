@@ -1,4 +1,18 @@
 <resources>
     <string name="app_name">SWTOR</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_tutorial">TutorialActivity</string>
+    <string name="skip">Skip</string>
+    <string name="tutorial_1_title">Ooops !</string>
+    <string name="tutorial_1_description">You are going to save a new Star Wars : The Old Republic Authentication Key into the app. You will be helped through the steps</string>
+    <string name="tutorial_2_description">Log into the official website</string>
+    <string name="tutorial_3_description">Go to your account and select to add a new key</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_tutorial_hey">Hey !</string>
+    <string name="title_tutorial_login">swtor.com</string>
+    <string name="title_tutorial_add_key">Add a Key</string>
+    <string name="input_key_title">Input the given key below</string>
+    <string name="input_key_description">Copy the key. Once it is done, a unique code will be given right here. Simply copy it into the website to validate the exchange and it\'s done !</string>
 </resources>

@@ -6,8 +6,8 @@ import org.junit.Test;
 
 import java.util.Arrays;
 
-import eu.codlab.swtor.security.CodeProvider;
-import eu.codlab.swtor.security.CodeProviderFactory;
+import eu.codlab.swtor.internal.security.CodeProvider;
+import eu.codlab.swtor.internal.security.CodeProviderFactory;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
