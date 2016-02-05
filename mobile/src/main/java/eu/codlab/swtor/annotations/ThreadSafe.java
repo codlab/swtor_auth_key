@@ -1,7 +1,8 @@
 package eu.codlab.swtor.annotations;
 
 /**
- * Created by kevinleperf on 24/01/16.
+ * Simply here to give the information that the method call is safe to be used using
+ * parallel execution
  */
 public @interface ThreadSafe {
 }

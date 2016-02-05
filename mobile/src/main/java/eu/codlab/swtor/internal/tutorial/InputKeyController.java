@@ -10,6 +10,7 @@ import eu.codlab.swtor.internal.security.CodeProvider;
  */
 public class InputKeyController implements ITutorialValidationFragment {
 
+    private static final int CORRECT_CONTENT_LENGTH = 16;
     private static final int CORRECT_CODE_LENGTH = 6;
     private String _content;
 
@@ -22,16 +23,25 @@ public class InputKeyController implements ITutorialValidationFragment {
 
     @Override
     public boolean isValid() {
-        if (_content == null) return false;
+        String code = generateCode();
+
+        return getContent() != null && getContent().length() == CORRECT_CONTENT_LENGTH
+                && code != null && code.length() == CORRECT_CODE_LENGTH;
+    }
+
+    public String getContent() {
+        return _content;
+    }
+
+    public String generateCode() {
+        if (_content == null) return null;
 
         CodeProvider provider = DependencyInjectorFactory.getDependencyInjector()
                 .getCodeProvider(_content);
 
-        if (provider == null) return false;
+        if (provider == null) return null;
 
-        String code = provider.generateCode();
-
-        return code != null && code.length() == CORRECT_CODE_LENGTH;
+        return provider.generateCode();
     }
 
     @Override

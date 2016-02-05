@@ -8,15 +8,15 @@ import java.util.concurrent.locks.ReentrantLock;
 public class LockableObject {
     private ReentrantLock _reentrant_lock;
 
-    protected LockableObject(){
+    public LockableObject(){
         _reentrant_lock = new ReentrantLock();
     }
 
-    protected void lock() {
+    public void lock() {
         _reentrant_lock.lock();
     }
 
-    protected void unlock() {
+    public void unlock() {
         _reentrant_lock.unlock();
     }
 

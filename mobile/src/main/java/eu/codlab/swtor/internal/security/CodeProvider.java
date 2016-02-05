@@ -25,6 +25,10 @@ public class CodeProvider {
     public CodeProvider(@NonNull String code, @NonNull TimeProvider time_provider) throws IllegalStateException {
         this();
 
+        if(code == null) throw new IllegalStateException("code null");
+
+        if(time_provider == null) throw new IllegalStateException("time null");
+
         try {
             _time_provider = time_provider;
             _local_mac = Mac.getInstance(SecurityConstants.SECURITY);
