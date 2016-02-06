@@ -15,7 +15,7 @@ import eu.codlab.swtor.internal.security.TimeProvider;
 /**
  * Created by Kévin on 05/02/2016.
  */
-public class DependencyInjectorImplementation extends eu.codlab.swtor.internal.injector.DependencyInjector {
+public class DependencyInjectorImplementation implements eu.codlab.swtor.internal.injector.DependencyInjector {
     @Override
     public void init(@NonNull Context context) {
 
