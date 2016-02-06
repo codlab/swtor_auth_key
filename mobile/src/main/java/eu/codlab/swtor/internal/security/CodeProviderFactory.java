@@ -35,7 +35,7 @@ public class CodeProviderFactory {
      */
     @Nullable
     public static CodeProvider getCodeProvider(@NonNull String provider) {
-        if (decode(provider).length == 0 || provider.length() != LENGTH_TOTAL)
+        if (isCorrectArray(provider) || isCorrectLength(provider))
             return null;
 
         if (mProviders.containsKey(provider)) {
@@ -56,8 +56,16 @@ public class CodeProviderFactory {
         return null;
     }
 
+    protected static boolean isCorrectArray(@NonNull String provider) {
+        return decode(provider).length == 0;
+    }
+
+    protected static boolean isCorrectLength(@NonNull String provider) {
+        return provider.length() == LENGTH_TOTAL;
+    }
+
     @NonNull
-    public static byte[] decode(@NonNull String provider) {
+    protected static byte[] decode(@NonNull String provider) {
         try {
             return Base32String.decode(provider);
         } catch (Base32String.DecodingException exception) {
