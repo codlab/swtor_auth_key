@@ -19,10 +19,10 @@ public class DatabaseProvider implements IDatabaseProvider {
 
     @Nullable
     @ThreadSafe
-    private List<Key> _database_value = null;
+    private List<Key> mDatabaseValue;
 
     public DatabaseProvider() {
-
+        mDatabaseValue = null;
     }
 
     public void loadDatabaseIntoMemory() {
@@ -32,25 +32,26 @@ public class DatabaseProvider implements IDatabaseProvider {
     }
 
     public void reloadDatabaseInMemory() {
-        _database_value = new Select()
+        mDatabaseValue = new Select()
                 .from(Key.class)
                 .queryList();
     }
 
     public boolean hasLoadedDatabaseValues() {
-        List<Key> list = _database_value;
+        List<Key> list = mDatabaseValue;
         return list != null;
     }
 
     public boolean hasValues() {
-        return _database_value != null && _database_value.size() > 0;
+        return mDatabaseValue != null && !mDatabaseValue.isEmpty();
     }
 
     @NonNull
     public List<Key> getAllKeys() {
-        List<Key> tmp = _database_value;
+        List<Key> tmp = mDatabaseValue;
+        if(tmp == null) tmp = new ArrayList<>();
 
-        return tmp == null ? new ArrayList<Key>() : tmp;
+        return tmp;
     }
 
     @NonNull
