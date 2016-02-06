@@ -2,6 +2,7 @@ package eu.codlab.swtor.internal.network;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import java.util.Date;
 
@@ -16,12 +17,12 @@ import retrofit2.Response;
  */
 public class TimeSync {
     private static TimeSync sInstance = new TimeSync();
+    private Context mContext;
 
     public static TimeSync getInstance() {
         return sInstance;
     }
 
-    private Context mContext;
 
     public void init(Context context) {
         mContext = context;
@@ -43,13 +44,19 @@ public class TimeSync {
                     if (response != null) {
                         Headers headers = response.headers();
                         if (headers != null) {
-                            String string_date = headers.get("Date");
-                            Date date = new Date(string_date);
+                            String stringDate = headers.get("Date");
+                            Date date = new Date(stringDate);
                             long diff = date.getTime() - System.currentTimeMillis();
+                            Log.d(TimeSync.class.getSimpleName(), "diff := "+diff);
                         }
                     }
                 }
 
+                /**
+                 * Failure called when a network error occured
+                 *
+                 * @param t the error
+                 */
                 @Override
                 public void onFailure(@NonNull Throwable t) {
 

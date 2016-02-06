@@ -17,10 +17,10 @@ import retrofit2.Retrofit;
  * Created by kevinleperf on 15/01/16.
  */
 public class ToStringConverterFactory extends Converter.Factory {
-    private final static MediaType MEDIA_TYPE = MediaType.parse("text/plain");
+    private static final MediaType MEDIA_TYPE = MediaType.parse("text/plain");
 
     @Nullable
-    public Converter<ResponseBody, ?> responseBodyConverter(@NonNull Type type,
+    public Converter<ResponseBody, String> responseBodyConverter(@NonNull Type type,
                                                             @Nullable Annotation[] annotations,
                                                             @NonNull Retrofit retrofit) {
         if (String.class.equals(type)) {
@@ -35,7 +35,7 @@ public class ToStringConverterFactory extends Converter.Factory {
     }
 
     @Nullable
-    public Converter<?, RequestBody> requestBodyConverter(@NonNull Type type,
+    public Converter<String, RequestBody> requestBodyConverter(@NonNull Type type,
                                                           @Nullable Annotation[] annotations,
                                                           @NonNull Retrofit retrofit) {
         if (String.class.equals(type)) {
