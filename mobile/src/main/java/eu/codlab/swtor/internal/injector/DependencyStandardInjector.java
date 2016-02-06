@@ -21,8 +21,8 @@ import retrofit2.Retrofit;
 /**
  * Created by kevinleperf on 15/01/16.
  */
-public class DependencyStandardInjector extends DependencyInjector {
-    private final static String SHARED_PREFERENCES = "swtor";
+public class DependencyStandardInjector implements DependencyInjector {
+    private static final String SHARED_PREFERENCES = "swtor";
 
     private Context mContext;
     private DatabaseProvider mDatabaseProvider;

@@ -15,29 +15,29 @@ import eu.codlab.swtor.internal.security.TimeProvider;
 /**
  * Created by kevinleperf on 15/01/16.
  */
-public abstract class DependencyInjector {
+public interface DependencyInjector {
 
-    public abstract void init(@NonNull Context context);
-
-    @NonNull
-    public abstract IWeb getNetworkTimeWebsevice();
+    void init(@NonNull Context context);
 
     @NonNull
-    public abstract SharedPreferences getDefaultSharedPreferences();
+    IWeb getNetworkTimeWebsevice();
 
     @NonNull
-    public abstract IDatabaseProvider getDatabaseProvider();
+    SharedPreferences getDefaultSharedPreferences();
 
     @NonNull
-    public abstract EventBus getDefaultEventBus();
+    IDatabaseProvider getDatabaseProvider();
 
     @NonNull
-    public abstract IAppManager getAppManager();
+    EventBus getDefaultEventBus();
+
+    @NonNull
+    IAppManager getAppManager();
 
     @Nullable
-    public abstract CodeProvider getCodeProvider(String provider);
+    CodeProvider getCodeProvider(String provider);
 
     @NonNull
-    public abstract TimeProvider getTimeProvider();
+    TimeProvider getTimeProvider();
 
 }
