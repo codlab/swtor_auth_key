@@ -2,14 +2,18 @@ buildscript {
     repositories {
         maven { url 'https://maven.fabric.io/public' }
         maven { url "https://jitpack.io" }
+        maven { url 'https://plugins.gradle.org/m2' }
     }
 
     dependencies {
         classpath 'io.fabric.tools:gradle:1.+'
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:1.2"
     }
 }
+
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
+apply plugin: 'org.sonarqube'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
@@ -28,6 +32,10 @@ android {
         versionName "1.0"
     }
     buildTypes {
+        debug {
+            testCoverageEnabled true
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -80,4 +88,27 @@ dependencies {
 
 afterEvaluate {
     test.dependsOn clean
+}
+
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "swtor"
+        property "sonar.projectName", "Swtor"
+        property "sonar.projectVersion", "1.0"
+
+        property "sonar.sources", "src/main/java"
+        property "sonar.binaries", "build"
+        property "sonar.test", "src/test/java"
+
+        property "sonar.profile", "Sonar way"
+        property "sonar.language", "java"
+        property "sonar.sourceEncoding", "UTF-8"
+
+        property "sonar.dynamicAnalysis", "reuseReports"
+
+        property "sonar.junit.reportsPath", "build/outputs/reports/coverage/debug"
+        property "sonar.cobertura.reportPath", "build/outputs/reports/coverage/debug/cobertura.xml"
+        property "sonar.java.coveragePlugin", "cobertura"
+    }
 }
