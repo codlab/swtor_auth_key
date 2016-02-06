@@ -19,34 +19,29 @@ import retrofit2.Retrofit;
 public class ToStringConverterFactory extends Converter.Factory {
     private static final MediaType MEDIA_TYPE = MediaType.parse("text/plain");
 
+    /**
+     * Default constructor
+     */
+    public ToStringConverterFactory(){
+
+    }
+
     @Nullable
     public Converter<ResponseBody, String> responseBodyConverter(@NonNull Type type,
-                                                            @Nullable Annotation[] annotations,
-                                                            @NonNull Retrofit retrofit) {
+                                                                 @Nullable Annotation[] annotations,
+                                                                 @NonNull Retrofit retrofit) {
         if (String.class.equals(type)) {
-            return new Converter<ResponseBody, String>() {
-                @Override
-                public String convert(@NonNull ResponseBody value) throws IOException {
-                    return value.string();
-                }
-            };
+            return getConverterFromResponseBody();
         }
         return null;
     }
 
     @Nullable
     public Converter<String, RequestBody> requestBodyConverter(@NonNull Type type,
-                                                          @Nullable Annotation[] annotations,
-                                                          @NonNull Retrofit retrofit) {
+                                                               @Nullable Annotation[] annotations,
+                                                               @NonNull Retrofit retrofit) {
         if (String.class.equals(type)) {
-            return new Converter<String, RequestBody>() {
-                @NonNull
-                @Override
-                public RequestBody convert(@NonNull String value) throws IOException {
-                    return RequestBody.create(MEDIA_TYPE, value);
-                }
-            };
-
+            return getConverterFromString();
         }
         return null;
     }
@@ -55,5 +50,24 @@ public class ToStringConverterFactory extends Converter.Factory {
     public Converter<?, String> stringConverter(@NonNull Type type,
                                                 @Nullable Annotation[] annotations) {
         return null;
+    }
+
+    Converter<ResponseBody, String> getConverterFromResponseBody() {
+        return new Converter<ResponseBody, String>() {
+            @Override
+            public String convert(@NonNull ResponseBody value) throws IOException {
+                return value.string();
+            }
+        };
+    }
+
+    Converter<String, RequestBody> getConverterFromString(){
+        return new Converter<String, RequestBody>() {
+            @NonNull
+            @Override
+            public RequestBody convert(@NonNull String value) throws IOException {
+                return RequestBody.create(MEDIA_TYPE, value);
+            }
+        };
     }
 }

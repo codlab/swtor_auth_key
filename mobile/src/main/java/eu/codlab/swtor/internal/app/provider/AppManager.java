@@ -73,13 +73,9 @@ public class AppManager extends LockableObject implements IAppManager {
                 .getDatabaseProvider()
                 .loadDatabaseIntoMemory();
 
-        setInit(true);
+        mInit = true;
 
         warnListeners();
-    }
-
-    private void setInit(boolean state) {
-        mInit = state;
     }
 
     private void appendListener(@NonNull IAppListener listener) {
