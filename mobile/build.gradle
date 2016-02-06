@@ -101,7 +101,8 @@ tasks.withType(Test) { task ->
 
 afterEvaluate {
     test.dependsOn clean
-    tasks.sonarqube.dependsOn testDebugUnitTest
+
+    tasks.testDebugUnitTest.finalizedBy(tasks.sonarqube)
 }
 
 
