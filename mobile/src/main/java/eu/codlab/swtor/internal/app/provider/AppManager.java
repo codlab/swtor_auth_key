@@ -2,10 +2,12 @@ package eu.codlab.swtor.internal.app.provider;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import com.raizlabs.android.dbflow.config.FlowManager;
+import com.wopata.aspectlib.annotations.EnsureAsync;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,14 +43,7 @@ public class AppManager extends LockableObject implements IAppManager {
         if (!isInit() && !mLoading) {
             mLoading = true;
 
-            Thread thread = new Thread() {
-                @Override
-                public void run() {
-                    internalInitInThread(context);
-                }
-            };
-
-            thread.start();
+            internalInitInThread(context);
         }
     }
 
@@ -58,16 +53,17 @@ public class AppManager extends LockableObject implements IAppManager {
     }
 
     @Override
-    public void removeListener(@NonNull IAppListener app_listener) {
+    public void removeListener(@NonNull IAppListener listener) {
         lock();
 
-        if (!mAppListeners.contains(app_listener)) {
-            mAppListeners.add(app_listener);
+        if (!mAppListeners.contains(listener)) {
+            mAppListeners.add(listener);
         }
 
         unlock();
     }
 
+    @EnsureAsync
     private void internalInitInThread(@NonNull Context context) {
         Fabric.with(context, new Crashlytics(), new Answers());
         FlowManager.init(context);
@@ -86,11 +82,11 @@ public class AppManager extends LockableObject implements IAppManager {
         mInit = state;
     }
 
-    private void appendListener(@NonNull IAppListener app_listener) {
+    private void appendListener(@NonNull IAppListener listener) {
         lock();
 
-        if (!mAppListeners.contains(app_listener)) {
-            mAppListeners.add(app_listener);
+        if (!mAppListeners.contains(listener)) {
+            mAppListeners.add(listener);
         }
 
         unlock();
@@ -106,10 +102,12 @@ public class AppManager extends LockableObject implements IAppManager {
             for (IAppListener listener : mAppListeners) {
                 listener.onAppInitialized();
             }
-        } catch (Exception e) {
-            if (BuildConfig.DEBUG) e.printStackTrace();
+        } catch (Exception exception) {
+            if (BuildConfig.DEBUG) {
+                Log.e(AppManager.class.getSimpleName(), "exception ", exception);
+            }
 
-            throw e;
+            throw exception;
         }
 
         lock();

@@ -13,26 +13,26 @@ import eu.codlab.swtor.R;
 
 public class TutorialActivity extends com.alexandrepiveteau.library.tutorial.ui.activities.TutorialActivity {
 
-    private final static int background[] = new int[]{
+    private static final int[] background = new int[]{
             R.color.colorPrimary,
             R.color.colorPrimary,
             R.color.colorPrimary,
             R.color.colorPrimaryDark,
     };
 
-    private final static int title[] = new int[]{
+    private static final int[] title = new int[]{
             R.string.title_tutorial_hey,
             R.string.title_tutorial_login,
             R.string.title_tutorial_add_key
     };
 
-    private final static int description[] = new int[]{
+    private static final int[] description = new int[]{
             R.string.tutorial_1_description,
             R.string.tutorial_2_description,
             R.string.tutorial_2_description,
     };
 
-    private final static int res[] = new int[]{
+    private static final int[] res = new int[]{
             R.drawable.swtor_tutorial_1,
             R.drawable.swtor_tutorial_2,
             R.drawable.swtor_tutorial_3
@@ -84,12 +84,7 @@ public class TutorialActivity extends com.alexandrepiveteau.library.tutorial.ui.
             case 0:
             case 1:
             case 2:
-                return new TutorialFragment.Builder()
-                        .setTitle(getString(title[position]))
-                        .setDescription(getString(description[position]))
-                        .setImageResource(res[position])
-                        .setSkippable(true)
-                        .build();
+                return createTutorialFragment(position);
             default:
                 return new InputKeyFragment();
         }
@@ -108,5 +103,14 @@ public class TutorialActivity extends com.alexandrepiveteau.library.tutorial.ui.
     @Override
     public ViewPager.PageTransformer getPageTransformer() {
         return TutorialFragment.getParallaxPageTransformer(1.25f);
+    }
+
+    private TutorialFragment createTutorialFragment(int position) {
+        return new TutorialFragment.Builder()
+                .setTitle(getString(title[position]))
+                .setDescription(getString(description[position]))
+                .setImageResource(res[position])
+                .setSkippable(true)
+                .build();
     }
 }

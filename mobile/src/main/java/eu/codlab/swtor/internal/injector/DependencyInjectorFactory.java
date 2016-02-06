@@ -12,12 +12,17 @@ public class DependencyInjectorFactory {
             + ".init(Context, Injector Class) first";
     private static DependencyInjector _injector = null;
 
+    /**
+     * Empty constructor to prevent class instantiation
+     */
+    private DependencyInjectorFactory(){
+
+    }
     public static void init(@NonNull Context context,
                             @NonNull Class<? extends DependencyInjector> injector) {
         try {
             _injector = injector.newInstance();
         } catch (Exception e) {
-            e.printStackTrace();
             _injector = new DependencyStandardInjector();
         }
 
