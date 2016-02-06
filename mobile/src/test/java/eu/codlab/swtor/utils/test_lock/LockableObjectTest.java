@@ -32,13 +32,13 @@ public class LockableObjectTest {
         Thread thread = new Thread() {
             @Override
             public void run() {
-                retainLoop("thread", test, maintainer, 50);
+                retainLoop("thread", test, maintainer, 5);
                 state[0] = true;
             }
         };
         thread.start();
 
-        retainLoop("main", test, maintainer, 30);
+        retainLoop("main", test, maintainer, 20);
 
 
         while (!state[0]) {
