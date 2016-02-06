@@ -10,9 +10,9 @@ import eu.codlab.swtor.internal.app.listeners.IAppListener;
  */
 public interface IAppManager {
     void init(@NonNull final Context context,
-              @NonNull final IAppListener app_listener);
+              @NonNull final IAppListener listener);
 
     boolean isInit();
 
-    void removeListener(IAppListener app_listener);
+    void removeListener(IAppListener listener);
 }

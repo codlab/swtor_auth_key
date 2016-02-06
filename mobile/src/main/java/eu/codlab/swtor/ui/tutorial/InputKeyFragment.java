@@ -35,7 +35,7 @@ public class InputKeyFragment extends AbstractTutorialValidationFragment {
     private final InputKeyController mInputKeyController;
 
     @Bind(R.id.code_next_time)
-    ProgressBar _code_next_time;
+    ProgressBar mCodeNextTime;
 
     public InputKeyFragment() {
         mInputKeyController = new InputKeyController();
@@ -106,7 +106,7 @@ public class InputKeyFragment extends AbstractTutorialValidationFragment {
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                _code_next_time.setProgress((Integer) animation.getAnimatedValue());
+                mCodeNextTime.setProgress((Integer) animation.getAnimatedValue());
             }
         });
         animator.setInterpolator(new LinearInterpolator());
