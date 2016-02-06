@@ -6,6 +6,7 @@ buildscript {
     }
 
     dependencies {
+        classpath 'org.ajoberstar:gradle-jacoco:0.3.0'
         classpath 'io.fabric.tools:gradle:1.+'
         classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:1.2"
     }
@@ -14,6 +15,7 @@ buildscript {
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 apply plugin: 'org.sonarqube'
+apply plugin: 'jacoco'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
@@ -86,6 +88,12 @@ dependencies {
 
 }
 
+tasks.withType(Test) { task ->
+    jacoco {
+        destinationFile = file("$buildDir/jacoco/${task.name}.exec")
+    }
+}
+
 afterEvaluate {
     test.dependsOn clean
 }
@@ -97,18 +105,15 @@ sonarqube {
         property "sonar.projectName", "Swtor"
         property "sonar.projectVersion", "1.0"
 
-        property "sonar.sources", "src/main/java"
+
+        property "sonar.sources", "./src/main/java"
+        property "sonar.tests", "./src/test/java"
         property "sonar.binaries", "build"
-        property "sonar.test", "src/test/java"
 
-        property "sonar.profile", "Sonar way"
-        property "sonar.language", "java"
-        property "sonar.sourceEncoding", "UTF-8"
+        property "sonar.junit.reportsPath", "./build/test-results/debug"
 
-        property "sonar.dynamicAnalysis", "reuseReports"
+        property "sonar.jacoco.reportPath", "${project.buildDir}/jacoco/testDebugUnitTest.exec"
+        property "sonar.android.lint.report", "./build/outputs/lint-results.xml"
 
-        property "sonar.junit.reportsPath", "build/outputs/reports/coverage/debug"
-        property "sonar.cobertura.reportPath", "build/outputs/reports/coverage/debug/cobertura.xml"
-        property "sonar.java.coveragePlugin", "cobertura"
     }
 }
