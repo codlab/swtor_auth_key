@@ -8,6 +8,14 @@ package eu.codlab.swtor.internal.database.impl;
         version = Database.VERSION
 )
 public class Database {
-    public final static String NAME = "keys";
-    public final static int VERSION = 1;
+    public static final String NAME = "keys";
+    public static final int VERSION = 1;
+
+
+    /**
+     * Prevent the Database class to being instantiated
+     */
+    private Database() {
+
+    }
 }
