@@ -96,6 +96,7 @@ tasks.withType(Test) { task ->
 
 afterEvaluate {
     test.dependsOn clean
+    tasks.sonarqube.dependsOn testDebugUnitTest
 }
 
 
@@ -109,6 +110,7 @@ sonarqube {
         property "sonar.sources", "./src/main/java"
         property "sonar.tests", "./src/test/java"
         property "sonar.binaries", "build"
+        property "sonar.scm.provider", "git"
 
         property "sonar.junit.reportsPath", "./build/test-results/debug"
 
