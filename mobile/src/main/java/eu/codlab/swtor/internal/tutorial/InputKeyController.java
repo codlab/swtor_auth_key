@@ -15,6 +15,7 @@ public class InputKeyController implements ITutorialValidationFragment {
     private String mContent;
 
     public InputKeyController() {
+        mContent = null;
     }
 
     public void setContent(String content) {
@@ -34,12 +35,14 @@ public class InputKeyController implements ITutorialValidationFragment {
     }
 
     public String generateCode() {
-        if (mContent == null) return null;
+        if (null == mContent)
+            return null;
 
         CodeProvider provider = DependencyInjectorFactory.getDependencyInjector()
                 .getCodeProvider(mContent);
 
-        if (provider == null) return null;
+        if (null == provider)
+            return null;
 
         return provider.generateCode();
     }

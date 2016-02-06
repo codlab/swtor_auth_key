@@ -20,24 +20,6 @@ public abstract class AbstractKeysActivity extends AppCompatActivity {
         mDependencyInjector = DependencyInjectorFactory.getDependencyInjector();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        /*mDependencyInjector.getDefaultEventBus().register(this);
-
-        mDependencyInjector
-                .getDatabaseProvider()
-                .loadDatabaseIntoMemory();*/
-    }
-
-    @Override
-    public void onPause() {
-        /*mDependencyInjector.getDefaultEventBus().unregister(this);*/
-
-        super.onPause();
-    }
-
     protected DependencyInjector getDependencyInjector() {
         return mDependencyInjector;
     }

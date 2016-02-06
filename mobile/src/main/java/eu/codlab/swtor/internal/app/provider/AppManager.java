@@ -37,8 +37,8 @@ public class AppManager extends LockableObject implements IAppManager {
 
     @Override
     public void init(@NonNull final Context context,
-                     @NonNull IAppListener app_listener) {
-        appendListener(app_listener);
+                     @NonNull IAppListener listener) {
+        appendListener(listener);
 
         if (!isInit() && !mLoading) {
             mLoading = true;

@@ -5,4 +5,11 @@ package eu.codlab.swtor.internal.network;
  */
 public class NetworkConstants {
     public static final String SWTOR = "http://www.swtor.com";
+
+    /**
+     * Prevent class instantiation
+     */
+    private NetworkConstants() {
+
+    }
 }
