@@ -1,5 +1,6 @@
 package eu.codlab.swtor.internal.security;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -33,8 +34,8 @@ public class CodeProviderFactory {
      * @return a proper CodeProvider or null if something wrong happened
      */
     @Nullable
-    public static CodeProvider getCodeProvider(@Nullable String provider) {
-        if (null == decode(provider) || provider.length() != LENGTH_TOTAL)
+    public static CodeProvider getCodeProvider(@NonNull String provider) {
+        if (decode(provider).length > 0 || provider.length() != LENGTH_TOTAL)
             return null;
 
         if (mProviders.containsKey(provider)) {
@@ -55,10 +56,8 @@ public class CodeProviderFactory {
         return null;
     }
 
-    private static byte[] decode(@Nullable String provider) {
-        if (null == provider)
-            return null;
-
+    @NonNull
+    private static byte[] decode(@NonNull String provider) {
         try {
             return Base32String.decode(provider);
         } catch (Base32String.DecodingException exception) {
@@ -68,6 +67,6 @@ public class CodeProviderFactory {
                         exception);
             }
         }
-        return null;
+        return new byte[]{};
     }
 }
