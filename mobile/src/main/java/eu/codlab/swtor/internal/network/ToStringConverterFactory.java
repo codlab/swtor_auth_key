@@ -23,7 +23,7 @@ public class ToStringConverterFactory extends Converter.Factory {
      * Default constructor
      */
     public ToStringConverterFactory(){
-
+        //NOTHING TO DO IN IT
     }
 
     @Nullable
