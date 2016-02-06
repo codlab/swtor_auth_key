@@ -34,7 +34,7 @@ public class CodeProviderFactory {
      */
     @Nullable
     public static CodeProvider getCodeProvider(@Nullable String provider) {
-        if (null == provider)
+        if (null == decode(provider) || provider.length() != LENGTH_TOTAL)
             return null;
 
         if (mProviders.containsKey(provider)) {
@@ -42,9 +42,6 @@ public class CodeProviderFactory {
         }
 
         try {
-            if (null == Base32String.decode(provider) || provider.length() != LENGTH_TOTAL)
-                return null;
-
             CodeProvider prov = new CodeProvider(provider, new TimeProvider());
             mProviders.put(provider, prov);
             return prov;
@@ -55,6 +52,22 @@ public class CodeProviderFactory {
             }
         }
 
+        return null;
+    }
+
+    private static byte[] decode(@Nullable String provider) {
+        if (null == provider)
+            return null;
+
+        try {
+            return Base32String.decode(provider);
+        } catch (Base32String.DecodingException exception) {
+            if (BuildConfig.DEBUG) {
+                Log.e(CodeProviderFactory.class.getSimpleName(),
+                        "exception",
+                        exception);
+            }
+        }
         return null;
     }
 }
