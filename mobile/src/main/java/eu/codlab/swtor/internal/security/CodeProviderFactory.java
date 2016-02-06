@@ -12,15 +12,15 @@ import java.util.HashMap;
 public class CodeProviderFactory {
     private final static int LENGTH_TOTAL = 16;
 
-    private final static HashMap<String, CodeProvider> _providers = new HashMap<>();
+    private final static HashMap<String, CodeProvider> mProviders = new HashMap<>();
 
 
     @Nullable
     public static CodeProvider getCodeProvider(@Nullable String provider) {
         if (provider == null) return null;
 
-        if (_providers.containsKey(provider)) {
-            return _providers.get(provider);
+        if (mProviders.containsKey(provider)) {
+            return mProviders.get(provider);
         }
 
         try {
@@ -28,7 +28,7 @@ public class CodeProviderFactory {
                 return null;
 
             CodeProvider prov = new CodeProvider(provider, new TimeProvider());
-            _providers.put(provider, prov);
+            mProviders.put(provider, prov);
             return prov;
         } catch (Exception exception) {
             System.out.println("CodeProviderFactory :: issue " + exception.getMessage());

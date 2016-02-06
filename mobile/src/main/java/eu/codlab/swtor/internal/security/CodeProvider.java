@@ -14,9 +14,9 @@ import javax.crypto.spec.SecretKeySpec;
  * Created by kevinleperf on 15/01/16.
  */
 public class CodeProvider {
-    private PasscodeGenerator _passcode_generator;
-    private Mac _local_mac;
-    private TimeProvider _time_provider;
+    private PasscodeGenerator mPasscodeGenerator;
+    private Mac mLocalMac;
+    private TimeProvider mTimeProvider;
 
     private CodeProvider() {
 
@@ -30,10 +30,10 @@ public class CodeProvider {
         if(time_provider == null) throw new IllegalStateException("time null");
 
         try {
-            _time_provider = time_provider;
-            _local_mac = Mac.getInstance(SecurityConstants.SECURITY);
-            _local_mac.init(new SecretKeySpec(Base32String.decode(code), ""));
-            _passcode_generator = new PasscodeGenerator(_local_mac);
+            mTimeProvider = time_provider;
+            mLocalMac = Mac.getInstance(SecurityConstants.SECURITY);
+            mLocalMac.init(new SecretKeySpec(Base32String.decode(code), ""));
+            mPasscodeGenerator = new PasscodeGenerator(mLocalMac);
         } catch (Exception exception) {
             throw new IllegalStateException("EXCEPTION");
         }
@@ -42,7 +42,7 @@ public class CodeProvider {
     @Nullable
     public String generateCode() {
         try {
-            return _passcode_generator.generateResponseCode(_time_provider.getCurrentInterval());
+            return mPasscodeGenerator.generateResponseCode(mTimeProvider.getCurrentInterval());
         } catch (Exception e) {
             if (BuildConfig.DEBUG) e.printStackTrace();
         }

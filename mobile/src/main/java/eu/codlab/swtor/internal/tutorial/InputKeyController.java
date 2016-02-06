@@ -12,13 +12,13 @@ public class InputKeyController implements ITutorialValidationFragment {
 
     private static final int CORRECT_CONTENT_LENGTH = 16;
     private static final int CORRECT_CODE_LENGTH = 6;
-    private String _content;
+    private String mContent;
 
     public InputKeyController() {
     }
 
     public void setContent(String content) {
-        _content = content;
+        mContent = content;
     }
 
     @Override
@@ -30,14 +30,14 @@ public class InputKeyController implements ITutorialValidationFragment {
     }
 
     public String getContent() {
-        return _content;
+        return mContent;
     }
 
     public String generateCode() {
-        if (_content == null) return null;
+        if (mContent == null) return null;
 
         CodeProvider provider = DependencyInjectorFactory.getDependencyInjector()
-                .getCodeProvider(_content);
+                .getCodeProvider(mContent);
 
         if (provider == null) return null;
 

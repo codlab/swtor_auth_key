@@ -6,18 +6,18 @@ import java.util.concurrent.locks.ReentrantLock;
  * Created by kevinleperf on 25/01/16.
  */
 public class LockableObject {
-    private ReentrantLock _reentrant_lock;
+    private ReentrantLock mReentrantLock;
 
     public LockableObject(){
-        _reentrant_lock = new ReentrantLock();
+        mReentrantLock = new ReentrantLock();
     }
 
     public void lock() {
-        _reentrant_lock.lock();
+        mReentrantLock.lock();
     }
 
     public void unlock() {
-        _reentrant_lock.unlock();
+        mReentrantLock.unlock();
     }
 
 }

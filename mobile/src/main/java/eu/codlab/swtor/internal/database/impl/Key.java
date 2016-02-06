@@ -13,13 +13,13 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 public class Key extends BaseModel {
 
     @PrimaryKey(autoincrement = true)
-    @Column
-    long id;
+    @Column(name = "id")
+    long mId;
 
     @Index
-    @Column
-    String name;
+    @Column(name = "name")
+    String mName;
 
-    @Column
-    String secret;
+    @Column(name = "secret")
+    String mSecret;
 }

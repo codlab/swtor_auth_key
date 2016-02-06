@@ -31,15 +31,15 @@ import eu.codlab.swtor.internal.tutorial.InputKeyController;
  */
 public class InputKeyFragment extends AbstractTutorialValidationFragment {
 
-    private final DependencyInjector _dependency_injector;
-    private final InputKeyController _input_key_controller;
+    private final DependencyInjector mDepdencyInjector;
+    private final InputKeyController mInputKeyController;
 
     @Bind(R.id.code_next_time)
     ProgressBar _code_next_time;
 
     public InputKeyFragment() {
-        _input_key_controller = new InputKeyController();
-        _dependency_injector = DependencyInjectorFactory.getDependencyInjector();
+        mInputKeyController = new InputKeyController();
+        mDepdencyInjector = DependencyInjectorFactory.getDependencyInjector();
     }
 
 
@@ -59,20 +59,20 @@ public class InputKeyFragment extends AbstractTutorialValidationFragment {
         super.onResume();
 
 
-        _dependency_injector.getDefaultEventBus()
+        mDepdencyInjector.getDefaultEventBus()
                 .register(this);
 
-        _dependency_injector.getTimeProvider()
+        mDepdencyInjector.getTimeProvider()
                 .onResume();
     }
 
     @Override
     public void onPause() {
 
-        _dependency_injector.getTimeProvider()
+        mDepdencyInjector.getTimeProvider()
                 .onPause();
 
-        _dependency_injector.getDefaultEventBus()
+        mDepdencyInjector.getDefaultEventBus()
                 .unregister(this);
 
         super.onPause();
@@ -80,12 +80,12 @@ public class InputKeyFragment extends AbstractTutorialValidationFragment {
 
     @OnTextChanged(R.id.input_code)
     public void afterTextChanged(Editable content) {
-        _input_key_controller.setContent(content.toString());
+        mInputKeyController.setContent(content.toString());
     }
 
     @Override
     public boolean isValid() {
-        return _input_key_controller.isValid();
+        return mInputKeyController.isValid();
     }
 
     @Override
@@ -93,7 +93,7 @@ public class InputKeyFragment extends AbstractTutorialValidationFragment {
 
         Log.d(InputKeyFragment.class.getSimpleName(), "onTryValidate ");
 
-        _input_key_controller.onTryValidate();
+        mInputKeyController.onTryValidate();
 
     }
 

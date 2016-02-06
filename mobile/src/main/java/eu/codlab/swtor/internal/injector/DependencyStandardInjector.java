@@ -24,10 +24,10 @@ import retrofit2.Retrofit;
 public class DependencyStandardInjector extends DependencyInjector {
     private final static String SHARED_PREFERENCES = "swtor";
 
-    private Context _context;
-    private DatabaseProvider _database_provider;
-    private AppManager _app_manager;
-    private TimeProvider _time_provider;
+    private Context mContext;
+    private DatabaseProvider mDatabaseProvider;
+    private AppManager mAppManager;
+    private TimeProvider mTimeProvider;
 
     public DependencyStandardInjector() {
         super();
@@ -35,10 +35,10 @@ public class DependencyStandardInjector extends DependencyInjector {
 
     @Override
     public void init(@NonNull Context context) {
-        _context = context;
-        _database_provider = new DatabaseProvider();
-        _app_manager = new AppManager();
-        _time_provider = new TimeProvider();
+        mContext = context;
+        mDatabaseProvider = new DatabaseProvider();
+        mAppManager = new AppManager();
+        mTimeProvider = new TimeProvider();
     }
 
     @Override
@@ -55,13 +55,13 @@ public class DependencyStandardInjector extends DependencyInjector {
     @Override
     @NonNull
     public SharedPreferences getDefaultSharedPreferences() {
-        return _context.getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        return mContext.getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
     }
 
     @Override
     @NonNull
     public IDatabaseProvider getDatabaseProvider() {
-        return _database_provider;
+        return mDatabaseProvider;
     }
 
     @NonNull
@@ -73,7 +73,7 @@ public class DependencyStandardInjector extends DependencyInjector {
     @NonNull
     @Override
     public IAppManager getAppManager() {
-        return _app_manager;
+        return mAppManager;
     }
 
     @Nullable
@@ -85,6 +85,6 @@ public class DependencyStandardInjector extends DependencyInjector {
     @NonNull
     @Override
     public TimeProvider getTimeProvider() {
-        return _time_provider;
+        return mTimeProvider;
     }
 }

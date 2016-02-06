@@ -11,35 +11,35 @@ import eu.codlab.swtor.internal.injector.DependencyInjectorFactory;
  */
 public abstract class AbstractKeysActivity extends AppCompatActivity {
 
-    private DependencyInjector _dependency_injector;
+    private DependencyInjector mDependencyInjector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        _dependency_injector = DependencyInjectorFactory.getDependencyInjector();
+        mDependencyInjector = DependencyInjectorFactory.getDependencyInjector();
     }
 
     @Override
     public void onResume() {
         super.onResume();
 
-        /*_dependency_injector.getDefaultEventBus().register(this);
+        /*mDependencyInjector.getDefaultEventBus().register(this);
 
-        _dependency_injector
+        mDependencyInjector
                 .getDatabaseProvider()
                 .loadDatabaseIntoMemory();*/
     }
 
     @Override
     public void onPause() {
-        /*_dependency_injector.getDefaultEventBus().unregister(this);*/
+        /*mDependencyInjector.getDefaultEventBus().unregister(this);*/
 
         super.onPause();
     }
 
     protected DependencyInjector getDependencyInjector() {
-        return _dependency_injector;
+        return mDependencyInjector;
     }
 
 

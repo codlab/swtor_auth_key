@@ -22,15 +22,15 @@ import io.fabric.sdk.android.Fabric;
  */
 public class AppManager extends LockableObject implements IAppManager {
 
-    private boolean _init;
-    private boolean _loading;
-    private List<IAppListener> _app_listeners;
+    private boolean mInit;
+    private boolean mLoading;
+    private List<IAppListener> mAppListeners;
 
     public AppManager() {
         super();
-        _init = false;
-        _loading = false;
-        _app_listeners = new ArrayList<>();
+        mInit = false;
+        mLoading = false;
+        mAppListeners = new ArrayList<>();
     }
 
     @Override
@@ -38,8 +38,8 @@ public class AppManager extends LockableObject implements IAppManager {
                      @NonNull IAppListener app_listener) {
         appendListener(app_listener);
 
-        if (!isInit() && !_loading) {
-            _loading = true;
+        if (!isInit() && !mLoading) {
+            mLoading = true;
 
             Thread thread = new Thread() {
                 @Override
@@ -54,15 +54,15 @@ public class AppManager extends LockableObject implements IAppManager {
 
     @Override
     public boolean isInit() {
-        return _init;
+        return mInit;
     }
 
     @Override
     public void removeListener(@NonNull IAppListener app_listener) {
         lock();
 
-        if (!_app_listeners.contains(app_listener)) {
-            _app_listeners.add(app_listener);
+        if (!mAppListeners.contains(app_listener)) {
+            mAppListeners.add(app_listener);
         }
 
         unlock();
@@ -83,14 +83,14 @@ public class AppManager extends LockableObject implements IAppManager {
     }
 
     private void setInit(boolean state) {
-        _init = state;
+        mInit = state;
     }
 
     private void appendListener(@NonNull IAppListener app_listener) {
         lock();
 
-        if (!_app_listeners.contains(app_listener)) {
-            _app_listeners.add(app_listener);
+        if (!mAppListeners.contains(app_listener)) {
+            mAppListeners.add(app_listener);
         }
 
         unlock();
@@ -99,11 +99,11 @@ public class AppManager extends LockableObject implements IAppManager {
     private void warnListeners() {
         lock();
         List<IAppListener> listeners = new ArrayList<>();
-        listeners.addAll(_app_listeners);
+        listeners.addAll(mAppListeners);
         unlock();
 
         try {
-            for (IAppListener listener : _app_listeners) {
+            for (IAppListener listener : mAppListeners) {
                 listener.onAppInitialized();
             }
         } catch (Exception e) {
@@ -113,7 +113,7 @@ public class AppManager extends LockableObject implements IAppManager {
         }
 
         lock();
-        _app_listeners.removeAll(listeners);
+        mAppListeners.removeAll(listeners);
         unlock();
 
         listeners.clear();

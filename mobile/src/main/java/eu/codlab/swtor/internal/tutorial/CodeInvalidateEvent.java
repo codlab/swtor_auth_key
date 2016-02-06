@@ -4,13 +4,13 @@ package eu.codlab.swtor.internal.tutorial;
  * Created by kevinleperf on 03/02/16.
  */
 public class CodeInvalidateEvent {
-    private long _next_iteration_in;
+    private long mNextIterationIn;
 
     public CodeInvalidateEvent(long nextIterationIn) {
-        _next_iteration_in = nextIterationIn;
+        mNextIterationIn = nextIterationIn;
     }
 
     public long getNextIterationIn() {
-        return _next_iteration_in;
+        return mNextIterationIn;
     }
 }

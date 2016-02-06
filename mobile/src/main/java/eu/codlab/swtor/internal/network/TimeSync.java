@@ -15,24 +15,24 @@ import retrofit2.Response;
  * Created by kevinleperf on 15/01/16.
  */
 public class TimeSync {
-    private static TimeSync _instance = new TimeSync();
+    private static TimeSync sInstance = new TimeSync();
 
     public static TimeSync getInstance() {
-        return _instance;
+        return sInstance;
     }
 
-    private Context _context;
+    private Context mContext;
 
     public void init(Context context) {
-        _context = context;
+        mContext = context;
     }
 
     public void deinit() {
-        _context = null;
+        mContext = null;
     }
 
     public void sync() {
-        if (_context != null) {
+        if (mContext != null) {
             IWeb web = DependencyInjectorFactory.getDependencyInjector()
                     .getNetworkTimeWebsevice();
 

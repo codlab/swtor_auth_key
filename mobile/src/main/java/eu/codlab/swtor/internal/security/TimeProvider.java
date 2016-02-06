@@ -13,11 +13,11 @@ import eu.codlab.swtor.internal.tutorial.CodeInvalidateEvent;
  */
 public class TimeProvider {
 
-    private Handler _handler;
-    private Runnable _post_event;
+    private Handler mHandler;
+    private Runnable mPostEvent;
 
     public TimeProvider() {
-        _post_event = new Runnable() {
+        mPostEvent = new Runnable() {
             @Override
             public void run() {
                 Log.d("TimeProvider", "next in :: " + getNextIterationIn());
@@ -46,24 +46,24 @@ public class TimeProvider {
     }
 
     private void postNextIteration() {
-        if (_handler != null) _handler.postDelayed(_post_event, getNextIterationIn());
+        if (mHandler != null) mHandler.postDelayed(mPostEvent, getNextIterationIn());
     }
 
     @MainThread
     public void onResume() {
-        if (_handler == null) {
-            _handler = new Handler(Looper.getMainLooper());
+        if (mHandler == null) {
+            mHandler = new Handler(Looper.getMainLooper());
 
-            _handler.post(_post_event);
+            mHandler.post(mPostEvent);
         }
     }
 
     @MainThread
     public void onPause() {
-        if (_handler != null) {
-            _handler.removeCallbacks(_post_event);
+        if (mHandler != null) {
+            mHandler.removeCallbacks(mPostEvent);
 
-            _handler = null;
+            mHandler = null;
         }
     }
 }
