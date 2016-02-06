@@ -23,7 +23,7 @@ public class InputKeyControllerTest {
     public void init() {
         _context = Mockito.mock(Context.class);
 
-        DependencyInjectorFactory.init(_context, DependencyInjectorImplementation.class);
+        DependencyInjectorFactory.init(_context, new DependencyInjectorImplementation());
     }
 
     @Test

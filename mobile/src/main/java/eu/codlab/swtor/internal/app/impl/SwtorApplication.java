@@ -14,7 +14,7 @@ public class SwtorApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        DependencyInjectorFactory.init(this, DependencyStandardInjector.class);
+        DependencyInjectorFactory.init(this, new DependencyStandardInjector());
     }
 
 }

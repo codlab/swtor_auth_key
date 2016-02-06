@@ -2,9 +2,6 @@ package eu.codlab.swtor.internal.injector;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.util.Log;
-
-import eu.codlab.swtor.BuildConfig;
 
 /**
  * Created by kevinleperf on 15/01/16.
@@ -23,16 +20,8 @@ public class DependencyInjectorFactory {
     }
 
     public static void init(@NonNull Context context,
-                            @NonNull Class<? extends DependencyInjector> injector) {
-        try {
-            sInjector = injector.newInstance();
-        } catch (Exception exception) {
-            sInjector = new DependencyStandardInjector();
-            if (BuildConfig.DEBUG) {
-                Log.e(DependencyInjectorFactory.class.getSimpleName(),
-                        "exception", exception);
-            }
-        }
+                               @NonNull DependencyInjector injector) {
+        sInjector = injector;
 
         initDependencyInjectorFactory(context);
     }

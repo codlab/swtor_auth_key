@@ -35,7 +35,7 @@ public class CodeProviderFactory {
      */
     @Nullable
     public static CodeProvider getCodeProvider(@NonNull String provider) {
-        if (isCorrectArray(provider) || isCorrectLength(provider))
+        if (!isCorrectArray(provider) || !isCorrectLength(provider))
             return null;
 
         if (mProviders.containsKey(provider)) {
@@ -57,7 +57,7 @@ public class CodeProviderFactory {
     }
 
     protected static boolean isCorrectArray(@NonNull String provider) {
-        return decode(provider).length == 0;
+        return decode(provider).length > 0;
     }
 
     protected static boolean isCorrectLength(@NonNull String provider) {
