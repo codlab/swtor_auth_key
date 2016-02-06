@@ -17,7 +17,7 @@ import retrofit2.Retrofit;
  * Created by kevinleperf on 15/01/16.
  */
 public class ToStringConverterFactory extends Converter.Factory {
-    private static final MediaType MEDIA_TYPE = MediaType.parse("text/plain");
+    private static final MediaType MEDIA_TYPE = MediaType.parse("text/plain; charset=utf-8");
 
     /**
      * Default constructor

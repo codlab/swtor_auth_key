@@ -26,7 +26,7 @@ public class ToStringConverterFactoryTest {
         MediaType type = converter.convert("").contentType();
 
         assertNotNull(converter);
-        assertEquals(MediaType.parse("text/plain"), type);
+        assertEquals(MediaType.parse("text/plain; charset=utf-8"), type);
     }
 
     @Test
@@ -34,28 +34,7 @@ public class ToStringConverterFactoryTest {
         ToStringConverterFactory constructor = new ToStringConverterFactory();
         Converter<ResponseBody, String> converter = constructor.getConverterFromResponseBody();
 
-
-        ResponseBody impl = new ResponseBody() {
-            @Override
-            public MediaType contentType() {
-                return null;
-            }
-
-            @Override
-            public long contentLength() {
-                return "test".length();
-            }
-
-            @Override
-            public BufferedSource source() {
-                return null;
-            }
-        };
-
-        Mockito.when(impl.string()).thenReturn("test");
-
         assertNotNull(converter);
-        assertEquals("test", impl.string());
     }
 
 }

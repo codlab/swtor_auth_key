@@ -12,7 +12,7 @@ import static org.junit.Assert.fail;
 /**
  * Created by kevinleperf on 06/02/16.
  */
-public class TestUtil {
+public final class TestUtil {
 
     public static void assertUtilityClassWellDefined(final Class<?> clazz)
             throws NoSuchMethodException, InvocationTargetException,
