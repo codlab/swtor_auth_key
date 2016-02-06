@@ -29,36 +29,29 @@ public class LoadingActivity extends AbstractKeysActivity implements IAppListene
 
     @Override
     public void onPause() {
-        IAppManager app_manager = getDependencyInjector().getAppManager();
-        app_manager.removeListener(this);
+        IAppManager appManager = getDependencyInjector().getAppManager();
+        appManager.removeListener(this);
 
         super.onPause();
     }
 
     private void checkDependency() {
-        IAppManager app_manager = getDependencyInjector().getAppManager();
+        IAppManager appManager = getDependencyInjector().getAppManager();
 
-        if (app_manager.isInit()) {
-            Log.d("LoadingActivity", "is init");
+        if (appManager.isInit()) {
             IDatabaseProvider database = getDependencyInjector().getDatabaseProvider();
             if (database.hasLoadedDatabaseValues()) {
-                Log.d("LoadingActivity", "has loaded database");
-                if (database.hasValues()) {
-                    Log.d("LoadingActivity", "has values");
-                } else {
-                    Log.d("LoadingActivity", "has no values");
+                if (!database.hasValues()) {
                     TutorialActivity.startAndFinish(this);
                 }
             }
         } else {
-            Log.d("LoadingActivity", "is not init");
-            app_manager.init(this, this);
+            appManager.init(this, this);
         }
     }
 
     @Override
     public void onAppInitialized() {
-        Log.d("LoadingActivity", "on app initialized");
         checkDependency();
     }
 }
