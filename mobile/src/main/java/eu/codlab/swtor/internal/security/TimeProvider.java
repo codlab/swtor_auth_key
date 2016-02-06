@@ -3,7 +3,8 @@ package eu.codlab.swtor.internal.security;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.MainThread;
-import android.util.Log;
+
+import com.wopata.aspectlib.annotations.EnsureUiThread;
 
 import eu.codlab.swtor.internal.injector.DependencyInjectorFactory;
 import eu.codlab.swtor.internal.tutorial.CodeInvalidateEvent;
@@ -17,16 +18,7 @@ public class TimeProvider {
     private Runnable mPostEvent;
 
     public TimeProvider() {
-        mPostEvent = new Runnable() {
-            @Override
-            public void run() {
-                Log.d("TimeProvider", "next in :: " + getNextIterationIn());
-                DependencyInjectorFactory.getDependencyInjector()
-                        .getDefaultEventBus().postSticky(new CodeInvalidateEvent(getNextIterationIn()));
-
-                postNextIteration();
-            }
-        };
+        mPostEvent = createPostNextIterationRunnable();
     }
 
     public long getNextIterationIn() {
@@ -46,10 +38,12 @@ public class TimeProvider {
     }
 
     private void postNextIteration() {
-        if (mHandler != null) mHandler.postDelayed(mPostEvent, getNextIterationIn());
+        if (mHandler != null)
+            mHandler.postDelayed(mPostEvent, getNextIterationIn());
     }
 
     @MainThread
+    @EnsureUiThread
     public void onResume() {
         if (mHandler == null) {
             mHandler = new Handler(Looper.getMainLooper());
@@ -59,11 +53,25 @@ public class TimeProvider {
     }
 
     @MainThread
+    @EnsureUiThread
     public void onPause() {
         if (mHandler != null) {
             mHandler.removeCallbacks(mPostEvent);
 
             mHandler = null;
         }
+    }
+
+    private Runnable createPostNextIterationRunnable() {
+        return new Runnable() {
+            @Override
+            public void run() {
+                DependencyInjectorFactory.getDependencyInjector()
+                        .getDefaultEventBus()
+                        .postSticky(new CodeInvalidateEvent(getNextIterationIn()));
+
+                postNextIteration();
+            }
+        };
     }
 }

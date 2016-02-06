@@ -49,7 +49,8 @@ public class DatabaseProvider implements IDatabaseProvider {
     @NonNull
     public List<Key> getAllKeys() {
         List<Key> tmp = mDatabaseValue;
-        if(tmp == null) tmp = new ArrayList<>();
+        if (null == tmp)
+            tmp = new ArrayList<>();
 
         return tmp;
     }

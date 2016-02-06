@@ -38,30 +38,32 @@ public class TimeSync {
                     .getNetworkTimeWebsevice();
 
             Call<String> result = web.getRoot();
-            result.enqueue(new Callback<String>() {
-                @Override
-                public void onResponse(@NonNull Response<String> response) {
-                    if (response != null) {
-                        Headers headers = response.headers();
-                        if (headers != null) {
-                            String stringDate = headers.get("Date");
-                            Date date = new Date(stringDate);
-                            long diff = date.getTime() - System.currentTimeMillis();
-                            Log.d(TimeSync.class.getSimpleName(), "diff := "+diff);
-                        }
-                    }
-                }
-
-                /**
-                 * Failure called when a network error occured
-                 *
-                 * @param t the error
-                 */
-                @Override
-                public void onFailure(@NonNull Throwable t) {
-
-                }
-            });
+            result.enqueue(getCallback());
         }
+    }
+
+    private Callback<String> getCallback() {
+        return new Callback<String>() {
+            @Override
+            public void onResponse(@NonNull Response<String> response) {
+                Headers headers = response.headers();
+                if (headers != null) {
+                    String stringDate = headers.get("Date");
+                    Date date = new Date(stringDate);
+                    long diff = date.getTime() - System.currentTimeMillis();
+                    Log.d(TimeSync.class.getSimpleName(), "diff := " + diff);
+                }
+            }
+
+            /**
+             * Failure called when a network error occured
+             *
+             * @param t the error
+             */
+            @Override
+            public void onFailure(@NonNull Throwable t) {
+                //NOTHING TO DO HERE FOR NOW
+            }
+        };
     }
 }
