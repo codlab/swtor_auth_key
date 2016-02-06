@@ -22,7 +22,8 @@ public class DependencyInjectorFactoryTest {
     public void testConstructor() {
         Class<DependencyInjectorFactory> clazz = DependencyInjectorFactory.class;
 
-        assertEquals(1, clazz.getConstructors().length);
+        assertEquals(0, clazz.getConstructors().length);
+        assertEquals(1, clazz.getDeclaredConstructors().length);
 
         Constructor<?> constructor = null;
         try {
