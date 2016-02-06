@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 /**
  * Created by kevinleperf on 15/01/16.
  */
-public class DependencyInjectorFactory {
+public final class DependencyInjectorFactory {
     private static final String INJECTOR_NOT_CREATED = "Please ensure calling "
             + DependencyInjectorFactory.class.getSimpleName()
             + ".init(Context, Injector Class) first";
