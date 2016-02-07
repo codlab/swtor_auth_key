@@ -2,6 +2,7 @@ package eu.codlab.swtor.ui.tutorial;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -10,38 +11,20 @@ import com.alexandrepiveteau.library.tutorial.ui.fragments.AbstractTutorialValid
 import com.alexandrepiveteau.library.tutorial.ui.fragments.TutorialFragment;
 
 import eu.codlab.swtor.R;
+import eu.codlab.swtor.utils.Constants;
 
 public class TutorialActivity extends com.alexandrepiveteau.library.tutorial.ui.activities.TutorialActivity {
 
-    private static final int[] background = new int[]{
-            R.color.colorPrimary,
-            R.color.colorPrimary,
-            R.color.colorPrimary,
-            R.color.colorPrimaryDark,
-    };
-
-    private static final int[] title = new int[]{
-            R.string.title_tutorial_hey,
-            R.string.title_tutorial_login,
-            R.string.title_tutorial_add_key
-    };
-
-    private static final int[] description = new int[]{
-            R.string.tutorial_1_description,
-            R.string.tutorial_2_description,
-            R.string.tutorial_2_description,
-    };
-
-    private static final int[] res = new int[]{
-            R.drawable.swtor_tutorial_1,
-            R.drawable.swtor_tutorial_2,
-            R.drawable.swtor_tutorial_3
-    };
-
-    public static void startAndFinish(@NonNull AppCompatActivity parent) {
+    @NonNull
+    public static Intent createIntent(@NonNull AppCompatActivity parent) {
         Intent intent = new Intent(parent, TutorialActivity.class);
 
-        parent.startActivity(intent);
+        return intent;
+    }
+
+    public static void startAndFinish(@NonNull AppCompatActivity parent) {
+        parent.startActivity(createIntent(parent));
+
         parent.finish();
     }
 
@@ -54,8 +37,8 @@ public class TutorialActivity extends com.alexandrepiveteau.library.tutorial.ui.
     }
 
     @Override
-    public String getIgnoreText() {
-        return getString(R.string.skip);
+    public int getIgnoreText() {
+        return R.string.skip;
     }
 
     @Override
@@ -65,17 +48,17 @@ public class TutorialActivity extends com.alexandrepiveteau.library.tutorial.ui.
 
     @Override
     public int getBackgroundColor(int position) {
-        return getResources().getColor(background[position]);
+        return Constants.background[position];
     }
 
     @Override
     public int getNavigationBarColor(int position) {
-        return getResources().getColor(R.color.black);
+        return R.color.black;
     }
 
     @Override
     public int getStatusBarColor(int position) {
-        return getResources().getColor(R.color.colorPrimaryDark);
+        return R.color.colorPrimaryDark;
     }
 
     @Override
@@ -105,12 +88,17 @@ public class TutorialActivity extends com.alexandrepiveteau.library.tutorial.ui.
         return TutorialFragment.getParallaxPageTransformer(1.25f);
     }
 
-    private TutorialFragment createTutorialFragment(int position) {
-        return new TutorialFragment.Builder()
-                .setTitle(getString(title[position]))
-                .setDescription(getString(description[position]))
-                .setImageResource(res[position])
-                .setSkippable(true)
-                .build();
+    @Nullable
+    TutorialFragment createTutorialFragment(int position) {
+        if (position < Constants.title.length) {
+            return new TutorialFragment.Builder()
+                    .setTitle(getString(Constants.title[position]))
+                    .setDescription(getString(Constants.description[position]))
+                    .setImageResource(Constants.res[position])
+                    .setSkippable(true)
+                    .build();
+        } else {
+            return null;
+        }
     }
 }
