@@ -2,6 +2,9 @@ package eu.codlab.swtor.internal.security;
 
 import org.junit.Test;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 import de.greenrobot.event.EventBus;
 import eu.codlab.swtor.internal.injector.DependencyInjectorFactory;
 import eu.codlab.swtor.internal.tutorial.CodeInvalidateEvent;
@@ -93,5 +96,23 @@ public class TimeProviderTest {
         assertNotNull(eventbus.getStickyEvent(CodeInvalidateEvent.class));
 
         assertTrue(provider.postNextIteration());
+    }
+
+    @Test
+    public void testTimeProviderPrivateMethod() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        TimeProvider provider = new TimeProvider();
+        provider.onResume();
+
+        Method method = provider.getClass().getDeclaredMethod("createPostNextIterationRunnable");
+        method.setAccessible(true);
+
+        Runnable runnable = (Runnable) method.invoke(provider);
+        assertNotNull(runnable);
+
+        runnable.run();
+
+        assertNotNull(DependencyInjectorFactory.getDependencyInjector().getDefaultEventBus()
+                .getStickyEvent(CodeInvalidateEvent.class));
+
     }
 }

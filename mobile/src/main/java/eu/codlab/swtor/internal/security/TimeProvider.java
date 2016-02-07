@@ -74,12 +74,8 @@ public class TimeProvider {
         return new Runnable() {
             @Override
             public void run() {
-                internalRunPostedNextIteration();
+                InternalTimeProvider.internalRunPostedNextIteration(TimeProvider.this);
             }
         };
-    }
-
-    private void internalRunPostedNextIteration() {
-        InternalTimeProvider.internalRunPostedNextIteration(this);
     }
 }
