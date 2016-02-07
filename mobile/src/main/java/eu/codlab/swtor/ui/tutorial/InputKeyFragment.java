@@ -88,8 +88,8 @@ public class InputKeyFragment extends AbstractTutorialValidationFragment {
     }
 
     @Override
-    public void onTryValidate() {
-        mInputKeyController.onTryValidate();
+    public boolean onTryValidate() {
+        return mInputKeyController.onTryValidate();
     }
 
     @Subscribe(threadMode = ThreadMode.MainThread, sticky = true)

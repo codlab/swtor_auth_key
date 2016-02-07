@@ -11,6 +11,9 @@ import eu.codlab.swtor.internal.tutorial.non_test.DependencyInjectorImplementati
 
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNull;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -37,5 +40,32 @@ public class InputKeyControllerTestWithCodeProviderNull {
 
         assertNull(generated);
         assertNull(DependencyInjectorFactory.getDependencyInjector().getCodeProvider(code));
+    }
+
+    @Test
+    public void testValidNext(){
+        InputKeyController controller = new InputKeyController();
+
+        String code = "";
+        controller.setContent(code);
+
+        assertNotNull(controller.getContent());
+        assertEquals(controller.getContent(), code);
+
+        boolean valid = controller.isValid();
+
+        assertFalse(valid);
+        assertNull(controller.generateCode());
+    }
+
+    @Test
+    public void testValidImproperContentLength(){
+        InputKeyController controller = new InputKeyController();
+
+        String content = "";
+        boolean valid = controller.isValid();
+
+        assertNotEquals(16, content.length());
+        assertFalse(valid);
     }
 }

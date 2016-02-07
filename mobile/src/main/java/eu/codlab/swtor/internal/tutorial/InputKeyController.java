@@ -48,7 +48,7 @@ public class InputKeyController implements ITutorialValidationFragment {
     }
 
     @Override
-    public void onTryValidate() {
-        //nothing to do, it is let to the UI
+    public boolean onTryValidate() {
+        return false;
     }
 }

@@ -75,7 +75,7 @@ dependencies {
 
     compile 'com.android.support:design:23.1.1'
     compile 'me.zhanghai.android.materialprogressbar:library:1.1.4'
-    compile 'com.github.codlab:MaterialTutorial:1.4.3'
+    compile 'com.github.codlab:MaterialTutorial:1.4.4'
 
     compile 'com.github.Raizlabs.DBFlow:dbflow-core:3.0.0-beta1'
     compile 'com.github.Raizlabs.DBFlow:dbflow:3.0.0-beta1'

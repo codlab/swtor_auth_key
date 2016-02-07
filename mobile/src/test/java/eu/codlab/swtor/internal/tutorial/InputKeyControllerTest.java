@@ -49,4 +49,11 @@ public class InputKeyControllerTest {
 
         assertTrue(controller.isValid());
     }
+
+    @Test
+    public void testOnTryValidate() {
+        InputKeyController controller = new InputKeyController();
+
+        assertFalse(controller.onTryValidate());
+    }
 }
