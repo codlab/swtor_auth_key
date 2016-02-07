@@ -6,9 +6,6 @@ import android.support.annotation.MainThread;
 
 import com.wopata.aspectlib.annotations.EnsureUiThread;
 
-import eu.codlab.swtor.internal.injector.DependencyInjectorFactory;
-import eu.codlab.swtor.internal.tutorial.CodeInvalidateEvent;
-
 /**
  * Created by kevinleperf on 03/02/16.
  */
@@ -65,11 +62,11 @@ public class TimeProvider {
         }
     }
 
-    public boolean isResumed(){
+    public boolean isResumed() {
         return mHandler != null;
     }
 
-    public boolean isPaused(){
+    public boolean isPaused() {
         return !isResumed();
     }
 
@@ -77,12 +74,12 @@ public class TimeProvider {
         return new Runnable() {
             @Override
             public void run() {
-                DependencyInjectorFactory.getDependencyInjector()
-                        .getDefaultEventBus()
-                        .postSticky(new CodeInvalidateEvent(getNextIterationIn()));
-
-                postNextIteration();
+                internalRunPostedNextIteration();
             }
         };
+    }
+
+    private void internalRunPostedNextIteration() {
+        InternalTimeProvider.internalRunPostedNextIteration(this);
     }
 }

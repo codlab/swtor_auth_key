@@ -2,11 +2,13 @@ package eu.codlab.swtor.internal.security;
 
 import org.junit.Test;
 
+import de.greenrobot.event.EventBus;
 import eu.codlab.swtor.internal.injector.DependencyInjectorFactory;
 import eu.codlab.swtor.internal.tutorial.CodeInvalidateEvent;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -40,7 +42,7 @@ public class TimeProviderTest {
     }
 
     @Test
-    public void testGetNextIterationIn(){
+    public void testGetNextIterationIn() {
         TimeProvider provider = new TimeProvider();
         long nextIteration = provider.getNextIteration() - System.currentTimeMillis();
 
@@ -57,21 +59,38 @@ public class TimeProviderTest {
     }
 
     @Test
-    public void testGetCurrentInterval(){
+    public void testGetCurrentInterval() {
         TimeProvider provider = new TimeProvider();
 
-        long currentInterval = System.currentTimeMillis()/SecurityConstants.INTERVAL;
+        long currentInterval = System.currentTimeMillis() / SecurityConstants.INTERVAL;
 
         assertEquals(currentInterval, provider.getCurrentInterval());
     }
 
     @Test
-    public void testPostNextIteration(){
+    public void testPostNextIteration() {
         TimeProvider provider = new TimeProvider();
 
         assertFalse(provider.postNextIteration());
 
         provider.onResume();
+
+        assertTrue(provider.postNextIteration());
+    }
+
+    @Test
+    public void testInternalPostRunnable() {
+        TimeProvider provider = new TimeProvider();
+        provider.onResume();
+
+        EventBus eventbus = DependencyInjectorFactory.getDependencyInjector()
+                .getDefaultEventBus();
+
+        assertNotNull(eventbus);
+
+        eventbus.postSticky(new CodeInvalidateEvent(provider.getNextIterationIn()));
+
+        assertNotNull(eventbus.getStickyEvent(CodeInvalidateEvent.class));
 
         assertTrue(provider.postNextIteration());
     }
