@@ -37,9 +37,12 @@ public class TimeProvider {
         return System.currentTimeMillis() / SecurityConstants.INTERVAL;
     }
 
-    private void postNextIteration() {
-        if (mHandler != null)
+    protected boolean postNextIteration() {
+        if (isResumed()) {
             mHandler.postDelayed(mPostEvent, getNextIterationIn());
+            return true;
+        }
+        return false;
     }
 
     @MainThread
@@ -60,6 +63,14 @@ public class TimeProvider {
 
             mHandler = null;
         }
+    }
+
+    public boolean isResumed(){
+        return mHandler != null;
+    }
+
+    public boolean isPaused(){
+        return !isResumed();
     }
 
     private Runnable createPostNextIterationRunnable() {

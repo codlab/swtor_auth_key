@@ -17,9 +17,7 @@ public class TutorialActivity extends com.alexandrepiveteau.library.tutorial.ui.
 
     @NonNull
     public static Intent createIntent(@NonNull AppCompatActivity parent) {
-        Intent intent = new Intent(parent, TutorialActivity.class);
-
-        return intent;
+        return new Intent(parent, TutorialActivity.class);
     }
 
     public static void startAndFinish(@NonNull AppCompatActivity parent) {

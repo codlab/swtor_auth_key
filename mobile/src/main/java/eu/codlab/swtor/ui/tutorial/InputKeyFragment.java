@@ -58,7 +58,6 @@ public class InputKeyFragment extends AbstractTutorialValidationFragment {
     public void onResume() {
         super.onResume();
 
-
         mDepdencyInjector.getDefaultEventBus()
                 .register(this);
 
@@ -90,11 +89,7 @@ public class InputKeyFragment extends AbstractTutorialValidationFragment {
 
     @Override
     public void onTryValidate() {
-
-        Log.d(InputKeyFragment.class.getSimpleName(), "onTryValidate ");
-
         mInputKeyController.onTryValidate();
-
     }
 
     @Subscribe(threadMode = ThreadMode.MainThread, sticky = true)
