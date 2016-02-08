@@ -22,4 +22,29 @@ public class Key extends BaseModel {
 
     @Column(name = "secret")
     String mSecret;
+
+    public void setId(long id) {
+        mId = id;
+    }
+
+    public long getId() {
+        return mId;
+    }
+
+    public void setName(String name) {
+        mName = name;
+    }
+
+    public String getName() {
+        return mName;
+    }
+
+    public void setSecret(String secret) {
+        mSecret = secret;
+    }
+
+    public String getSecret() {
+        return mSecret;
+    }
+
 }

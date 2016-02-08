@@ -7,11 +7,14 @@ import android.util.Log;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import com.raizlabs.android.dbflow.config.FlowManager;
-import com.wopata.aspectlib.annotations.EnsureAsync;
+import com.wopata.aspectlib.annotations.EnsureUiThread;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
+import de.greenrobot.event.Subscribe;
+import de.greenrobot.event.ThreadMode;
 import eu.codlab.swtor.BuildConfig;
 import eu.codlab.swtor.internal.app.listeners.IAppListener;
 import eu.codlab.swtor.internal.injector.DependencyInjectorFactory;
@@ -43,7 +46,9 @@ public class AppManager extends LockableObject implements IAppManager {
         if (!isInit() && !mLoading) {
             mLoading = true;
 
-            internalInitInThread(context);
+            EventBus.getDefault().register(this);
+
+            EventBus.getDefault().post(new EventLoad(context));
         }
     }
 
@@ -56,8 +61,8 @@ public class AppManager extends LockableObject implements IAppManager {
     public void removeListener(@NonNull IAppListener listener) {
         lock();
 
-        if (!mAppListeners.contains(listener)) {
-            mAppListeners.add(listener);
+        if (mAppListeners.contains(listener)) {
+            mAppListeners.remove(listener);
         }
 
         unlock();
@@ -65,25 +70,10 @@ public class AppManager extends LockableObject implements IAppManager {
 
     @Override
     public boolean hasListeners() {
-        return mAppListeners.size() > 0;
+        return !mAppListeners.isEmpty();
     }
 
-    @EnsureAsync
-    private void internalInitInThread(@NonNull Context context) {
-        Fabric.with(context, new Crashlytics(), new Answers());
-        FlowManager.init(context);
-
-        DependencyInjectorFactory
-                .getDependencyInjector()
-                .getDatabaseProvider()
-                .loadDatabaseIntoMemory();
-
-        mInit = true;
-
-        warnListeners();
-    }
-
-    private void appendListener(@NonNull IAppListener listener) {
+    public void appendListener(@NonNull IAppListener listener) {
         lock();
 
         if (!mAppListeners.contains(listener)) {
@@ -93,6 +83,7 @@ public class AppManager extends LockableObject implements IAppManager {
         unlock();
     }
 
+    @EnsureUiThread
     private void warnListeners() {
         lock();
         List<IAppListener> listeners = new ArrayList<>();
@@ -116,5 +107,39 @@ public class AppManager extends LockableObject implements IAppManager {
         unlock();
 
         listeners.clear();
+    }
+
+    @Subscribe(threadMode = ThreadMode.Async)
+    public void onEvent(EventLoad event) {
+        Context context = event.getContext();
+
+        try {
+            Fabric.with(context, new Crashlytics(), new Answers());
+            FlowManager.init(context);
+
+            DependencyInjectorFactory
+                    .getDependencyInjector()
+                    .getDatabaseProvider()
+                    .loadDatabaseIntoMemory();
+
+        } catch (Exception e) {
+        }
+
+        EventBus.getDefault().unregister(this);
+
+        warnListeners();
+        mInit = true;
+    }
+
+    public static class EventLoad {
+        private Context mContext;
+
+        public EventLoad(Context context) {
+            mContext = context;
+        }
+
+        public Context getContext() {
+            return mContext;
+        }
     }
 }

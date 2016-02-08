@@ -6,6 +6,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
+import eu.codlab.swtor.internal.network.TimeSync;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
@@ -71,6 +73,36 @@ public final class TestUtil {
     }
 
     private TestUtil() {
+
+    }
+
+    public static void assertSingletonClassWellDefined(Class<TimeSync> clazz)
+            throws NoSuchMethodException, InvocationTargetException,
+            InstantiationException, IllegalAccessException {
+        assertTrue("class must be final",
+                Modifier.isFinal(clazz.getModifiers()));
+        assertEquals("There must be only one constructor", 1,
+                clazz.getDeclaredConstructors().length);
+        final Constructor<?> constructor = clazz.getDeclaredConstructor();
+        if (constructor.isAccessible() ||
+                !Modifier.isPrivate(constructor.getModifiers())) {
+            fail("constructor is not private");
+        }
+        constructor.setAccessible(true);
+        constructor.newInstance();
+        constructor.setAccessible(false);
+
+        boolean hasStatic = false;
+        for (final Method method : clazz.getMethods()) {
+            if (!Modifier.isStatic(method.getModifiers())
+                    && method.getDeclaringClass().equals(clazz)) {
+                hasStatic = true;
+            }
+        }
+
+        if (!hasStatic) {
+            fail("there does not exist static method in a singleton class");
+        }
 
     }
 }

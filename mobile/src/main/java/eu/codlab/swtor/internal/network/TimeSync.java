@@ -1,11 +1,10 @@
 package eu.codlab.swtor.internal.network;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import java.util.Date;
 
+import eu.codlab.swtor.BuildConfig;
 import eu.codlab.swtor.internal.injector.DependencyInjectorFactory;
 import okhttp3.Headers;
 import retrofit2.Call;
@@ -15,31 +14,41 @@ import retrofit2.Response;
 /**
  * Created by kevinleperf on 15/01/16.
  */
-public class TimeSync {
+public final class TimeSync {
     private static TimeSync sInstance = new TimeSync();
-    private Context mContext;
+    private IWeb mIWeb;
+
+    private TimeSync() {
+        //PREVENT CONSTRUCTION OUTSIDE OF THE PACKAGE
+    }
 
     public static TimeSync getInstance() {
         return sInstance;
     }
 
-
-    public void init(Context context) {
-        mContext = context;
+    public void init() {
+        mIWeb = DependencyInjectorFactory.getDependencyInjector()
+                .getNetworkTimeWebsevice();
     }
 
     public void deinit() {
-        mContext = null;
+        mIWeb = null;
     }
 
-    public void sync() {
-        if (mContext != null) {
-            IWeb web = DependencyInjectorFactory.getDependencyInjector()
-                    .getNetworkTimeWebsevice();
+    public boolean sync() {
+        if (isInit()) {
 
-            Call<String> result = web.getRoot();
+            Call<String> result = mIWeb.getRoot();
             result.enqueue(getCallback());
+
+            return true;
         }
+
+        return false;
+    }
+
+    public boolean isInit() {
+        return mIWeb != null;
     }
 
     private Callback<String> getCallback() {
@@ -50,8 +59,9 @@ public class TimeSync {
                 if (headers != null) {
                     String stringDate = headers.get("Date");
                     Date date = new Date(stringDate);
-                    long diff = date.getTime() - System.currentTimeMillis();
-                    Log.d(TimeSync.class.getSimpleName(), "diff := " + diff);
+                    long diff = Math.abs(date.getTime() - System.currentTimeMillis());
+                    if (BuildConfig.DEBUG)
+                        assert diff > 0;
                 }
             }
 

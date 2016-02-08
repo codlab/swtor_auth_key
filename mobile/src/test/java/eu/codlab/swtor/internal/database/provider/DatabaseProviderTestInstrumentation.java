@@ -19,19 +19,29 @@ public class DatabaseProviderTestInstrumentation extends ActivityUnitTestCase {/
 
     public DatabaseProviderTestInstrumentation() {
         super(LoadingActivity.class);
+
+        System.out.println("constructor");
     }
 
     @Override
     protected void setUp() throws Exception {
-        super.setUp();
+        System.out.println("setUp");
+
+        try {
+            super.setUp();
+        }catch(Exception exception){
+            exception.printStackTrace();
+        }
     }
 
     private void init() {
+        System.out.println("init");
         FlowManager.init(getActivity());
     }
 
     @Test
     public void testLoadDatabaseIntoMemory() {
+        System.out.println("entering testLoadDatabaseIntoMemory");
         init();
         DatabaseProvider provider = new DatabaseProvider();
 

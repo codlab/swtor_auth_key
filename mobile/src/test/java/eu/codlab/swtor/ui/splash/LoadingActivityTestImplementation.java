@@ -1,51 +1,50 @@
 package eu.codlab.swtor.ui.splash;
 
-import android.test.ActivityUnitTestCase;
-
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.Robolectric;
+import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.annotation.Config;
 
 import java.lang.reflect.InvocationTargetException;
 
+import eu.codlab.swtor.BuildConfig;
 import eu.codlab.swtor.internal.injector.DependencyInjectorFactory;
 import eu.codlab.swtor.internal.injector.DependencyStandardInjector;
 import eu.codlab.swtor.internal.injector.interfaces.IAppManager;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 /**
  * Created by kevinleperf on 08/02/16.
  */
-public class LoadingActivityTestImplementation extends ActivityUnitTestCase {
+@RunWith(RobolectricGradleTestRunner.class)
+@Config(sdk = 21, constants = BuildConfig.class)
+public class LoadingActivityTestImplementation {
 
-    public LoadingActivityTestImplementation() {
-        this(LoadingActivity.class);
-    }
 
-    public LoadingActivityTestImplementation(Class<LoadingActivity> activityClass) {
-        super(activityClass);
-    }
+    private LoadingActivity mActivity;
 
-    @Override
+    @Before
     public void setUp() throws Exception {
-        super.setUp();
+        mActivity = Robolectric.setupActivity(LoadingActivity.class);
 
-        DependencyInjectorFactory.init(getActivity(), new DependencyStandardInjector());
+        DependencyInjectorFactory.init(mActivity, new DependencyStandardInjector());
     }
 
     @Test
-    public void testOnCreate(){
-        LoadingActivity activity = (LoadingActivity) getActivity();
-
-        assertNull(activity.getDependencyInjector());
-
-        activity.onCreate(null);
-
-        assertNotNull(activity.getDependencyInjector());
+    public void testOnCreate() {
+        assertNotNull(mActivity.getDependencyInjector());
     }
 
     @Test
     public void testCheckDependencyAppManagerNotInit() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        LoadingActivity activity = (LoadingActivity) getActivity();
 
-        IAppManager appManager = activity.getDependencyInjector().getAppManager();
+        IAppManager appManager = mActivity.getDependencyInjector().getAppManager();
 
         //set checkDependency as invokable
 
@@ -54,7 +53,13 @@ public class LoadingActivityTestImplementation extends ActivityUnitTestCase {
 
         assertFalse(appManager.isInit());
 
-        activity.checkDependency();
+        mActivity.checkDependency();
+
+        long time = System.currentTimeMillis();
+        long timeout = time + 5000;
+        while(time < timeout && !appManager.isInit()    ){
+            time = System.currentTimeMillis();
+        }
 
         //test that after checkDependecy(), the app manager is then init
         assertTrue(appManager.isInit());

@@ -20,9 +20,9 @@ public class ConstantsTest {
 
     @Test
     public void testArrays() {
-        assertNotNull(Constants.background);
-        assertNotNull(Constants.description);
-        assertNotNull(Constants.title);
-        assertNotNull(Constants.res);
+        assertNotNull(Constants.BACKGROUND);
+        assertNotNull(Constants.DESCRIPTION);
+        assertNotNull(Constants.TITLE);
+        assertNotNull(Constants.RES);
     }
 }

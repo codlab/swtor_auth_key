@@ -57,6 +57,7 @@ dependencies {
     wearApp project(':wear')
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:2.0.0-beta'
+    testCompile "org.robolectric:robolectric:3.0"
 
     apt 'com.github.Raizlabs.DBFlow:dbflow-processor:3.0.0-beta1'
 

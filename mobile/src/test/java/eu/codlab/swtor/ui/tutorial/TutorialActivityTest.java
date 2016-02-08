@@ -32,12 +32,12 @@ public class TutorialActivityTest {
     public void testcreateTutorialFragment() {
         TutorialActivity activity = new TutorialActivity();
 
-        for (int i = 0; i < Constants.title.length; i++) {
+        for (int i = 0; i < Constants.TITLE.length; i++) {
             TutorialFragment fragment = activity.createTutorialFragment(i);
             System.out.println("having " + i + " " + fragment);
             assertNotNull(fragment);
         }
-        assertNull(activity.createTutorialFragment(Constants.title.length));
+        assertNull(activity.createTutorialFragment(Constants.TITLE.length));
     }
 
     @Test
@@ -46,7 +46,7 @@ public class TutorialActivityTest {
 
         AbstractTutorialValidationFragment fragment = null;
 
-        for (int i = 0; i < 3 && i < Constants.title.length; i++) {
+        for (int i = 0; i < 3 && i < Constants.TITLE.length; i++) {
             fragment = activity.getTutorialFragmentFor(i);
             System.out.println("having " + i + " " + fragment);
             assertTrue(fragment instanceof TutorialFragment);
@@ -69,8 +69,8 @@ public class TutorialActivityTest {
     public void testGetBackgroundColor() {
         TutorialActivity activity = new TutorialActivity();
 
-        for (int i = 0; i < Constants.background.length; i++) {
-            assertEquals(Constants.background[i], activity.getBackgroundColor(i));
+        for (int i = 0; i < Constants.BACKGROUND.length; i++) {
+            assertEquals(Constants.BACKGROUND[i], activity.getBackgroundColor(i));
         }
     }
 

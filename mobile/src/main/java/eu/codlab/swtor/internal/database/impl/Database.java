@@ -7,7 +7,7 @@ package eu.codlab.swtor.internal.database.impl;
         name = Database.NAME,
         version = Database.VERSION
 )
-public class Database {
+public final class Database {
     public static final String NAME = "keys";
     public static final int VERSION = 1;
 

@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 
 import com.alexandrepiveteau.library.tutorial.ui.fragments.AbstractTutorialValidationFragment;
 import com.alexandrepiveteau.library.tutorial.ui.fragments.TutorialFragment;
@@ -38,7 +37,7 @@ public class TutorialActivity extends com.alexandrepiveteau.library.tutorial.ui.
 
     @Override
     public int getBackgroundColor(int position) {
-        return Constants.background[position];
+        return Constants.BACKGROUND[position];
     }
 
     @Override
@@ -80,11 +79,11 @@ public class TutorialActivity extends com.alexandrepiveteau.library.tutorial.ui.
 
     @Nullable
     TutorialFragment createTutorialFragment(int position) {
-        if (position < Constants.title.length) {
+        if (position < Constants.TITLE.length) {
             return new TutorialFragment.Builder()
-                    .setTitle(getString(Constants.title[position]))
-                    .setDescription(getString(Constants.description[position]))
-                    .setImageResource(Constants.res[position])
+                    .setTitle(getString(Constants.TITLE[position]))
+                    .setDescription(getString(Constants.DESCRIPTION[position]))
+                    .setImageResource(Constants.RES[position])
                     .setSkippable(true)
                     .build();
         } else {
