@@ -13,7 +13,7 @@ import eu.codlab.swtor.BuildConfig;
 /**
  * Created by kevinleperf on 15/01/16.
  */
-public class CodeProviderFactory {
+public final class CodeProviderFactory {
     private static final int LENGTH_TOTAL = 16;
 
     private static final HashMap<String, CodeProvider> mProviders = new HashMap<>();
@@ -47,13 +47,8 @@ public class CodeProviderFactory {
             mProviders.put(provider, prov);
             return prov;
         } catch (Exception exception) {
-            if (BuildConfig.DEBUG) {
-                Log.e(CodeProviderFactory.class.getSimpleName(),
-                        "Error with CodeProvider ", exception);
-            }
+            return null;
         }
-
-        return null;
     }
 
     protected static boolean isCorrectArray(@NonNull String provider) {
@@ -69,12 +64,7 @@ public class CodeProviderFactory {
         try {
             return Base32String.decode(provider);
         } catch (Base32String.DecodingException exception) {
-            if (BuildConfig.DEBUG) {
-                Log.e(CodeProviderFactory.class.getSimpleName(),
-                        "exception",
-                        exception);
-            }
+            return new byte[]{};
         }
-        return new byte[]{};
     }
 }

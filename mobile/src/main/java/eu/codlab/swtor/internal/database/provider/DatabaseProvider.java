@@ -25,25 +25,26 @@ public class DatabaseProvider implements IDatabaseProvider {
         mDatabaseValue = null;
     }
 
-    public void loadDatabaseIntoMemory() {
+    public boolean loadDatabaseIntoMemory() {
         if (!hasLoadedDatabaseValues()) {
-            reloadDatabaseInMemory();
+            return reloadDatabaseInMemory();
         }
+        return true;
     }
 
-    public void reloadDatabaseInMemory() {
+    public boolean reloadDatabaseInMemory() {
         mDatabaseValue = new Select()
                 .from(Key.class)
                 .queryList();
+        return true;
     }
 
     public boolean hasLoadedDatabaseValues() {
-        List<Key> list = mDatabaseValue;
-        return list != null;
+        return mDatabaseValue != null;
     }
 
     public boolean hasValues() {
-        return mDatabaseValue != null && !mDatabaseValue.isEmpty();
+        return !getAllKeys().isEmpty();
     }
 
     @NonNull

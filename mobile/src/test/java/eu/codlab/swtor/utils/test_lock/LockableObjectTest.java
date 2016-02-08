@@ -61,7 +61,7 @@ public class LockableObjectTest {
     private void retainLoop(String tag, @NonNull LockableObject locker, @NonNull LockableMaintainer maintainer,
                             int timeout) {
         Object to_retain = new Object();
-        for (int i = 0; i < 500; i++) {
+        for (int i = 0; i < 100; i++) {
             boolean ok = true;
 
             try {

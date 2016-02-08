@@ -2,6 +2,10 @@ package eu.codlab.swtor.internal.security;
 
 import org.junit.Test;
 
+import java.lang.reflect.InvocationTargetException;
+
+import eu.codlab.swtor.TestUtil;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
@@ -13,6 +17,11 @@ import static org.junit.Assert.assertTrue;
  * Created by kevinleperf on 06/02/16.
  */
 public class CodeProviderFactoryTest {
+
+    @Test
+    public void testConstructor() throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+        TestUtil.assertUtilityClassWellDefined(CodeProviderFactory.class);
+    }
 
     @Test
     public void testGetCodeProviderImproperLength() {

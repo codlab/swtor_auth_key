@@ -27,14 +27,6 @@ public class TutorialActivity extends com.alexandrepiveteau.library.tutorial.ui.
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-
-        findViewById(com.alexandrepiveteau.library.tutorial.R.id.tutorial_button_image_left)
-                .setVisibility(View.GONE);
-    }
-
-    @Override
     public int getIgnoreText() {
         return R.string.skip;
     }

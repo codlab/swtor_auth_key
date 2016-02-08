@@ -1,44 +1,25 @@
 package eu.codlab.swtor.ui.tutorial;
 
-import android.app.Activity;
-import android.app.Instrumentation;
 import android.content.Intent;
-import android.provider.Browser;
-import android.test.InstrumentationTestCase;
 
 import com.alexandrepiveteau.library.tutorial.ui.fragments.AbstractTutorialValidationFragment;
 import com.alexandrepiveteau.library.tutorial.ui.fragments.TutorialFragment;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import eu.codlab.swtor.R;
 import eu.codlab.swtor.utils.Constants;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 /**
  * Created by kevinleperf on 06/02/16.
  */
-public class TutorialActivityTest extends InstrumentationTestCase {
-    private Instrumentation.ActivityMonitor mBrowserActivityMonitor;
-
-    @Before
-    public void init() {
-
-        mBrowserActivityMonitor = new Instrumentation.ActivityMonitor(Browser.class.getName(), null, false);
-        getInstrumentation().addMonitor(mBrowserActivityMonitor);
-    }
-
-    @Test
-    public void testStartActivity() {
-        TutorialActivity activity = new TutorialActivity();
-
-        TutorialActivity.startAndFinish(activity);
-
-        Activity newActivity = mBrowserActivityMonitor.waitForActivityWithTimeout(5 * 1000);
-        assertNotNull("Activity was not started", newActivity);
-        assertTrue(newActivity instanceof TutorialActivity);
-        assertTrue(activity.isFinishing());
-    }
+public class TutorialActivityTest {
 
     @Test
     public void testGetCount() throws NoSuchFieldException {

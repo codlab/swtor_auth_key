@@ -6,11 +6,19 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 import eu.codlab.swtor.TestUtil;
+import eu.codlab.swtor.internal.network.IWeb;
+import eu.codlab.swtor.internal.network.NetworkConstants;
+import eu.codlab.swtor.internal.network.ToStringConverterFactory;
+import retrofit2.Converter;
+import retrofit2.Retrofit;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -58,5 +66,41 @@ public class DependencyInjectorFactoryTest {
 
         assertTrue(ok);
         assertEquals(injector, injector2);
+    }
+
+    @Test
+    public void testgetNetworkTimeInjector() {
+        DependencyStandardInjector injector = new DependencyStandardInjector();
+        Context context = Mockito.mock(Context.class);
+        injector.init(context);
+
+        Retrofit retrofit = injector.getRetrofit();
+        assertNotNull(retrofit);
+        assertEquals(NetworkConstants.SWTOR, retrofit.baseUrl().url().url().toString());
+
+        List<Converter.Factory> converters = retrofit.converterFactories();
+        assertNotNull(converters);
+        assertNotEquals(0, converters.size());
+
+        boolean found = false;
+        for(Converter.Factory factory : converters){
+            if(factory instanceof ToStringConverterFactory)
+                found = true;
+        }
+
+        assertTrue(found);
+    }
+
+    @Test
+    public void testIWeb(){
+        DependencyStandardInjector injector = new DependencyStandardInjector();
+        Context context = Mockito.mock(Context.class);
+        injector.init(context);
+
+        IWeb iweb = injector.getNetworkTimeWebsevice();
+
+        assertNotNull(iweb);
+
+        assertNotNull(iweb.getRoot());
     }
 }

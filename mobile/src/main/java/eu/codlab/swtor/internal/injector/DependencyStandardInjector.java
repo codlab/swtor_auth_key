@@ -28,6 +28,8 @@ public class DependencyStandardInjector implements DependencyInjector {
     private DatabaseProvider mDatabaseProvider;
     private AppManager mAppManager;
     private TimeProvider mTimeProvider;
+    private Retrofit mRetrofit;
+    private IWeb mIWeb;
 
     public DependencyStandardInjector() {
         super();
@@ -39,17 +41,24 @@ public class DependencyStandardInjector implements DependencyInjector {
         mDatabaseProvider = new DatabaseProvider();
         mAppManager = new AppManager();
         mTimeProvider = new TimeProvider();
+
+        mRetrofit = new Retrofit.Builder()
+                .baseUrl(NetworkConstants.SWTOR)
+                .addConverterFactory(new ToStringConverterFactory())
+                .build();
+
+        mIWeb = mRetrofit.create(IWeb.class);
+
+    }
+
+    Retrofit getRetrofit(){
+        return mRetrofit;
     }
 
     @Override
     @NonNull
     public IWeb getNetworkTimeWebsevice() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(NetworkConstants.SWTOR)
-                .addConverterFactory(new ToStringConverterFactory())
-                .build();
-
-        return retrofit.create(IWeb.class);
+        return mIWeb;
     }
 
     @Override

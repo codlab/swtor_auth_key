@@ -11,9 +11,9 @@ import eu.codlab.swtor.internal.database.impl.Key;
  */
 public interface IDatabaseProvider {
 
-    void loadDatabaseIntoMemory();
+    boolean loadDatabaseIntoMemory();
 
-    void reloadDatabaseInMemory();
+    boolean reloadDatabaseInMemory();
 
     boolean hasLoadedDatabaseValues();
 
