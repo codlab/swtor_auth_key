@@ -1,11 +1,10 @@
 package eu.codlab.swtor.ui.splash;
 
-import android.test.ActivityInstrumentationTestCase2;
+import android.test.ActivityUnitTestCase;
 
 import org.junit.Test;
 
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 import eu.codlab.swtor.internal.injector.DependencyInjectorFactory;
 import eu.codlab.swtor.internal.injector.DependencyStandardInjector;
@@ -14,9 +13,9 @@ import eu.codlab.swtor.internal.injector.interfaces.IAppManager;
 /**
  * Created by kevinleperf on 08/02/16.
  */
-public class LoadingActivityTestImplementation extends ActivityInstrumentationTestCase2<LoadingActivity> {
+public class LoadingActivityTestImplementation extends ActivityUnitTestCase {
 
-    public LoadingActivityTestImplementation(){
+    public LoadingActivityTestImplementation() {
         this(LoadingActivity.class);
     }
 
@@ -32,21 +31,30 @@ public class LoadingActivityTestImplementation extends ActivityInstrumentationTe
     }
 
     @Test
+    public void testOnCreate(){
+        LoadingActivity activity = (LoadingActivity) getActivity();
+
+        assertNull(activity.getDependencyInjector());
+
+        activity.onCreate(null);
+
+        assertNotNull(activity.getDependencyInjector());
+    }
+
+    @Test
     public void testCheckDependencyAppManagerNotInit() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        IAppManager appManager = getActivity().getDependencyInjector().getAppManager();
+        LoadingActivity activity = (LoadingActivity) getActivity();
+
+        IAppManager appManager = activity.getDependencyInjector().getAppManager();
 
         //set checkDependency as invokable
-        Method checkDependency = getActivity().getClass().getDeclaredMethod("checkDependecy");
-        checkDependency.setAccessible(true);
 
 
         assertNotNull(appManager);
 
         assertFalse(appManager.isInit());
 
-        assertNotNull(checkDependency);
-
-        checkDependency.invoke(getActivity());
+        activity.checkDependency();
 
         //test that after checkDependecy(), the app manager is then init
         assertTrue(appManager.isInit());

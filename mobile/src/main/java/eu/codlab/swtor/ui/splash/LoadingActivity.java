@@ -34,7 +34,7 @@ public class LoadingActivity extends AbstractKeysActivity implements IAppListene
         super.onPause();
     }
 
-    private void checkDependency() {
+    protected void checkDependency() {
         IAppManager appManager = getDependencyInjector().getAppManager();
 
         if (appManager.isInit()) {
