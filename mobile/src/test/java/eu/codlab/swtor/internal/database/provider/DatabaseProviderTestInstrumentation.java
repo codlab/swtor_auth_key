@@ -6,10 +6,8 @@ import com.raizlabs.android.dbflow.config.FlowManager;
 
 import org.junit.Test;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-import eu.codlab.swtor.TestUtil;
 import eu.codlab.swtor.ui.splash.LoadingActivity;
 
 import static org.junit.Assert.assertNotEquals;
@@ -37,8 +35,11 @@ public class DatabaseProviderTestInstrumentation extends ActivityUnitTestCase {/
         init();
         DatabaseProvider provider = new DatabaseProvider();
 
+        assertFalse(provider.hasLoadedDatabaseValues());
         assertTrue(provider.loadDatabaseIntoMemory());
-        assertFalse(provider.loadDatabaseIntoMemory());
+
+        assertTrue(provider.hasLoadedDatabaseValues());
+        assertTrue(provider.loadDatabaseIntoMemory());
 
     }
 

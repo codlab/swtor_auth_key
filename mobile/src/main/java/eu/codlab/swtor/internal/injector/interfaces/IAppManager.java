@@ -15,4 +15,6 @@ public interface IAppManager {
     boolean isInit();
 
     void removeListener(IAppListener listener);
+
+    boolean hasListeners();
 }

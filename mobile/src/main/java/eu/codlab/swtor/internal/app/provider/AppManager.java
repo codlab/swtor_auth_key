@@ -63,6 +63,11 @@ public class AppManager extends LockableObject implements IAppManager {
         unlock();
     }
 
+    @Override
+    public boolean hasListeners() {
+        return mAppListeners.size() > 0;
+    }
+
     @EnsureAsync
     private void internalInitInThread(@NonNull Context context) {
         Fabric.with(context, new Crashlytics(), new Answers());

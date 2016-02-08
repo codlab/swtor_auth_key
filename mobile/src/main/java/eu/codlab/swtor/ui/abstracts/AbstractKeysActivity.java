@@ -20,7 +20,7 @@ public abstract class AbstractKeysActivity extends AppCompatActivity {
         mDependencyInjector = DependencyInjectorFactory.getDependencyInjector();
     }
 
-    protected DependencyInjector getDependencyInjector() {
+    public DependencyInjector getDependencyInjector() {
         return mDependencyInjector;
     }
 
