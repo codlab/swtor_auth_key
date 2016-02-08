@@ -44,7 +44,7 @@ public class DatabaseProvider implements IDatabaseProvider {
     }
 
     public boolean hasValues() {
-        return !getAllKeys().isEmpty();
+        return hasLoadedDatabaseValues() && !mDatabaseValue.isEmpty();
     }
 
     @NonNull
