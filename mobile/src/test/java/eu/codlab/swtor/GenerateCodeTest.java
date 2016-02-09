@@ -5,7 +5,6 @@ import org.junit.Test;
 import eu.codlab.swtor.internal.security.CodeProvider;
 import eu.codlab.swtor.internal.security.CodeProviderFactory;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -14,7 +13,7 @@ import static org.junit.Assert.assertNull;
  * To work on unit tests, switch the Test Artifact in the Build Variants view.
  */
 public class GenerateCodeTest {
-    private final static String CODE_OK = "RULAB3CHR3KDHFC3";
+    public final static String CODE_OK = "RULAB3CHR3KDHFC3";
     private final static String CODE_ERROR = "RULAB3CHR3KDHFC";
 
     @Test

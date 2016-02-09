@@ -43,7 +43,6 @@ public class TimeProvider {
     }
 
     @MainThread
-    @EnsureUiThread
     public void onResume() {
         if (mHandler == null) {
             mHandler = new Handler(Looper.getMainLooper());
@@ -53,7 +52,6 @@ public class TimeProvider {
     }
 
     @MainThread
-    @EnsureUiThread
     public void onPause() {
         if (mHandler != null) {
             mHandler.removeCallbacks(mPostEvent);

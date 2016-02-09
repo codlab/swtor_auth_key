@@ -38,5 +38,9 @@ public final class DependencyInjectorFactory {
         return sInjector;
     }
 
+    public static void flush(){
+        sInjector = null;
+    }
+
 
 }

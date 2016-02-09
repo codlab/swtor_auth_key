@@ -1,15 +1,15 @@
 package eu.codlab.swtor.internal.network;
 
-import android.content.Context;
-
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 
 import eu.codlab.swtor.TestUtil;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -19,10 +19,15 @@ import static org.junit.Assert.assertTrue;
  */
 public class TimeSyncTest {
 
-    private TimeSync mProvider;
-
     @Before
     public void init() {
+    }
+
+    @Test
+    public void testFinal() {
+        Class klass = TimeSync.class;
+
+        assertTrue(Modifier.isFinal(klass.getModifiers()));
     }
 
     @Test
@@ -51,13 +56,27 @@ public class TimeSyncTest {
     }
 
     @Test
-    public void testSync(){
+    public void testSync() {
         TimeSync timeSync = TimeSync.getInstance();
-        
+
         timeSync.deinit();
         assertFalse(timeSync.sync());
 
         timeSync.init();
         assertTrue(timeSync.sync());
+    }
+
+    @Test
+    public void testSetDiff() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        long diff = 10;
+
+        Method setDiff = TimeSync.class.getDeclaredMethod("setDiff", long.class);
+        setDiff.setAccessible(true);
+
+        TimeSync sync = TimeSync.getInstance();
+
+        setDiff.invoke(sync, diff);
+
+        assertEquals(diff, sync.getDiff());
     }
 }

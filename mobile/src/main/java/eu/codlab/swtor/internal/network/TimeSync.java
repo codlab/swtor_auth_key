@@ -4,7 +4,6 @@ import android.support.annotation.NonNull;
 
 import java.util.Date;
 
-import eu.codlab.swtor.BuildConfig;
 import eu.codlab.swtor.internal.injector.DependencyInjectorFactory;
 import okhttp3.Headers;
 import retrofit2.Call;
@@ -17,6 +16,7 @@ import retrofit2.Response;
 public final class TimeSync {
     private static TimeSync sInstance = new TimeSync();
     private IWeb mIWeb;
+    private long mDiff;
 
     private TimeSync() {
         //PREVENT CONSTRUCTION OUTSIDE OF THE PACKAGE
@@ -51,29 +51,31 @@ public final class TimeSync {
         return mIWeb != null;
     }
 
+    public long getDiff() {
+        return mDiff;
+    }
+
     private Callback<String> getCallback() {
         return new Callback<String>() {
             @Override
             public void onResponse(@NonNull Response<String> response) {
+                //response headers are always non null
                 Headers headers = response.headers();
-                if (headers != null) {
-                    String stringDate = headers.get("Date");
-                    Date date = new Date(stringDate);
-                    long diff = Math.abs(date.getTime() - System.currentTimeMillis());
-                    if (BuildConfig.DEBUG)
-                        assert diff > 0;
-                }
+                String stringDate = headers.get("Date");
+                Date date = new Date(stringDate);
+                long diff = date.getTime() - System.currentTimeMillis();
+
+                setDiff(diff);
             }
 
-            /**
-             * Failure called when a network error occured
-             *
-             * @param t the error
-             */
             @Override
             public void onFailure(@NonNull Throwable t) {
-                //NOTHING TO DO HERE FOR NOW
+                //NO SONAR
             }
         };
+    }
+
+    private void setDiff(long diff) {
+        mDiff = diff;
     }
 }

@@ -12,9 +12,6 @@ import com.wopata.aspectlib.annotations.EnsureUiThread;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.greenrobot.event.EventBus;
-import de.greenrobot.event.Subscribe;
-import de.greenrobot.event.ThreadMode;
 import eu.codlab.swtor.BuildConfig;
 import eu.codlab.swtor.internal.app.listeners.IAppListener;
 import eu.codlab.swtor.internal.injector.DependencyInjectorFactory;
@@ -45,10 +42,14 @@ public class AppManager extends LockableObject implements IAppManager {
 
         if (!isInit() && !mLoading) {
             mLoading = true;
+            Thread thread = new Thread() {
 
-            EventBus.getDefault().register(this);
-
-            EventBus.getDefault().post(new EventLoad(context));
+                @Override
+                public void run() {
+                    onEvent(new EventLoad(context));
+                }
+            };
+            thread.start();
         }
     }
 
@@ -83,7 +84,6 @@ public class AppManager extends LockableObject implements IAppManager {
         unlock();
     }
 
-    @EnsureUiThread
     private void warnListeners() {
         lock();
         List<IAppListener> listeners = new ArrayList<>();
@@ -109,26 +109,29 @@ public class AppManager extends LockableObject implements IAppManager {
         listeners.clear();
     }
 
-    @Subscribe(threadMode = ThreadMode.Async)
     public void onEvent(EventLoad event) {
         Context context = event.getContext();
 
         try {
             Fabric.with(context, new Crashlytics(), new Answers());
-            FlowManager.init(context);
+        } catch (Throwable e) {
+        }
 
+        try {
+            FlowManager.init(context);
+        } catch (Exception e) {
+        }
+
+        try {
             DependencyInjectorFactory
                     .getDependencyInjector()
                     .getDatabaseProvider()
                     .loadDatabaseIntoMemory();
-
         } catch (Exception e) {
         }
 
-        EventBus.getDefault().unregister(this);
-
-        warnListeners();
         mInit = true;
+        warnListeners();
     }
 
     public static class EventLoad {

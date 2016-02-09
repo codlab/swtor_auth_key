@@ -45,8 +45,24 @@ public class CodeProviderFactoryTest {
     }
 
     @Test
+    public void testGetCodeProviderInvalid() {
+        String provider = "_____+/;?:=";
+
+        CodeProvider codeProvider = CodeProviderFactory.getCodeProvider(provider);
+        assertEquals(0, CodeProviderFactory.decode(provider).length);
+        assertNull(codeProvider);
+    }
+
+    @Test
     public void testDecodeInvalid() {
         byte[] array = CodeProviderFactory.decode("");
+
+        assertEquals(0, array.length);
+    }
+
+    @Test
+    public void testDecodeException() {
+        byte[] array = CodeProviderFactory.decode("_____+/;?:=");
 
         assertEquals(0, array.length);
     }
@@ -59,28 +75,28 @@ public class CodeProviderFactoryTest {
     }
 
     @Test
-    public void testCorrectLengthValid(){
+    public void testCorrectLengthValid() {
         String provider = "AZERTYUIOPAZERTY";
 
         assertTrue(CodeProviderFactory.isCorrectLength(provider));
     }
 
     @Test
-    public void testCorrectLengthInvalid(){
+    public void testCorrectLengthInvalid() {
         String provider = "";
 
         assertFalse(CodeProviderFactory.isCorrectLength(provider));
     }
 
     @Test
-    public void testByteArrayValid(){
+    public void testByteArrayValid() {
         String provider = "AZERTYUIOPAZERTY";
 
         assertTrue(CodeProviderFactory.isCorrectArray(provider));
     }
 
     @Test
-    public void testByteArrayInvalid(){
+    public void testByteArrayInvalid() {
         String provider = "";
 
         assertFalse(CodeProviderFactory.isCorrectArray(provider));

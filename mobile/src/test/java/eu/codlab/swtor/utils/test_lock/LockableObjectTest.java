@@ -8,7 +8,6 @@ import eu.codlab.swtor.utils.LockableObject;
 import eu.codlab.swtor.utils.test_lock.non_test.LockableMaintainer;
 
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -18,7 +17,7 @@ public class LockableObjectTest {
 
     /**
      * Test the lock object
-     *
+     * <p/>
      * It will iterate a large amount of time between two thread to make the :
      * lock / unlock process
      */
@@ -61,16 +60,14 @@ public class LockableObjectTest {
     private void retainLoop(String tag, @NonNull LockableObject locker, @NonNull LockableMaintainer maintainer,
                             int timeout) {
         Object to_retain = new Object();
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 50; i++) {
             boolean ok = true;
 
             try {
                 locker.lock();
-                System.out.println("lock :: " + tag + " " + i);
                 maintainer.retain(to_retain);
                 wait(timeout);
                 maintainer.release(to_retain);
-                System.out.println("unlock :: " + tag + " " + i);
                 locker.unlock();
                 wait(timeout);
             } catch (IllegalStateException exception) {

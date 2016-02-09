@@ -58,6 +58,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:2.0.0-beta'
     testCompile "org.robolectric:robolectric:3.0"
+    testCompile "org.robolectric:shadows-support-v4:3.0"
 
     apt 'com.github.Raizlabs.DBFlow:dbflow-processor:3.0.0-beta1'
 
@@ -76,7 +77,7 @@ dependencies {
 
     compile 'com.android.support:design:23.1.1'
     compile 'me.zhanghai.android.materialprogressbar:library:1.1.4'
-    compile 'com.github.codlab:MaterialTutorial:1.4.4'
+    compile 'com.github.codlab:MaterialTutorial:1.5.3'
 
     compile 'com.github.Raizlabs.DBFlow:dbflow-core:3.0.0-beta1'
     compile 'com.github.Raizlabs.DBFlow:dbflow:3.0.0-beta1'

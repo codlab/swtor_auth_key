@@ -10,7 +10,7 @@ import static junit.framework.Assert.assertEquals;
 public class CodeInvalidateEventTest {
 
     @Test
-    public void testCodeInvalidateContruction(){
+    public void testCodeInvalidateContruction() {
         long time = System.currentTimeMillis();
         CodeInvalidateEvent event = new CodeInvalidateEvent(time);
 

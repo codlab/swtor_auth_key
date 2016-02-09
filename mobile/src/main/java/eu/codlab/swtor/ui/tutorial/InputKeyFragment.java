@@ -3,39 +3,33 @@ package eu.codlab.swtor.ui.tutorial;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.LinearInterpolator;
-import android.widget.ProgressBar;
+import android.widget.EditText;
 
 import com.alexandrepiveteau.library.tutorial.ui.fragments.AbstractTutorialValidationFragment;
-import com.nineoldandroids.animation.ValueAnimator;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnTextChanged;
-import de.greenrobot.event.Subscribe;
-import de.greenrobot.event.ThreadMode;
 import eu.codlab.swtor.R;
 import eu.codlab.swtor.internal.injector.DependencyInjector;
 import eu.codlab.swtor.internal.injector.DependencyInjectorFactory;
-import eu.codlab.swtor.internal.tutorial.CodeInvalidateEvent;
+import eu.codlab.swtor.internal.security.TimeProvider;
+import eu.codlab.swtor.internal.tutorial.EventContent;
 import eu.codlab.swtor.internal.tutorial.InputKeyController;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class InputKeyFragment extends AbstractTutorialValidationFragment {
 
     private final DependencyInjector mDepdencyInjector;
     private final InputKeyController mInputKeyController;
 
-    @Bind(R.id.code_next_time)
-    ProgressBar mCodeNextTime;
+    @Bind(R.id.input_code)
+    EditText mInputCode;
+
 
     public InputKeyFragment() {
         mInputKeyController = new InputKeyController();
@@ -58,9 +52,6 @@ public class InputKeyFragment extends AbstractTutorialValidationFragment {
     public void onResume() {
         super.onResume();
 
-        mDepdencyInjector.getDefaultEventBus()
-                .register(this);
-
         mDepdencyInjector.getTimeProvider()
                 .onResume();
     }
@@ -71,41 +62,41 @@ public class InputKeyFragment extends AbstractTutorialValidationFragment {
         mDepdencyInjector.getTimeProvider()
                 .onPause();
 
-        mDepdencyInjector.getDefaultEventBus()
-                .unregister(this);
-
         super.onPause();
     }
 
     @OnTextChanged(R.id.input_code)
-    public void afterTextChanged(Editable content) {
-        mInputKeyController.setContent(content.toString());
+    public void afterTextChanged(Editable editable) {
+        mInputKeyController.setContent(editable.toString());
+
+        String content = mInputKeyController.getContent();
+        DependencyInjectorFactory.getDependencyInjector()
+                .getDefaultEventBus().postSticky(new EventContent(content));
     }
 
     @Override
     public boolean isValid() {
+        Log.d("Content", "isValid := " + mInputKeyController.isValid());
+        invalidateErrorText();
         return mInputKeyController.isValid();
     }
 
     @Override
     public boolean onTryValidate() {
+        invalidateErrorText();
         return mInputKeyController.onTryValidate();
     }
 
-    @Subscribe(threadMode = ThreadMode.MainThread, sticky = true)
-    public void onEvent(CodeInvalidateEvent event) {
-        Log.d(InputKeyFragment.class.getSimpleName(), "next in :: " + event.getNextIterationIn());
+    public TimeProvider getTimeProvider() {
+        return mDepdencyInjector.getTimeProvider();
+    }
 
-        ValueAnimator animator = ValueAnimator.ofInt((int) event.getNextIterationIn(), 0);
+    private void invalidateErrorText() {
 
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                mCodeNextTime.setProgress((Integer) animation.getAnimatedValue());
-            }
-        });
-        animator.setInterpolator(new LinearInterpolator());
-        animator.setDuration(event.getNextIterationIn());
-        animator.start();
+        if (!mInputKeyController.isValid()) {
+            mInputCode.setError(getString(R.string.error_invalid));
+        } else {
+            mInputCode.setError(null);
+        }
     }
 }

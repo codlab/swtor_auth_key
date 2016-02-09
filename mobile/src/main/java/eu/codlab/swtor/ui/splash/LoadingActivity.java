@@ -1,6 +1,7 @@
 package eu.codlab.swtor.ui.splash;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import eu.codlab.swtor.R;
 import eu.codlab.swtor.internal.app.listeners.IAppListener;
@@ -39,11 +40,12 @@ public class LoadingActivity extends AbstractKeysActivity implements IAppListene
 
         if (appManager.isInit()) {
             IDatabaseProvider database = getDependencyInjector().getDatabaseProvider();
-            if (database.hasLoadedDatabaseValues()
-                    && !database.hasLoadedDatabaseValues()) {
+            Log.d("CONTENT",database.hasValues() + " "+appManager.isInit());
+            if (!database.hasValues()) {
                 TutorialActivity.startAndFinish(this);
             }
         } else {
+            Log.d("CONTENT","call init");
             appManager.init(this, this);
         }
     }

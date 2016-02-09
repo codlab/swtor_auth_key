@@ -11,7 +11,7 @@ import eu.codlab.swtor.internal.security.CodeProvider;
 public class InputKeyController implements ITutorialValidationFragment {
 
     private static final int CORRECT_CONTENT_LENGTH = 16;
-    private static final int CORRECT_CODE_LENGTH = 6;
+
     private String mContent;
 
     public InputKeyController() {
@@ -27,7 +27,7 @@ public class InputKeyController implements ITutorialValidationFragment {
         String code = generateCode();
 
         return getContent() != null && getContent().length() == CORRECT_CONTENT_LENGTH
-                && code != null && code.length() == CORRECT_CODE_LENGTH;
+                && code != null;
     }
 
     public String getContent() {

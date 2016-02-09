@@ -54,7 +54,11 @@ public class DependencyInjectorImplementation implements eu.codlab.swtor.interna
     @Nullable
     @Override
     public CodeProvider getCodeProvider(String provider) {
-        return new CodeProvider(provider, getTimeProvider());
+        try {
+            return new CodeProvider(provider, getTimeProvider());
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @NonNull

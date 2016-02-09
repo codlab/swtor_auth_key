@@ -2,13 +2,10 @@ package eu.codlab.swtor.internal.security;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.bioware.android.apps.authenticator.Base32String;
 
 import java.util.HashMap;
-
-import eu.codlab.swtor.BuildConfig;
 
 /**
  * Created by kevinleperf on 15/01/16.
@@ -42,13 +39,9 @@ public final class CodeProviderFactory {
             return mProviders.get(provider);
         }
 
-        try {
-            CodeProvider prov = new CodeProvider(provider, new TimeProvider());
-            mProviders.put(provider, prov);
-            return prov;
-        } catch (Exception exception) {
-            return null;
-        }
+        CodeProvider prov = new CodeProvider(provider, new TimeProvider());
+        mProviders.put(provider, prov);
+        return prov;
     }
 
     protected static boolean isCorrectArray(@NonNull String provider) {
@@ -63,7 +56,7 @@ public final class CodeProviderFactory {
     protected static byte[] decode(@NonNull String provider) {
         try {
             return Base32String.decode(provider);
-        } catch (Base32String.DecodingException exception) {
+        } catch (Exception exception) {
             return new byte[]{};
         }
     }

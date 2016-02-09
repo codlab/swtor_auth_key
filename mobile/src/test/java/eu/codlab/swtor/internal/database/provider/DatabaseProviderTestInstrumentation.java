@@ -1,48 +1,47 @@
 package eu.codlab.swtor.internal.database.provider;
 
-import android.test.ActivityUnitTestCase;
-
 import com.raizlabs.android.dbflow.config.FlowManager;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.Robolectric;
+import org.robolectric.RobolectricGradleTestRunner;
+import org.robolectric.annotation.Config;
 
 import java.util.List;
 
-import eu.codlab.swtor.ui.splash.LoadingActivity;
+import eu.codlab.swtor.BuildConfig;
+import eu.codlab.swtor.TestUtil;
+import eu.codlab.swtor.ui.tutorial.TutorialActivity;
 
+import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by kevinleperf on 08/02/16.
  */
-public class DatabaseProviderTestInstrumentation extends ActivityUnitTestCase {//ActivityInstrumentationTestCase2<LoadingActivity> {
+@RunWith(RobolectricGradleTestRunner.class)
+@Config(sdk = 21, constants = BuildConfig.class)
+public class DatabaseProviderTestInstrumentation {
 
-    public DatabaseProviderTestInstrumentation() {
-        super(LoadingActivity.class);
 
-        System.out.println("constructor");
+    @Before
+    public void init() {
+        FlowManager.init(Robolectric.setupActivity(TutorialActivity.class));
     }
 
-    @Override
-    protected void setUp() throws Exception {
-        System.out.println("setUp");
-
-        try {
-            super.setUp();
-        }catch(Exception exception){
-            exception.printStackTrace();
-        }
-    }
-
-    private void init() {
-        System.out.println("init");
-        FlowManager.init(getActivity());
+    @After
+    public void tearDown() throws Exception {
+        TestUtil.cleanDBFlow();
     }
 
     @Test
     public void testLoadDatabaseIntoMemory() {
-        System.out.println("entering testLoadDatabaseIntoMemory");
-        init();
         DatabaseProvider provider = new DatabaseProvider();
 
         assertFalse(provider.hasLoadedDatabaseValues());
@@ -55,7 +54,6 @@ public class DatabaseProviderTestInstrumentation extends ActivityUnitTestCase {/
 
     @Test
     public void testReloadDatabaseInMemory() {
-        init();
         DatabaseProvider provider = new DatabaseProvider();
 
         assertTrue(provider.reloadDatabaseInMemory());
@@ -63,7 +61,6 @@ public class DatabaseProviderTestInstrumentation extends ActivityUnitTestCase {/
 
     @Test
     public void testHasLoadedDatabaseValues() {
-        init();
         DatabaseProvider provider = new DatabaseProvider();
 
         assertFalse(provider.hasLoadedDatabaseValues());
@@ -73,7 +70,6 @@ public class DatabaseProviderTestInstrumentation extends ActivityUnitTestCase {/
 
     @Test
     public void testGetAllKeys() {
-        init();
         DatabaseProvider provider = new DatabaseProvider();
 
         assertNotNull(provider.getAllKeys());
@@ -84,13 +80,16 @@ public class DatabaseProviderTestInstrumentation extends ActivityUnitTestCase {/
 
     @Test
     public void testGetCopyKeys() {
-        init();
         DatabaseProvider provider = new DatabaseProvider();
 
         List all = provider.getAllKeys();
         List copy = provider.getCopyKeys();
 
-        assertNotEquals(all, copy);
         assertEquals(all.size(), copy.size());
+
+        //to test the fact the two list are different, we had an item into one
+        all.add(null);
+
+        assertNotEquals(all.toString(), copy.toString());
     }
 }

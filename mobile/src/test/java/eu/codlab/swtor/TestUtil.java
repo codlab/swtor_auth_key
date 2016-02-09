@@ -1,5 +1,11 @@
 package eu.codlab.swtor;
 
+import android.content.Intent;
+
+import com.raizlabs.android.dbflow.config.FlowManager;
+
+import org.robolectric.shadows.ShadowActivity;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -18,6 +24,10 @@ import static org.junit.Assert.fail;
  * Created by kevinleperf on 06/02/16.
  */
 public final class TestUtil {
+
+    private TestUtil() {
+
+    }
 
     public static void assertArrayValid(final Class<?> clazz,
                                         String name,
@@ -72,10 +82,6 @@ public final class TestUtil {
         }
     }
 
-    private TestUtil() {
-
-    }
-
     public static void assertSingletonClassWellDefined(Class<TimeSync> clazz)
             throws NoSuchMethodException, InvocationTargetException,
             InstantiationException, IllegalAccessException {
@@ -103,6 +109,21 @@ public final class TestUtil {
         if (!hasStatic) {
             fail("there does not exist static method in a singleton class");
         }
+
+    }
+
+    public static void cleanDBFlow() {
+        FlowManager.destroy();
+    }
+
+    public static void purgeShadowActivityStartActivity(ShadowActivity shadowActivity) {
+        int maximum_stack_size = 200;
+        Intent i;
+        do {
+            maximum_stack_size--;
+            //we purge the intent stack
+            i = shadowActivity.getNextStartedActivity();
+        } while (i != null && maximum_stack_size > 0);
 
     }
 }

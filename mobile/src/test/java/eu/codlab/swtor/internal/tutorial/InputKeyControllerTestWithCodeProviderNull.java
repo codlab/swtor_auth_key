@@ -14,7 +14,6 @@ import static junit.framework.Assert.assertNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Kévin on 05/02/2016.
@@ -43,7 +42,7 @@ public class InputKeyControllerTestWithCodeProviderNull {
     }
 
     @Test
-    public void testValidNext(){
+    public void testValidNext() {
         InputKeyController controller = new InputKeyController();
 
         String code = "";
@@ -59,7 +58,7 @@ public class InputKeyControllerTestWithCodeProviderNull {
     }
 
     @Test
-    public void testValidImproperContentLength(){
+    public void testValidImproperContentLength() {
         InputKeyController controller = new InputKeyController();
 
         String content = "";

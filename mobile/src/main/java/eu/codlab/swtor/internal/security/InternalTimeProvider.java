@@ -12,6 +12,10 @@ import eu.codlab.swtor.internal.tutorial.CodeInvalidateEvent;
 
 final class InternalTimeProvider {
 
+    private InternalTimeProvider() {
+
+    }
+
     public static CodeInvalidateEvent postEvent(@NonNull DependencyInjector injector, @NonNull CodeInvalidateEvent event) {
         injector.getDefaultEventBus().postSticky(event);
         return event;
@@ -23,9 +27,5 @@ final class InternalTimeProvider {
         postEvent(DependencyInjectorFactory.getDependencyInjector(), event);
 
         return provider.postNextIteration();
-    }
-
-    private InternalTimeProvider() {
-
     }
 }

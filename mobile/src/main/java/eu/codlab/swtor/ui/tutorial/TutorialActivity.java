@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.alexandrepiveteau.library.tutorial.ui.fragments.AbstractTutorialValidationFragment;
 import com.alexandrepiveteau.library.tutorial.ui.fragments.TutorialFragment;
+import com.alexandrepiveteau.library.tutorial.widgets.LinePageIndicatorEngine;
+import com.alexandrepiveteau.library.tutorial.widgets.PageIndicator;
 
 import eu.codlab.swtor.R;
 import eu.codlab.swtor.utils.Constants;
@@ -32,12 +34,12 @@ public class TutorialActivity extends com.alexandrepiveteau.library.tutorial.ui.
 
     @Override
     public int getCount() {
-        return 4;
+        return 5;
     }
 
     @Override
     public int getBackgroundColor(int position) {
-        return Constants.BACKGROUND[position];
+        return Constants.BACKGROUND.getValue(position);
     }
 
     @Override
@@ -57,19 +59,21 @@ public class TutorialActivity extends com.alexandrepiveteau.library.tutorial.ui.
             case 1:
             case 2:
                 return createTutorialFragment(position);
-            default:
+            case 3:
                 return new InputKeyFragment();
+            default:
+                return new SelectedKeyFragment();
         }
     }
 
     @Override
     public boolean isNavigationBarColored() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isStatusBarColored() {
-        return false;
+        return true;
     }
 
     @Override
@@ -77,13 +81,18 @@ public class TutorialActivity extends com.alexandrepiveteau.library.tutorial.ui.
         return TutorialFragment.getParallaxPageTransformer(1.25f);
     }
 
+    @Override
+    public PageIndicator.Engine getPageIndicatorEngine() {
+        return new LinePageIndicatorEngine();
+    }
+
     @Nullable
     TutorialFragment createTutorialFragment(int position) {
-        if (position < Constants.TITLE.length) {
+        if (position < Constants.TITLE.getSize()) {
             return new TutorialFragment.Builder()
-                    .setTitle(getString(Constants.TITLE[position]))
-                    .setDescription(getString(Constants.DESCRIPTION[position]))
-                    .setImageResource(Constants.RES[position])
+                    .setTitle(getString(Constants.TITLE.getValue(position)))
+                    .setDescription(getString(Constants.DESCRIPTION.getValue(position)))
+                    .setImageResource(Constants.RES.getValue(position))
                     .setSkippable(true)
                     .build();
         } else {

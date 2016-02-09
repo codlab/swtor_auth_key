@@ -4,13 +4,8 @@ import android.support.annotation.NonNull;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;

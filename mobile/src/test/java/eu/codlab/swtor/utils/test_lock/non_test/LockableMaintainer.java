@@ -7,7 +7,8 @@ public class LockableMaintainer {
     private Object _retained;
 
     public void retain(Object retain) {
-        if (null != _retained || null == retain) throw new IllegalStateException("sorry... try again");
+        if (null != _retained || null == retain)
+            throw new IllegalStateException("sorry... try again");
         _retained = retain;
     }
 

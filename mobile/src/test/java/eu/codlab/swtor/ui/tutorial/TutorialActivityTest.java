@@ -25,19 +25,19 @@ public class TutorialActivityTest {
     public void testGetCount() throws NoSuchFieldException {
         TutorialActivity activity = new TutorialActivity();
 
-        assertEquals(4, activity.getCount());
+        assertEquals(5, activity.getCount());
     }
 
     @Test
     public void testcreateTutorialFragment() {
         TutorialActivity activity = new TutorialActivity();
 
-        for (int i = 0; i < Constants.TITLE.length; i++) {
+        for (int i = 0; i < Constants.TITLE.getSize(); i++) {
             TutorialFragment fragment = activity.createTutorialFragment(i);
             System.out.println("having " + i + " " + fragment);
             assertNotNull(fragment);
         }
-        assertNull(activity.createTutorialFragment(Constants.TITLE.length));
+        assertNull(activity.createTutorialFragment(Constants.TITLE.getSize()));
     }
 
     @Test
@@ -46,7 +46,7 @@ public class TutorialActivityTest {
 
         AbstractTutorialValidationFragment fragment = null;
 
-        for (int i = 0; i < 3 && i < Constants.TITLE.length; i++) {
+        for (int i = 0; i < 3 && i < Constants.TITLE.getSize(); i++) {
             fragment = activity.getTutorialFragmentFor(i);
             System.out.println("having " + i + " " + fragment);
             assertTrue(fragment instanceof TutorialFragment);
@@ -54,6 +54,9 @@ public class TutorialActivityTest {
 
         fragment = activity.getTutorialFragmentFor(3);
         assertTrue(fragment instanceof InputKeyFragment);
+
+        fragment = activity.getTutorialFragmentFor(4);
+        assertTrue(fragment instanceof SelectedKeyFragment);
     }
 
     @Test
@@ -69,8 +72,8 @@ public class TutorialActivityTest {
     public void testGetBackgroundColor() {
         TutorialActivity activity = new TutorialActivity();
 
-        for (int i = 0; i < Constants.BACKGROUND.length; i++) {
-            assertEquals(Constants.BACKGROUND[i], activity.getBackgroundColor(i));
+        for (int i = 0; i < Constants.BACKGROUND.getSize(); i++) {
+            assertEquals(Constants.BACKGROUND.getValue(i), activity.getBackgroundColor(i));
         }
     }
 

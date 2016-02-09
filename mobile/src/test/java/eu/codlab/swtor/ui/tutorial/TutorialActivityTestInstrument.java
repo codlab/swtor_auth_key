@@ -2,17 +2,14 @@ package eu.codlab.swtor.ui.tutorial;
 
 import android.app.Instrumentation;
 import android.content.Intent;
-import android.os.Looper;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
 import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
 import org.robolectric.internal.ShadowExtractor;
 import org.robolectric.shadows.ShadowActivity;
-import org.robolectric.shadows.ShadowLooper;
 
 import eu.codlab.swtor.BuildConfig;
 import eu.codlab.swtor.ui.splash.LoadingActivity;
@@ -20,7 +17,6 @@ import eu.codlab.swtor.ui.splash.LoadingActivity;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.robolectric.Shadows.shadowOf;
 
 /**
  * Created by kevinleperf on 06/02/16.

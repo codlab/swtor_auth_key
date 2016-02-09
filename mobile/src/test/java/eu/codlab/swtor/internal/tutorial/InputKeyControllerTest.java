@@ -2,10 +2,13 @@ package eu.codlab.swtor.internal.tutorial;
 
 import android.content.Context;
 
+import junit.framework.Assert;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import eu.codlab.swtor.GenerateCodeTest;
 import eu.codlab.swtor.internal.injector.DependencyInjectorFactory;
 import eu.codlab.swtor.internal.tutorial.non_test.DependencyInjectorImplementation;
 
@@ -30,6 +33,22 @@ public class InputKeyControllerTest {
     public void testFailContentNull() {
         InputKeyController controller = new InputKeyController();
         controller.setContent(null);
+
+        assertFalse(controller.isValid());
+    }
+
+    @Test
+    public void testIsValid() {
+        InputKeyController controller = new InputKeyController();
+        controller.setContent(GenerateCodeTest.CODE_OK);
+
+        assertTrue(controller.isValid());
+    }
+
+    @Test
+    public void testIsValidFalse() {
+        InputKeyController controller = new InputKeyController();
+        controller.setContent("RULAB3CH+?'DHF__");
 
         assertFalse(controller.isValid());
     }
