@@ -65,13 +65,18 @@ public class InputKeyFragment extends AbstractTutorialValidationFragment {
         super.onPause();
     }
 
-    @OnTextChanged(R.id.input_code)
+    @OnTextChanged(value = R.id.input_code, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
     public void afterTextChanged(Editable editable) {
+        Log.d("Content", "afterTExtChanged");
         mInputKeyController.setContent(editable.toString());
 
         String content = mInputKeyController.getContent();
         DependencyInjectorFactory.getDependencyInjector()
                 .getDefaultEventBus().postSticky(new EventContent(content));
+
+        invalidateErrorText();
+
+        fireActivityValidateCurrent();
     }
 
     @Override
