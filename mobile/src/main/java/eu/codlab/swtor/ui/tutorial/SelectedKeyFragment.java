@@ -115,9 +115,16 @@ public class SelectedKeyFragment extends AbstractTutorialValidationFragment {
 
     @Subscribe(threadMode = ThreadMode.MainThread, sticky = true)
     public void onEvent(EventContent event) {
+        String previous = mInputKeyController.getContent();
+
         mInputKeyController.setContent(event.getContent());
 
-        mGetCode.setText(mInputKeyController.generateCode());
+        if (mInputKeyController.isValid()) {
+            mGetCode.setText(mInputKeyController.generateCode());
+        } else {
+            //restore the previous code if not valid
+            mInputKeyController.setContent(previous);
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MainThread, sticky = true)

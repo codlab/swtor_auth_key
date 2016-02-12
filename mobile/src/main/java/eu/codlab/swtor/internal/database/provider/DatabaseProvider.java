@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import eu.codlab.swtor.annotations.ThreadSafe;
+import eu.codlab.common.annotations.ThreadSafe;
 import eu.codlab.swtor.internal.database.events.DatabaseEvent;
 import eu.codlab.swtor.internal.database.impl.Key;
 import eu.codlab.swtor.internal.injector.DependencyInjectorFactory;

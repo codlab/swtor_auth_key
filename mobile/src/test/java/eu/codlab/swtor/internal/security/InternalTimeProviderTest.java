@@ -4,10 +4,10 @@ import org.junit.Test;
 
 import java.lang.reflect.InvocationTargetException;
 
-import eu.codlab.swtor.TestUtil;
 import eu.codlab.swtor.internal.injector.DependencyInjector;
 import eu.codlab.swtor.internal.injector.DependencyInjectorFactory;
 import eu.codlab.swtor.internal.tutorial.CodeInvalidateEvent;
+import eu.codlab.test.TestUtil;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

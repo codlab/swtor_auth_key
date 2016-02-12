@@ -17,12 +17,12 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 import eu.codlab.swtor.BuildConfig;
-import eu.codlab.swtor.TestUtil;
 import eu.codlab.swtor.internal.database.events.DatabaseEvent;
 import eu.codlab.swtor.internal.database.impl.Key;
 import eu.codlab.swtor.internal.injector.DependencyInjectorFactory;
 import eu.codlab.swtor.internal.injector.DependencyStandardInjector;
 import eu.codlab.swtor.ui.tutorial.TutorialActivity;
+import eu.codlab.test.TestUtil;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -47,7 +47,7 @@ public class DatabaseProviderTest {
 
     @After
     public void after() {
-        TestUtil.cleanDBFlow();
+        FlowManager.destroy();
         DependencyInjectorFactory.flush();
     }
 

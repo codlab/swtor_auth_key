@@ -54,6 +54,8 @@ public class InputKeyFragment extends AbstractTutorialValidationFragment {
 
         mDepdencyInjector.getTimeProvider()
                 .onResume();
+
+        onTryValidate();
     }
 
     @Override
@@ -98,10 +100,12 @@ public class InputKeyFragment extends AbstractTutorialValidationFragment {
 
     private void invalidateErrorText() {
 
-        if (!mInputKeyController.isValid()) {
-            mInputCode.setError(getString(R.string.error_invalid));
-        } else {
-            mInputCode.setError(null);
+        if(isResumed()) {
+            if (!mInputKeyController.isValid()) {
+                mInputCode.setError(getString(R.string.error_invalid));
+            } else {
+                mInputCode.setError(null);
+            }
         }
     }
 }

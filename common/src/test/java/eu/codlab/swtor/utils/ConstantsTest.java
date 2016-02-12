@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import java.lang.reflect.InvocationTargetException;
 
-import eu.codlab.swtor.TestUtil;
+import eu.codlab.test.TestUtil;
 
 import static org.junit.Assert.assertNotNull;
 

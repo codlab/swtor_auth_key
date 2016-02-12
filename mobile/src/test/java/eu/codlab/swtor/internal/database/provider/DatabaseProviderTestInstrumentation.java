@@ -13,7 +13,6 @@ import org.robolectric.annotation.Config;
 import java.util.List;
 
 import eu.codlab.swtor.BuildConfig;
-import eu.codlab.swtor.TestUtil;
 import eu.codlab.swtor.ui.tutorial.TutorialActivity;
 
 import static junit.framework.Assert.assertEquals;
@@ -37,7 +36,7 @@ public class DatabaseProviderTestInstrumentation {
 
     @After
     public void tearDown() throws Exception {
-        TestUtil.cleanDBFlow();
+        FlowManager.destroy();
     }
 
     @Test

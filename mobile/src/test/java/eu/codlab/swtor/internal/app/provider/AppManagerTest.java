@@ -2,6 +2,8 @@ package eu.codlab.swtor.internal.app.provider;
 
 import android.content.Context;
 
+import com.raizlabs.android.dbflow.config.FlowManager;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,7 +11,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import eu.codlab.swtor.TestUtil;
 import eu.codlab.swtor.internal.app.listeners.IAppListener;
 import eu.codlab.swtor.internal.injector.DependencyInjectorFactory;
 import eu.codlab.swtor.internal.injector.DependencyStandardInjector;
@@ -30,7 +31,7 @@ public class AppManagerTest {
 
     @After
     public void after() {
-        TestUtil.cleanDBFlow();
+        FlowManager.destroy();
     }
 
     @Test

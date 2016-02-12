@@ -1,4 +1,17 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+        maven { url 'https://plugins.gradle.org/m2' }
+        maven { url "https://jitpack.io" }
+    }
+
+    dependencies {
+        classpath 'org.ajoberstar:gradle-jacoco:0.3.0'
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:1.2"
+    }
+}
 apply plugin: 'com.android.library'
+apply plugin: 'jacoco'
 
 android {
     compileSdkVersion 23
@@ -11,15 +24,40 @@ android {
         versionName "1.0"
     }
     buildTypes {
+        debug {
+            testCoverageEnabled true
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
+
+apply plugin: 'com.neenbedankt.android-apt'
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.1.1'
+
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-core:2.0.0-beta'
+    testCompile 'org.robolectric:robolectric:3.0'
+    testCompile 'org.robolectric:shadows-support-v4:3.0'
+    testCompile 'com.github.codlab:TestCore:0.2.3'
+
+    apt 'com.github.Raizlabs.DBFlow:dbflow-processor:3.0.0-beta1'
+    compile 'com.github.Raizlabs.DBFlow:dbflow-core:3.0.0-beta1'
+    compile 'com.github.Raizlabs.DBFlow:dbflow:3.0.0-beta1'
+}
+
+tasks.withType(Test) { task ->
+    jacoco {
+        destinationFile = file("$buildDir/jacoco/${task.name}.exec")
+    }
 }

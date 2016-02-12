@@ -13,11 +13,11 @@ import org.robolectric.RobolectricTestRunner;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-import eu.codlab.swtor.TestUtil;
 import eu.codlab.swtor.internal.network.IWeb;
 import eu.codlab.swtor.internal.network.NetworkConstants;
 import eu.codlab.swtor.internal.network.ToStringConverterFactory;
 import eu.codlab.swtor.ui.splash.LoadingActivity;
+import eu.codlab.test.TestUtil;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
 

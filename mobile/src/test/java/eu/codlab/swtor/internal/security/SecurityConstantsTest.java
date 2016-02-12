@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import java.lang.reflect.InvocationTargetException;
 
-import eu.codlab.swtor.TestUtil;
+import eu.codlab.test.TestUtil;
 
 /**
  * Created by kevinleperf on 08/02/16.

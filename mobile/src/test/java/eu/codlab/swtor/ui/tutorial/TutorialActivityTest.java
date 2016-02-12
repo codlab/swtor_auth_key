@@ -1,17 +1,13 @@
 package eu.codlab.swtor.ui.tutorial;
 
-import android.content.Context;
 import android.content.Intent;
 
 import com.alexandrepiveteau.library.tutorial.ui.fragments.AbstractTutorialValidationFragment;
 import com.alexandrepiveteau.library.tutorial.ui.fragments.TutorialFragment;
 
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import eu.codlab.swtor.R;
-import eu.codlab.swtor.internal.injector.DependencyInjectorFactory;
-import eu.codlab.swtor.internal.injector.DependencyStandardInjector;
 import eu.codlab.swtor.utils.Constants;
 
 import static org.junit.Assert.assertEquals;

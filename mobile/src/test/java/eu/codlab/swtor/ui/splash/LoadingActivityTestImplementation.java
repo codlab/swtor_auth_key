@@ -3,6 +3,8 @@ package eu.codlab.swtor.ui.splash;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 
+import com.raizlabs.android.dbflow.config.FlowManager;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +20,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import eu.codlab.swtor.BuildConfig;
-import eu.codlab.swtor.TestUtil;
 import eu.codlab.swtor.internal.app.listeners.IAppListener;
 import eu.codlab.swtor.internal.app.provider.AppManager;
 import eu.codlab.swtor.internal.database.impl.Key;
@@ -27,6 +28,7 @@ import eu.codlab.swtor.internal.injector.DependencyInjectorFactory;
 import eu.codlab.swtor.internal.injector.DependencyStandardInjector;
 import eu.codlab.swtor.internal.injector.interfaces.IAppManager;
 import eu.codlab.swtor.ui.tutorial.TutorialActivity;
+import eu.codlab.test.TestUtil;
 
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertFalse;
@@ -70,7 +72,7 @@ public class LoadingActivityTestImplementation {
 
     @After
     public void after() {
-        TestUtil.cleanDBFlow();
+        FlowManager.destroy();
     }
 
     @Test

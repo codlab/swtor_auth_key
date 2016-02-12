@@ -1,6 +1,6 @@
 package eu.codlab.swtor.utils;
 
-import eu.codlab.swtor.R;
+import eu.codlab.common.R;
 
 /**
  * Created by kevinleperf on 07/02/16.

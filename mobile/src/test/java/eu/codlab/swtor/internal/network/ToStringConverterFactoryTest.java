@@ -8,7 +8,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
 
-import eu.codlab.swtor.TestUtil;
+import eu.codlab.test.TestUtil;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;

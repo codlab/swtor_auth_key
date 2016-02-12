@@ -19,7 +19,6 @@ import java.lang.reflect.Field;
 import de.greenrobot.event.EventBus;
 import eu.codlab.swtor.BuildConfig;
 import eu.codlab.swtor.GenerateCodeTest;
-import eu.codlab.swtor.TestUtil;
 import eu.codlab.swtor.internal.database.events.DatabaseEvent;
 import eu.codlab.swtor.internal.database.impl.Key;
 import eu.codlab.swtor.internal.injector.DependencyInjectorFactory;
@@ -27,6 +26,7 @@ import eu.codlab.swtor.internal.injector.DependencyStandardInjector;
 import eu.codlab.swtor.internal.security.TimeProvider;
 import eu.codlab.swtor.internal.tutorial.InputKeyController;
 import eu.codlab.swtor.ui.main.ShowCodeActivity;
+import eu.codlab.test.TestUtil;
 
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertEquals;
@@ -149,7 +149,7 @@ public class SelectCodeFragmentTestImplementation {
         assertThat(startedIntent.getComponent().getClassName(),
                 equalTo(ShowCodeActivity.class.getName()));
 
-        TestUtil.cleanDBFlow();
+        FlowManager.destroy();
         DependencyInjectorFactory.flush();
     }
 
