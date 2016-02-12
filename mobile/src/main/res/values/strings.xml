@@ -17,4 +17,7 @@
     <string name="input_key_description">Copy the key. Once it is done, a unique code will be given right here. Simply copy it into the website to validate the exchange and it\'s done !</string>
     <string name="get_code_title">Copy this code to the website</string>
     <string name="error_invalid">Error, the code is invalid</string>
+    <string name="set_new_key">Set a new key</string>
+    <string name="change">Change the displayed key</string>
+    <string name="notification_title">SWTOR Key</string>
 </resources>

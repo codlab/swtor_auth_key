@@ -2,17 +2,14 @@ package eu.codlab.swtor.internal.app.provider;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import com.raizlabs.android.dbflow.config.FlowManager;
-import com.wopata.aspectlib.annotations.EnsureUiThread;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import eu.codlab.swtor.BuildConfig;
 import eu.codlab.swtor.internal.app.listeners.IAppListener;
 import eu.codlab.swtor.internal.injector.DependencyInjectorFactory;
 import eu.codlab.swtor.internal.injector.interfaces.IAppManager;
@@ -90,16 +87,8 @@ public class AppManager extends LockableObject implements IAppManager {
         listeners.addAll(mAppListeners);
         unlock();
 
-        try {
-            for (IAppListener listener : mAppListeners) {
-                listener.onAppInitialized();
-            }
-        } catch (Exception exception) {
-            if (BuildConfig.DEBUG) {
-                Log.e(AppManager.class.getSimpleName(), "exception ", exception);
-            }
-
-            throw exception;
+        for (IAppListener listener : mAppListeners) {
+            listener.onAppInitialized();
         }
 
         lock();

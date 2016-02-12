@@ -23,6 +23,9 @@ public class Key extends BaseModel {
     @Column(name = "secret")
     String mSecret;
 
+    @Column(name = "updated_at")
+    long mUpdatedAt;
+
     public void setId(long id) {
         mId = id;
     }
@@ -45,6 +48,14 @@ public class Key extends BaseModel {
 
     public String getSecret() {
         return mSecret;
+    }
+
+    public void setUpdatedAt(long updatedAt) {
+        mUpdatedAt = updatedAt;
+    }
+
+    public long getUpdatedAt() {
+        return mUpdatedAt;
     }
 
 }

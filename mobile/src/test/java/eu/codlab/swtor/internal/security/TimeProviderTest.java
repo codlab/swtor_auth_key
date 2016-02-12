@@ -2,6 +2,7 @@ package eu.codlab.swtor.internal.security;
 
 import org.junit.Test;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -12,6 +13,7 @@ import eu.codlab.swtor.internal.tutorial.CodeInvalidateEvent;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -20,18 +22,28 @@ import static org.junit.Assert.assertTrue;
 public class TimeProviderTest {
 
     @Test
-    public void testResume() {
+    public void testResume() throws NoSuchFieldException, IllegalAccessException {
         TimeProvider provider = new TimeProvider();
+        Field mHandler = provider.getClass().getDeclaredField("mHandler");
+        mHandler.setAccessible(true);
+
+        Field mPostEvent = provider.getClass().getDeclaredField("mPostEvent");
+        mPostEvent.setAccessible(true);
+
+        assertNotNull(mPostEvent.get(provider));
 
         provider.onResume();
+        assertNotNull(mHandler.get(provider));
         assertTrue(provider.isResumed());
         assertFalse(provider.isPaused());
 
         provider.onPause();
+        assertNull(mHandler.get(provider));
         assertTrue(provider.isPaused());
         assertFalse(provider.isResumed());
 
         provider.onResume();
+        assertNotNull(mHandler.get(provider));
         assertTrue(provider.isResumed());
         assertFalse(provider.isPaused());
     }
@@ -49,7 +61,9 @@ public class TimeProviderTest {
         TimeProvider provider = new TimeProvider();
         long nextIteration = provider.getNextIteration() - System.currentTimeMillis();
 
-        assertEquals(nextIteration, provider.getNextIterationIn());
+        long diff = Math.abs(nextIteration - provider.getNextIterationIn());
+
+        assertTrue(diff < 10);
     }
 
     @Test
@@ -113,6 +127,31 @@ public class TimeProviderTest {
 
         assertNotNull(DependencyInjectorFactory.getDependencyInjector().getDefaultEventBus()
                 .getStickyEvent(CodeInvalidateEvent.class));
+    }
 
+    @Test
+    public void testOnResume() {
+        TimeProvider provider = new TimeProvider();
+
+        provider.onPause();
+
+        assertFalse(provider.isResumed());
+
+        provider.onResume();
+
+        assertTrue(provider.isResumed());
+    }
+
+    @Test
+    public void testOnPause() {
+        TimeProvider provider = new TimeProvider();
+
+        provider.onPause();
+
+        assertTrue(provider.isPaused());
+
+        provider.onResume();
+
+        assertFalse(provider.isPaused());
     }
 }

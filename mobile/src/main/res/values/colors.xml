@@ -5,4 +5,5 @@
     <color name="colorAccent">@color/accent</color>
     <color name="white">@android:color/white</color>
     <color name="black">@android:color/black</color>
+    <color name="black_semi_transparent">#B2000000</color>
 </resources>

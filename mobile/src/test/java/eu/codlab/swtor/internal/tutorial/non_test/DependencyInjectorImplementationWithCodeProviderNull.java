@@ -42,7 +42,7 @@ public class DependencyInjectorImplementationWithCodeProviderNull implements eu.
     @NonNull
     @Override
     public EventBus getDefaultEventBus() {
-        return null;
+        return EventBus.builder().build();
     }
 
     @NonNull

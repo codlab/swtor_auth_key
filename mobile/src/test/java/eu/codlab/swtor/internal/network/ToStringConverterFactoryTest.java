@@ -1,5 +1,6 @@
 package eu.codlab.swtor.internal.network;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -23,24 +24,50 @@ import static org.junit.Assert.assertNull;
  */
 public class ToStringConverterFactoryTest {
 
+    private ToStringConverterFactory mConstructor;
+    private Retrofit mRetrofit;
+
+    @Before
+    public void setUp() {
+        mConstructor = new ToStringConverterFactory();
+
+        mRetrofit = new Retrofit.Builder()
+                .baseUrl(NetworkConstants.SWTOR)
+                .addConverterFactory(mConstructor)
+                .build();
+    }
+
     @Test
     public void testConstructor() throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         TestUtil.assertPublicClassWellDefined(ToStringConverterFactory.class);
     }
 
     @Test
+    public void testRequestBodyConverterNull() {
+
+        Converter<String, RequestBody> converter =
+                mConstructor.requestBodyConverter(byte[].class, new Annotation[]{}, mRetrofit);
+
+        assertNull(converter);
+    }
+
+    @Test
+    public void testRequestBodyConverterNotNull() {
+
+        Converter<String, RequestBody> converter =
+                mConstructor.requestBodyConverter(String.class, new Annotation[]{}, mRetrofit);
+
+        assertNotNull(converter);
+    }
+
+    @Test
     public void testrequestBodyConverter() {
         final ToStringConverterFactory constructor = new ToStringConverterFactory();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(NetworkConstants.SWTOR)
-                .addConverterFactory(constructor)
-                .build();
-
         final Converter<String, RequestBody> converter = constructor.requestBodyConverter(new Type() {
-        }, new Annotation[]{}, retrofit);
+        }, new Annotation[]{}, mRetrofit);
         Converter<ResponseBody, String> converter2 = constructor.responseBodyConverter(new Type() {
-        }, new Annotation[]{}, retrofit);
+        }, new Annotation[]{}, mRetrofit);
 
         assertNull(converter);
         assertNull(converter2);

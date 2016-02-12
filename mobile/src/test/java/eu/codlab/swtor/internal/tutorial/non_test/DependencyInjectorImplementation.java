@@ -42,7 +42,7 @@ public class DependencyInjectorImplementation implements eu.codlab.swtor.interna
     @NonNull
     @Override
     public EventBus getDefaultEventBus() {
-        return null;
+        return EventBus.builder().build();
     }
 
     @NonNull

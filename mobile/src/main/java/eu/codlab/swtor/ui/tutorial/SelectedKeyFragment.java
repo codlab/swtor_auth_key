@@ -2,6 +2,7 @@ package eu.codlab.swtor.ui.tutorial;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,12 +18,15 @@ import butterknife.ButterKnife;
 import de.greenrobot.event.Subscribe;
 import de.greenrobot.event.ThreadMode;
 import eu.codlab.swtor.R;
+import eu.codlab.swtor.internal.database.events.DatabaseEvent;
+import eu.codlab.swtor.internal.database.impl.Key;
 import eu.codlab.swtor.internal.injector.DependencyInjector;
 import eu.codlab.swtor.internal.injector.DependencyInjectorFactory;
 import eu.codlab.swtor.internal.security.TimeProvider;
 import eu.codlab.swtor.internal.tutorial.CodeInvalidateEvent;
 import eu.codlab.swtor.internal.tutorial.EventContent;
 import eu.codlab.swtor.internal.tutorial.InputKeyController;
+import eu.codlab.swtor.ui.main.ShowCodeActivity;
 
 /**
  * Created by kevinleperf on 09/02/16.
@@ -64,6 +68,8 @@ public class SelectedKeyFragment extends AbstractTutorialValidationFragment {
     public void onResume() {
         super.onResume();
 
+        setContentKey();
+
         mDepdencyInjector.getDefaultEventBus()
                 .register(this);
 
@@ -90,7 +96,21 @@ public class SelectedKeyFragment extends AbstractTutorialValidationFragment {
 
     @Override
     public boolean onTryValidate() {
-        return mInputKeyController.onTryValidate();
+        boolean result = mInputKeyController.onTryValidate();
+        if (isValid()) {
+            ShowCodeActivity.startAndFinish((AppCompatActivity) getActivity());
+        }
+
+        return result;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MainThread, sticky = true)
+    public void onEvent(DatabaseEvent event) {
+        Key key = event.getKey();
+        if (event.getKey() != null) {
+            //           onEvent(new EventContent(event.getKey().getSecret()));
+            mInputKeyController.setContent(key.getSecret());
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MainThread, sticky = true)
@@ -115,6 +135,17 @@ public class SelectedKeyFragment extends AbstractTutorialValidationFragment {
         animator.start();
 
         mGetCode.setText(mInputKeyController.generateCode());
+    }
+
+    public void setContentKey() {
+        Key key = DependencyInjectorFactory.getDependencyInjector()
+                .getDatabaseProvider()
+                .getLastKey();
+
+        if (key != null) {
+            mInputKeyController.setContent(key.getSecret());
+            mGetCode.setText(mInputKeyController.generateCode());
+        }
     }
 
     public TimeProvider getTimeProvider() {

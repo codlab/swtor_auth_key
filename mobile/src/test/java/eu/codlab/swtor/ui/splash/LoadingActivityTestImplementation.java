@@ -32,7 +32,6 @@ import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
@@ -100,7 +99,7 @@ public class LoadingActivityTestImplementation {
 
 
         //create the activity
-        LoadingActivity activity = Robolectric.buildActivity(LoadingActivity.class).create().get();
+        LoadingActivity activity = Robolectric.buildActivity(LoadingActivity.class).create().resume().get();
         ShadowActivity shadowActivity = (ShadowActivity) ShadowExtractor.extract(activity);
         TestUtil.purgeShadowActivityStartActivity(shadowActivity);
 
@@ -123,6 +122,7 @@ public class LoadingActivityTestImplementation {
 
 
         //test that when having a key in the database, we do not start the activity
+        TestUtil.purgeShadowActivityStartActivity(shadowActivity);
         DependencyInjectorFactory.getDependencyInjector().getDatabaseProvider()
                 .getAllKeys().add(new Key());
         activity.checkDependency();
@@ -131,9 +131,10 @@ public class LoadingActivityTestImplementation {
         assertTrue(activity.getDependencyInjector().getDatabaseProvider().hasValues());
 
         Intent startedIntent = shadowActivity.getNextStartedActivity();
-        assertNull(startedIntent);
+        assertNotNull(startedIntent);
 
         //erase every key to make sure we have none
+        TestUtil.purgeShadowActivityStartActivity(shadowActivity);
         DependencyInjectorFactory.getDependencyInjector().getDatabaseProvider()
                 .getAllKeys().clear();
 
@@ -151,6 +152,7 @@ public class LoadingActivityTestImplementation {
 
         assertTrue(activity.isFinishing());
     }
+
 
     @Test
     public void testOnPause() throws NoSuchFieldException, IllegalAccessException {

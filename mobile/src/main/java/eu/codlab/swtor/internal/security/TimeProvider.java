@@ -4,8 +4,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.MainThread;
 
-import com.wopata.aspectlib.annotations.EnsureUiThread;
-
 /**
  * Created by kevinleperf on 03/02/16.
  */

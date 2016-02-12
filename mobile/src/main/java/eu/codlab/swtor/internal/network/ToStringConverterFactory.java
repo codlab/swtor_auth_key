@@ -22,7 +22,7 @@ public class ToStringConverterFactory extends Converter.Factory {
     /**
      * Default constructor
      */
-    public ToStringConverterFactory(){
+    public ToStringConverterFactory() {
         //NOTHING TO DO IN IT
     }
 
@@ -61,7 +61,7 @@ public class ToStringConverterFactory extends Converter.Factory {
         };
     }
 
-    Converter<String, RequestBody> getConverterFromString(){
+    Converter<String, RequestBody> getConverterFromString() {
         return new Converter<String, RequestBody>() {
             @NonNull
             @Override

@@ -76,9 +76,9 @@ public class AppManagerTest {
         });
 
         long time = System.currentTimeMillis();
-        long timeout = time + 5000;
+        long timeout = time + 2000;
 
-        while (time < timeout && !manager.isInit()) {
+        while (time < timeout) {
             time = System.currentTimeMillis();
         }
 

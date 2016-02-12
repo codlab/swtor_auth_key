@@ -56,7 +56,7 @@ public final class TimeSync {
     }
 
     private Callback<String> getCallback() {
-        return new Callback<String>() {
+        return new CallbackString() {
             @Override
             public void onResponse(@NonNull Response<String> response) {
                 //response headers are always non null
@@ -66,11 +66,6 @@ public final class TimeSync {
                 long diff = date.getTime() - System.currentTimeMillis();
 
                 setDiff(diff);
-            }
-
-            @Override
-            public void onFailure(@NonNull Throwable t) {
-                //NO SONAR
             }
         };
     }

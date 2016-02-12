@@ -2,6 +2,7 @@ package eu.codlab.swtor.internal.tutorial;
 
 import com.alexandrepiveteau.library.tutorial.ui.fragments.ITutorialValidationFragment;
 
+import eu.codlab.swtor.internal.database.impl.Key;
 import eu.codlab.swtor.internal.injector.DependencyInjectorFactory;
 import eu.codlab.swtor.internal.security.CodeProvider;
 
@@ -49,6 +50,16 @@ public class InputKeyController implements ITutorialValidationFragment {
 
     @Override
     public boolean onTryValidate() {
+
+        if(isValid()){
+            Key key = new Key();
+            key.setName("");
+            key.setSecret(getContent());
+
+            DependencyInjectorFactory.getDependencyInjector().getDatabaseProvider()
+                    .updateKey(key);
+        }
+
         return false;
     }
 }

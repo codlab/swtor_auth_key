@@ -71,27 +71,24 @@ dependencies {
         transitive = true;
     }
 
+    compile('com.github.afollestad.material-dialogs:core:0.8.5.4@aar') {
+        transitive = true
+    }
+
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:support-v4:23.1.1'
     compile 'com.google.android.gms:play-services-wearable:8.4.0'
-
     compile 'com.android.support:design:23.1.1'
     compile 'me.zhanghai.android.materialprogressbar:library:1.1.4'
-    compile 'com.github.codlab:MaterialTutorial:1.5.3'
-
+    compile 'com.github.codlab:MaterialTutorial:1.5.5'
     compile 'com.github.Raizlabs.DBFlow:dbflow-core:3.0.0-beta1'
     compile 'com.github.Raizlabs.DBFlow:dbflow:3.0.0-beta1'
-
     compile 'com.squareup.retrofit2:retrofit:2.0.0-beta3'
     compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta3'
-
     compile 'de.greenrobot:eventbus:3.0.0-beta1'
     compile 'com.jakewharton:butterknife:7.0.1'
-
     compile 'com.github.aardouin:AspectForAndroid:1.0'
-
-
-
+    compile 'com.getbase:floatingactionbutton:1.10.1'
 }
 
 tasks.withType(Test) { task ->
@@ -102,7 +99,7 @@ tasks.withType(Test) { task ->
 
 afterEvaluate {
     test.dependsOn clean
-
+    tasks.testDebugUnitTest.mustRunAfter clean
     tasks.testDebugUnitTest.finalizedBy(tasks.sonarqube)
 }
 

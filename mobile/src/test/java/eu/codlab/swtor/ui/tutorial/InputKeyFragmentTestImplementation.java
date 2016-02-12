@@ -49,14 +49,10 @@ public class InputKeyFragmentTestImplementation {
     @Test
     public void testOnResume() {
         TimeProvider provider = DependencyInjectorFactory.getDependencyInjector().getTimeProvider();
-        EventBus bus = DependencyInjectorFactory.getDependencyInjector().getDefaultEventBus();
-
         mFragment.onPause();
 
         assertFalse(provider.isResumed());
         assertTrue(provider.isPaused());
-
-        assertFalse(bus.isRegistered(mFragment));
 
         System.out.println("state ? " + provider.isPaused() + " " + provider.isResumed() + " " + provider + " " + mFragment.getTimeProvider());
         mFragment.onResume();
@@ -64,8 +60,6 @@ public class InputKeyFragmentTestImplementation {
 
         assertTrue(provider.isResumed());
         assertFalse(provider.isPaused());
-
-        assertTrue(bus.isRegistered(mFragment));
     }
 
     @Test

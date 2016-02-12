@@ -1,46 +1,33 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center_vertical|center_horizontal"
+    android:gravity="center_vertical|center_horizontal"
+    android:orientation="vertical"
+    android:padding="@dimen/default_padding"
     tools:context="eu.codlab.swtor.ui.tutorial.SelectedKeyFragment">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/get_code"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_gravity="center_vertical|center_horizontal"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:padding="@dimen/default_padding">
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_padding"
+        android:layout_marginBottom="@dimen/default_padding"
+        android:gravity="center_horizontal"
+        android:text="@string/get_code_title"
+        android:textColor="@android:color/white"
+        android:textSize="26dp" />
 
-        <TextView
-            android:id="@+id/get_code"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_padding"
-            android:layout_marginBottom="@dimen/default_padding"
-            android:gravity="center_horizontal"
-            android:text="@string/get_code_title"
-            android:textColor="@android:color/white"
-            android:textSize="26dp" />
-
-        <me.zhanghai.android.materialprogressbar.MaterialProgressBar
-            android:id="@+id/code_next_time"
-            style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:layout_margin="@dimen/default_padding"
-            android:layout_marginBottom="@dimen/default_padding"
-            android:indeterminate="false"
-            android:max="30000"
-            app:mpb_progressStyle="horizontal" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_padding"
-            android:layout_marginBottom="@dimen/default_padding"
-            android:textColor="@android:color/white"
-            tools:text="Some Text" />
-    </LinearLayout>
-</ScrollView>
+    <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+        android:id="@+id/code_next_time"
+        style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_margin="@dimen/default_padding"
+        android:layout_marginBottom="@dimen/default_padding"
+        android:indeterminate="false"
+        android:max="30000"
+        app:mpb_progressStyle="horizontal" />
+</LinearLayout>

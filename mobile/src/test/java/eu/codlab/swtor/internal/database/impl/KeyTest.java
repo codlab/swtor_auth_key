@@ -60,4 +60,10 @@ public class KeyTest {
         mKey.setSecret(null);
         assertNull(mKey.getSecret());
     }
+
+    @Test
+    public void testUpdatedAt(){
+        mKey.setUpdatedAt(0);
+        assertEquals(0, mKey.getUpdatedAt());
+    }
 }

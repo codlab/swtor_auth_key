@@ -24,4 +24,10 @@ public interface IDatabaseProvider {
 
     @NonNull
     List<Key> getCopyKeys();
+
+    Key getLastKey();
+
+    void updateKey(Key key);
+
+    void warnListeners();
 }

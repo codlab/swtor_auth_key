@@ -1,17 +1,20 @@
 package eu.codlab.swtor.ui.tutorial;
 
+import android.content.Context;
 import android.content.Intent;
 
 import com.alexandrepiveteau.library.tutorial.ui.fragments.AbstractTutorialValidationFragment;
 import com.alexandrepiveteau.library.tutorial.ui.fragments.TutorialFragment;
 
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import eu.codlab.swtor.R;
+import eu.codlab.swtor.internal.injector.DependencyInjectorFactory;
+import eu.codlab.swtor.internal.injector.DependencyStandardInjector;
 import eu.codlab.swtor.utils.Constants;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -45,6 +48,7 @@ public class TutorialActivityTest {
         TutorialActivity activity = new TutorialActivity();
 
         AbstractTutorialValidationFragment fragment = null;
+        AbstractTutorialValidationFragment select = activity.getTutorialFragmentFor(4);
 
         for (int i = 0; i < 3 && i < Constants.TITLE.getSize(); i++) {
             fragment = activity.getTutorialFragmentFor(i);
@@ -54,17 +58,15 @@ public class TutorialActivityTest {
 
         fragment = activity.getTutorialFragmentFor(3);
         assertTrue(fragment instanceof InputKeyFragment);
-
-        fragment = activity.getTutorialFragmentFor(4);
-        assertTrue(fragment instanceof SelectedKeyFragment);
+        assertTrue(select instanceof SelectedKeyFragment);
     }
 
     @Test
     public void testUI() {
         TutorialActivity activity = new TutorialActivity();
 
-        assertFalse(activity.isStatusBarColored());
-        assertFalse(activity.isNavigationBarColored());
+        assertTrue(activity.isStatusBarColored());
+        assertTrue(activity.isNavigationBarColored());
         assertNotNull(activity.getPageTransformer());
     }
 
