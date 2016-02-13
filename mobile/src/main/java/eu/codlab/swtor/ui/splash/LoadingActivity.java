@@ -1,6 +1,8 @@
 package eu.codlab.swtor.ui.splash;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 
 import eu.codlab.swtor.R;
 import eu.codlab.swtor.internal.app.listeners.IAppListener;
@@ -14,6 +16,7 @@ public class LoadingActivity extends AbstractKeysActivity implements IAppListene
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("Current", Build.VERSION.SDK_INT + " current sdk int");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
     }

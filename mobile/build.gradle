@@ -32,6 +32,7 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
     }
     buildTypes {
         debug {
@@ -52,14 +53,15 @@ android {
 apply plugin: 'com.neenbedankt.android-apt'
 
 dependencies {
+    compile 'com.android.support:multidex:1.0.1'
+
     compile project(':common')
-    compile files("libs/swtor.jar")
     wearApp project(':wear')
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:2.0.0-beta'
     testCompile 'org.robolectric:robolectric:3.0'
     testCompile 'org.robolectric:shadows-support-v4:3.0'
-    testCompile 'com.github.codlab:TestCore:0.2.3'
+    testCompile 'com.github.codlab:TestCore:0.2.4'
 
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
         transitive = true;

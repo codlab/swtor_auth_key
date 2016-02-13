@@ -107,9 +107,9 @@ public class SelectedKeyFragment extends AbstractTutorialValidationFragment {
     @Subscribe(threadMode = ThreadMode.MainThread, sticky = true)
     public void onEvent(DatabaseEvent event) {
         Key key = event.getKey();
-        if (event.getKey() != null) {
-            //           onEvent(new EventContent(event.getKey().getSecret()));
-            mInputKeyController.setContent(key.getSecret());
+        if (key != null) {
+            String content = event.getKey().getSecret();
+            onEvent(new EventContent(content));
         }
     }
 

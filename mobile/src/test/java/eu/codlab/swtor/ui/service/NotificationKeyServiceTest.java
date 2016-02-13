@@ -188,4 +188,9 @@ public class NotificationKeyServiceTest {
 
         assertNull(mEventBus);
     }
+
+    @Test
+    public void testInitKey() throws NoSuchFieldException, IllegalAccessException {
+        testOnEventDatabaseNull();
+    }
 }

@@ -94,9 +94,7 @@ public class NotificationKeyService extends Service {
                 .getDependencyInjector()
                 .getDatabaseProvider()
                 .getLastKey();
-        if (key != null) {
-            onEvent(new DatabaseEvent(key));
-        }
+        onEvent(new DatabaseEvent(key));
     }
 
     private void updateNotification() {

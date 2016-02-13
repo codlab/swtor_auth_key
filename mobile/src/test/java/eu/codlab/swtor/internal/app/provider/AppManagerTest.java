@@ -79,7 +79,7 @@ public class AppManagerTest {
         long time = System.currentTimeMillis();
         long timeout = time + 2000;
 
-        while (time < timeout) {
+        while (time < timeout && !warned[1]) {
             time = System.currentTimeMillis();
         }
 

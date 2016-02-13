@@ -12,17 +12,38 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 @Table(name = "Key", database = Database.class)
 public class Key extends BaseModel {
 
+    /**
+     * Represent the current Key id,
+     * internally, having mId = default means that
+     * the object was not saved in the database
+     */
     @PrimaryKey(autoincrement = true)
     @Column(name = "id")
     long mId;
 
+    /**
+     * The Key displayed name
+     *
+     * Not used for now, but here to be prepared to a future
+     * key management feature
+     */
     @Index
     @Column(name = "name")
     String mName;
 
+    /**
+     * The generated code given by the SWTOR Website
+     * It is b32 string
+     */
     @Column(name = "secret")
     String mSecret;
 
+    /**
+     * Internally, give the last update time of the current key
+     *
+     * selecting a key will update this field
+     * hence, the last updated key is the selected one
+     */
     @Column(name = "updated_at")
     long mUpdatedAt;
 

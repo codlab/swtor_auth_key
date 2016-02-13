@@ -176,7 +176,7 @@ public class SelectCodeFragmentTestImplementation {
         InputKeyController controller = (InputKeyController) field.get(mFragment);
 
         Key key = new Key();
-        key.setSecret("test");
+        key.setSecret(GenerateCodeTest.CODE_OK);
 
         mFragment.onEvent(new DatabaseEvent(key));
 
