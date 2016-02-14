@@ -2,8 +2,8 @@ package eu.codlab.swtor;
 
 import org.junit.Test;
 
-import eu.codlab.swtor.internal.security.CodeProvider;
-import eu.codlab.swtor.internal.security.CodeProviderFactory;
+import eu.codlab.common.security.CodeProvider;
+import eu.codlab.common.security.CodeProviderFactory;
 
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;

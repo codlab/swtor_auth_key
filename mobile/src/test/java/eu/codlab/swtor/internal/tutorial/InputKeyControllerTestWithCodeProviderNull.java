@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import eu.codlab.swtor.internal.injector.DependencyInjectorFactory;
+import eu.codlab.common.dependency.DependencyInjectorFactory;
 import eu.codlab.swtor.internal.tutorial.non_test.DependencyInjectorImplementationWithCodeProviderNull;
 
 import static junit.framework.Assert.assertFalse;

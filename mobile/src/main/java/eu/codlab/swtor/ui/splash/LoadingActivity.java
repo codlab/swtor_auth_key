@@ -4,10 +4,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
+import eu.codlab.common.dependency.listeners.IAppListener;
+import eu.codlab.common.dependency.listeners.IAppManager;
+import eu.codlab.common.dependency.listeners.IDatabaseProvider;
 import eu.codlab.swtor.R;
-import eu.codlab.swtor.internal.app.listeners.IAppListener;
-import eu.codlab.swtor.internal.injector.interfaces.IAppManager;
-import eu.codlab.swtor.internal.injector.interfaces.IDatabaseProvider;
 import eu.codlab.swtor.ui.abstracts.AbstractKeysActivity;
 import eu.codlab.swtor.ui.main.ShowCodeActivity;
 import eu.codlab.swtor.ui.tutorial.TutorialActivity;

@@ -14,13 +14,13 @@ import org.robolectric.annotation.Config;
 import org.robolectric.internal.ShadowExtractor;
 import org.robolectric.shadows.ShadowActivity;
 
+import eu.codlab.common.dependency.DependencyInjector;
+import eu.codlab.common.dependency.DependencyInjectorFactory;
+import eu.codlab.common.dependency.listeners.IDatabaseProvider;
 import eu.codlab.swtor.BuildConfig;
 import eu.codlab.swtor.internal.database.impl.Key;
 import eu.codlab.swtor.internal.database.provider.DatabaseProvider;
-import eu.codlab.swtor.internal.injector.DependencyInjector;
-import eu.codlab.swtor.internal.injector.DependencyInjectorFactory;
 import eu.codlab.swtor.internal.injector.DependencyStandardInjector;
-import eu.codlab.swtor.internal.injector.interfaces.IDatabaseProvider;
 import eu.codlab.swtor.ui.tutorial.TutorialActivity;
 import eu.codlab.test.TestUtil;
 

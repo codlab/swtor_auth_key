@@ -11,12 +11,12 @@ import android.support.v7.app.NotificationCompat;
 import de.greenrobot.event.EventBus;
 import de.greenrobot.event.Subscribe;
 import de.greenrobot.event.ThreadMode;
+import eu.codlab.common.dependency.DependencyInjectorFactory;
+import eu.codlab.common.security.TimeProvider;
+import eu.codlab.common.security.events.CodeInvalidateEvent;
 import eu.codlab.swtor.R;
 import eu.codlab.swtor.internal.database.events.DatabaseEvent;
 import eu.codlab.swtor.internal.database.impl.Key;
-import eu.codlab.swtor.internal.injector.DependencyInjectorFactory;
-import eu.codlab.swtor.internal.security.TimeProvider;
-import eu.codlab.swtor.internal.tutorial.CodeInvalidateEvent;
 import eu.codlab.swtor.internal.tutorial.InputKeyController;
 
 /**

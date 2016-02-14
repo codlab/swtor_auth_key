@@ -11,8 +11,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import eu.codlab.swtor.internal.app.listeners.IAppListener;
-import eu.codlab.swtor.internal.injector.DependencyInjectorFactory;
+import eu.codlab.common.dependency.DependencyInjectorFactory;
+import eu.codlab.common.dependency.listeners.IAppListener;
 import eu.codlab.swtor.internal.injector.DependencyStandardInjector;
 
 import static org.junit.Assert.assertFalse;
@@ -91,4 +91,6 @@ public class AppManagerTest {
         assertTrue(warned[1]);
 
     }
+
+
 }

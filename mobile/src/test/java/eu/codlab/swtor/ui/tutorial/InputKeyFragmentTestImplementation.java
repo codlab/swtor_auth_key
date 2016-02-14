@@ -15,11 +15,10 @@ import org.robolectric.shadows.support.v4.SupportFragmentTestUtil;
 import java.lang.reflect.Field;
 
 import de.greenrobot.event.EventBus;
+import eu.codlab.common.dependency.DependencyInjectorFactory;
+import eu.codlab.common.security.TimeProvider;
 import eu.codlab.swtor.BuildConfig;
 import eu.codlab.swtor.GenerateCodeTest;
-import eu.codlab.swtor.internal.injector.DependencyInjectorFactory;
-import eu.codlab.swtor.internal.injector.DependencyStandardInjector;
-import eu.codlab.swtor.internal.security.TimeProvider;
 import eu.codlab.swtor.internal.tutorial.InputKeyController;
 
 import static org.junit.Assert.assertEquals;

@@ -1,5 +1,6 @@
 package eu.codlab.swtor.ui.tutorial;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,15 +18,15 @@ import eu.codlab.swtor.utils.Constants;
 public class TutorialActivity extends com.alexandrepiveteau.library.tutorial.ui.activities.TutorialActivity {
 
     @NonNull
-    public static Intent createIntent(@NonNull AppCompatActivity parent) {
+    public static Intent createIntent(@NonNull Activity parent) {
         return new Intent(parent, TutorialActivity.class);
     }
 
-    public static void start(@NonNull AppCompatActivity parent) {
+    public static void start(@NonNull Activity parent) {
         parent.startActivity(createIntent(parent));
     }
 
-    public static void startAndFinish(@NonNull AppCompatActivity parent) {
+    public static void startAndFinish(@NonNull Activity parent) {
         start(parent);
 
         parent.finish();

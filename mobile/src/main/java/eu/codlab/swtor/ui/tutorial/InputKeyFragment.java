@@ -15,10 +15,10 @@ import com.alexandrepiveteau.library.tutorial.ui.fragments.AbstractTutorialValid
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnTextChanged;
+import eu.codlab.common.dependency.DependencyInjector;
+import eu.codlab.common.dependency.DependencyInjectorFactory;
+import eu.codlab.common.security.TimeProvider;
 import eu.codlab.swtor.R;
-import eu.codlab.swtor.internal.injector.DependencyInjector;
-import eu.codlab.swtor.internal.injector.DependencyInjectorFactory;
-import eu.codlab.swtor.internal.security.TimeProvider;
 import eu.codlab.swtor.internal.tutorial.EventContent;
 import eu.codlab.swtor.internal.tutorial.InputKeyController;
 
@@ -100,7 +100,7 @@ public class InputKeyFragment extends AbstractTutorialValidationFragment {
 
     private void invalidateErrorText() {
 
-        if(isResumed()) {
+        if (isResumed()) {
             if (!mInputKeyController.isValid()) {
                 mInputCode.setError(getString(R.string.error_invalid));
             } else {

@@ -3,8 +3,8 @@ package eu.codlab.swtor.ui.abstracts;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import eu.codlab.swtor.internal.injector.DependencyInjector;
-import eu.codlab.swtor.internal.injector.DependencyInjectorFactory;
+import eu.codlab.common.dependency.DependencyInjector;
+import eu.codlab.common.dependency.DependencyInjectorFactory;
 
 /**
  * Created by kevinleperf on 24/01/16.

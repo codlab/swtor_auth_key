@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,16 +24,17 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import de.greenrobot.event.EventBus;
+import eu.codlab.common.dependency.DependencyInjector;
+import eu.codlab.common.dependency.DependencyInjectorFactory;
+import eu.codlab.common.dependency.listeners.IDatabaseProvider;
+import eu.codlab.common.security.TimeProvider;
+import eu.codlab.common.security.events.CodeInvalidateEvent;
 import eu.codlab.swtor.BuildConfig;
 import eu.codlab.swtor.GenerateCodeTest;
 import eu.codlab.swtor.internal.database.events.DatabaseEvent;
 import eu.codlab.swtor.internal.database.impl.Key;
 import eu.codlab.swtor.internal.database.provider.DatabaseProvider;
-import eu.codlab.swtor.internal.injector.DependencyInjector;
-import eu.codlab.swtor.internal.injector.DependencyInjectorFactory;
 import eu.codlab.swtor.internal.injector.DependencyStandardInjector;
-import eu.codlab.swtor.internal.injector.interfaces.IDatabaseProvider;
-import eu.codlab.swtor.internal.security.TimeProvider;
 import eu.codlab.swtor.internal.tutorial.InputKeyController;
 
 import static org.junit.Assert.assertEquals;
@@ -61,6 +63,13 @@ public class NotificationKeyServiceTest {
         mNotificationManager = (NotificationManager) RuntimeEnvironment.application
                 .getSystemService(Context.NOTIFICATION_SERVICE);
         mShadowNotificationManager = (ShadowNotificationManager) ShadowExtractor.extract(mNotificationManager);
+
+        mShadowNotificationManager.cancelAll();
+    }
+
+    @After
+    public void tearDown() {
+        mNotificationKeyService.stopSelf();
     }
 
     @Test
@@ -68,6 +77,7 @@ public class NotificationKeyServiceTest {
         IBinder binder = mNotificationKeyService.onBind(new Intent());
 
         assertNull(binder);
+
     }
 
     @Test
@@ -133,6 +143,38 @@ public class NotificationKeyServiceTest {
     }
 
     @Test
+    public void testOnEventCodeInvalidateEventValid() throws NoSuchFieldException, IllegalAccessException {
+        String expectedString = GenerateCodeTest.CODE_OK;
+
+        Field inputKeyController = mNotificationKeyService.getClass().getDeclaredField("mInputKeyController");
+        inputKeyController.setAccessible(true);
+        InputKeyController controller = (InputKeyController) inputKeyController.get(mNotificationKeyService);
+
+        controller.setContent(expectedString);
+
+
+        mNotificationKeyService.onEvent(new CodeInvalidateEvent(1));
+        assertTrue(controller.isValid());
+        assertEquals(1, mShadowNotificationManager.size());
+    }
+
+    @Test
+    public void testOnEventCodeInvalidateEventInvalid() throws NoSuchFieldException, IllegalAccessException {
+        String expectedString = "test";
+
+        Field inputKeyController = mNotificationKeyService.getClass().getDeclaredField("mInputKeyController");
+        inputKeyController.setAccessible(true);
+        InputKeyController controller = (InputKeyController) inputKeyController.get(mNotificationKeyService);
+
+        controller.setContent(expectedString);
+
+
+        mNotificationKeyService.onEvent(new CodeInvalidateEvent(1));
+        assertFalse(controller.isValid());
+        assertEquals(0, mShadowNotificationManager.size());
+    }
+
+    @Test
     public void testOnEventDatabaseNull() throws NoSuchFieldException, IllegalAccessException {
         String expectedString = "test";
 
@@ -156,7 +198,6 @@ public class NotificationKeyServiceTest {
         key.setSecret(GenerateCodeTest.CODE_OK);
 
         DatabaseEvent event = new DatabaseEvent(key);
-
         mNotificationKeyService.onEvent(event);
 
         assertEquals(1, mShadowNotificationManager.size());

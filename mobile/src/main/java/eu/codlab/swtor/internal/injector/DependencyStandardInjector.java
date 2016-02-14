@@ -6,16 +6,17 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import de.greenrobot.event.EventBus;
+import eu.codlab.common.dependency.DependencyInjector;
+import eu.codlab.common.dependency.listeners.IAppManager;
+import eu.codlab.common.dependency.listeners.IDatabaseProvider;
+import eu.codlab.common.dependency.listeners.IWeb;
+import eu.codlab.common.network.NetworkConstants;
+import eu.codlab.common.network.ToStringConverterFactory;
+import eu.codlab.common.security.CodeProvider;
+import eu.codlab.common.security.CodeProviderFactory;
+import eu.codlab.common.security.TimeProvider;
 import eu.codlab.swtor.internal.app.provider.AppManager;
 import eu.codlab.swtor.internal.database.provider.DatabaseProvider;
-import eu.codlab.swtor.internal.injector.interfaces.IAppManager;
-import eu.codlab.swtor.internal.injector.interfaces.IDatabaseProvider;
-import eu.codlab.swtor.internal.network.IWeb;
-import eu.codlab.swtor.internal.network.NetworkConstants;
-import eu.codlab.swtor.internal.network.ToStringConverterFactory;
-import eu.codlab.swtor.internal.security.CodeProvider;
-import eu.codlab.swtor.internal.security.CodeProviderFactory;
-import eu.codlab.swtor.internal.security.TimeProvider;
 import retrofit2.Retrofit;
 
 /**

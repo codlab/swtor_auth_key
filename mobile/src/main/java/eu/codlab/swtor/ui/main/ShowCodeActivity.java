@@ -1,5 +1,6 @@
 package eu.codlab.swtor.ui.main;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,11 +19,11 @@ import eu.codlab.swtor.ui.tutorial.TutorialActivity;
 public class ShowCodeActivity extends AbstractKeysActivity implements ITutorialActivity {
 
     @NonNull
-    public static Intent createIntent(@NonNull AppCompatActivity parent) {
+    public static Intent createIntent(@NonNull Activity parent) {
         return new Intent(parent, ShowCodeActivity.class);
     }
 
-    public static void startAndFinish(@NonNull AppCompatActivity parent) {
+    public static void startAndFinish(@NonNull Activity parent) {
         parent.startActivity(createIntent(parent));
 
         parent.finish();

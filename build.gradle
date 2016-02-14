@@ -32,6 +32,7 @@ sonarqube {
         property "sonar.projectName", "sw:tor"
         property "sonar.projectVersion", "1.0"
         property "sonar.sourceEncoding", "UTF-8"
+        property "sonar.java.source", "1.7"
     }
 }
 
@@ -42,6 +43,7 @@ subprojects {
             property "sonar.tests", "./src/test/java"
             property "sonar.binaries", "build"
             property "sonar.scm.provider", "git"
+            property "sonar.java.source", "1.7"
 
             property "sonar.junit.reportsPath", "./build/test-results/debug"
 

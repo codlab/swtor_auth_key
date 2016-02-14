@@ -2,14 +2,12 @@ package eu.codlab.swtor.internal.tutorial;
 
 import android.content.Context;
 
-import junit.framework.Assert;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import eu.codlab.common.dependency.DependencyInjectorFactory;
 import eu.codlab.swtor.GenerateCodeTest;
-import eu.codlab.swtor.internal.injector.DependencyInjectorFactory;
 import eu.codlab.swtor.internal.tutorial.non_test.DependencyInjectorImplementation;
 
 import static junit.framework.Assert.assertFalse;

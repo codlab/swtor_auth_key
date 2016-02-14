@@ -19,14 +19,14 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
+import eu.codlab.common.dependency.DependencyInjector;
+import eu.codlab.common.dependency.DependencyInjectorFactory;
+import eu.codlab.common.dependency.listeners.IAppListener;
+import eu.codlab.common.dependency.listeners.IAppManager;
 import eu.codlab.swtor.BuildConfig;
-import eu.codlab.swtor.internal.app.listeners.IAppListener;
 import eu.codlab.swtor.internal.app.provider.AppManager;
 import eu.codlab.swtor.internal.database.impl.Key;
-import eu.codlab.swtor.internal.injector.DependencyInjector;
-import eu.codlab.swtor.internal.injector.DependencyInjectorFactory;
 import eu.codlab.swtor.internal.injector.DependencyStandardInjector;
-import eu.codlab.swtor.internal.injector.interfaces.IAppManager;
 import eu.codlab.swtor.ui.tutorial.TutorialActivity;
 import eu.codlab.test.TestUtil;
 

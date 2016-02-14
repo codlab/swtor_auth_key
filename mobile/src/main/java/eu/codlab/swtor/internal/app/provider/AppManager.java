@@ -10,9 +10,9 @@ import com.raizlabs.android.dbflow.config.FlowManager;
 import java.util.ArrayList;
 import java.util.List;
 
-import eu.codlab.swtor.internal.app.listeners.IAppListener;
-import eu.codlab.swtor.internal.injector.DependencyInjectorFactory;
-import eu.codlab.swtor.internal.injector.interfaces.IAppManager;
+import eu.codlab.common.dependency.DependencyInjectorFactory;
+import eu.codlab.common.dependency.listeners.IAppListener;
+import eu.codlab.common.dependency.listeners.IAppManager;
 import eu.codlab.swtor.utils.LockableObject;
 import io.fabric.sdk.android.Fabric;
 
