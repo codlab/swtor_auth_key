@@ -36,6 +36,29 @@
         <service
             android:name="eu.codlab.crashlytics_wear.ErrorService"
             android:process=":error" />
+
+
+        <!-- those two services are here to manage arrival keys -->
+        <service android:name=".service.NotificationKeyService" />
+
+        <service android:name=".service.MobileKeyListenerService">
+            <intent-filter>
+                <action android:name="com.google.android.gms.wearable.BIND_LISTENER" />
+            </intent-filter>
+
+            <intent-filter>
+                <!-- listeners receive events that match the action and data filters -->
+                <action android:name="com.google.android.gms.wearable.DATA_CHANGED" />
+                <action android:name="com.google.android.gms.wearable.MESSAGE_RECEIVED" />
+                <action android:name="com.google.android.gms.wearable.CAPABILITY_CHANGED" />
+                <action android:name="com.google.android.gms.wearable.CHANNEL_EVENT" />
+
+                <data
+                    android:host="*"
+                    android:pathPrefix="@string/wear_swtor_key"
+                    android:scheme="wear" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

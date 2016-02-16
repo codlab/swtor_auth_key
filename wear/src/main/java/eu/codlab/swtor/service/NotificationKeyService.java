@@ -1,13 +1,14 @@
-package eu.codlab.swtor.ui.service;
+package eu.codlab.swtor.service;
 
 import android.app.Activity;
 import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v7.app.NotificationCompat;
+import android.util.Log;
 
 import de.greenrobot.event.EventBus;
 import de.greenrobot.event.Subscribe;
@@ -15,7 +16,6 @@ import de.greenrobot.event.ThreadMode;
 import eu.codlab.common.dependency.DependencyInjectorFactory;
 import eu.codlab.common.security.TimeProvider;
 import eu.codlab.common.security.events.CodeInvalidateEvent;
-import eu.codlab.intercom.WearSenderObject;
 import eu.codlab.swtor.R;
 import eu.codlab.swtor.internal.database.events.DatabaseEvent;
 import eu.codlab.swtor.internal.database.impl.Key;
@@ -23,21 +23,19 @@ import eu.codlab.swtor.internal.tutorial.InputKeyController;
 import eu.codlab.swtor.utils.Constants;
 
 /**
- * Created by kevinleperf on 10/02/16.
+ * Created by kevinleperf on 15/02/16.
  */
 public class NotificationKeyService extends Service {
     private int mNotificationId;
     private TimeProvider mTimeProvider;
     private EventBus mEventBus;
     private InputKeyController mInputKeyController;
-    private WearSenderObject mWearSenderObject;
 
     public static void start(Activity parent) {
         Intent intent = new Intent(parent, NotificationKeyService.class);
 
         parent.startService(intent);
     }
-
 
     @Nullable
     @Override
@@ -52,8 +50,6 @@ public class NotificationKeyService extends Service {
         mNotificationId = (int) System.currentTimeMillis();
 
         mInputKeyController = new InputKeyController();
-
-        mWearSenderObject = new WearSenderObject(this);
 
         mEventBus = DependencyInjectorFactory
                 .getDependencyInjector()
@@ -70,6 +66,29 @@ public class NotificationKeyService extends Service {
         updateNotification();
 
         mTimeProvider.onResume();
+
+        Log.d("Wear", "onCreate");
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        if (intent != null
+                && intent.hasExtra(Constants.KEY_SEND_KEY_NAME)
+                && intent.hasExtra(Constants.KEY_SEND_KEY_SECRET)) {
+
+            Key key = new Key();
+
+            key.setName(intent.getStringExtra(Constants.KEY_SEND_KEY_NAME));
+            key.setSecret(intent.getStringExtra(Constants.KEY_SEND_KEY_SECRET));
+
+            DatabaseEvent event = new DatabaseEvent(key);
+            mEventBus.postSticky(event);
+
+            intent.removeExtra(Constants.KEY_SEND_KEY_NAME);
+            intent.removeExtra(Constants.KEY_SEND_KEY_SECRET);
+        }
+
+        return START_STICKY;
     }
 
     @Override
@@ -79,9 +98,6 @@ public class NotificationKeyService extends Service {
         mEventBus.unregister(this);
         mEventBus = null;
 
-        mWearSenderObject.stop();
-        mWearSenderObject = null;
-
         super.onDestroy();
     }
 
@@ -89,17 +105,14 @@ public class NotificationKeyService extends Service {
     public void onEvent(DatabaseEvent event) {
         Key key = event.getKey();
         if (key != null) {
+            DependencyInjectorFactory
+                    .getDependencyInjector()
+                    .getDatabaseProvider()
+                    .updateKey(key);
+
+            Log.d("Wear", "having key " + key.getSecret());
             mInputKeyController.setContent(key.getSecret());
             updateNotification();
-
-            if (mWearSenderObject != null) {
-                Bundle bundle = new Bundle();
-                bundle.putString(Constants.KEY_SEND_KEY_NAME, key.getName());
-                bundle.putString(Constants.KEY_SEND_KEY_SECRET, key.getSecret());
-
-
-                mWearSenderObject.sendMessage(Constants.KEY_SEND_WEAR, bundle);
-            }
         }
     }
 
@@ -113,15 +126,14 @@ public class NotificationKeyService extends Service {
                 .getDependencyInjector()
                 .getDatabaseProvider()
                 .getLastKey();
+        Log.d("Wear", "initKey " + key);
 
         onEvent(new DatabaseEvent(key));
-
-        if (key != null) {
-            mEventBus.postSticky(new SendMessageEvent(key));
-        }
     }
 
     private void updateNotification() {
+        Log.d("Wear", "updateNotification " + mInputKeyController.isValid()
+                + " " + mInputKeyController.generateCode());
         if (mInputKeyController.isValid()) {
             foreground(mInputKeyController.generateCode());
         }
@@ -138,11 +150,13 @@ public class NotificationKeyService extends Service {
     }
 
     private Notification createNotification(String code) {
+        Log.d("Wear", "createNotification");
         return new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_notification)
                 .setContentTitle(getString(R.string.notification_title))
                 .setContentText(code)
-                .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
+                .setContentIntent(PendingIntent.getBroadcast(this, mNotificationId, new Intent(),
+                        PendingIntent.FLAG_UPDATE_CURRENT))
                 .build();
     }
 

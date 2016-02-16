@@ -6,6 +6,13 @@ import eu.codlab.common.R;
  * Created by kevinleperf on 07/02/16.
  */
 public final class Constants {
+
+    public static final String KEY_SEND_WEAR = "/wear/swtor/key";
+
+    public static final String KEY_SEND_KEY_NAME = "KEY_SEND_KEY_NAME";
+
+    public static final String KEY_SEND_KEY_SECRET = "KEY_SEND_KEY_SECRET";
+
     /**
      * Contains the tutorial background colors
      */

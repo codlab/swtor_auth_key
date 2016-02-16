@@ -2,6 +2,7 @@ package eu.codlab.swtor.internal.injector;
 
 import android.content.SharedPreferences;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,7 +12,6 @@ import org.robolectric.annotation.Config;
 
 import java.util.List;
 
-import eu.codlab.common.dependency.DependencyInjector;
 import eu.codlab.common.dependency.DependencyInjectorFactory;
 import eu.codlab.common.dependency.listeners.IAppManager;
 import eu.codlab.common.dependency.listeners.IWeb;
@@ -34,20 +34,27 @@ import static org.junit.Assert.assertTrue;
 @Config(sdk = 21, constants = BuildConfig.class)
 public class DependencyInjectorStandardTest {
 
+    private DependencyStandardInjector mInjector;
     private LoadingActivity mActivity;
 
     @Before
     public void setUp() {
+        DependencyInjectorFactory.flush();
         mActivity = Robolectric.buildActivity(LoadingActivity.class).get();
+        mInjector = new DependencyStandardInjector();
+        mInjector.init(mActivity);
+
+        DependencyInjectorFactory.init(mActivity, mInjector);
+    }
+
+    @After
+    public void tearDown() {
+        DependencyInjectorFactory.flush();
     }
 
     @Test
     public void testGetAppManager() {
-
-        DependencyInjector injector = new DependencyStandardInjector();
-
-        DependencyInjectorFactory.init(mActivity, injector);
-        IAppManager appManager = injector.getAppManager();
+        IAppManager appManager = mInjector.getAppManager();
 
         IAppManager manager = DependencyInjectorFactory.getDependencyInjector()
                 .getAppManager();
@@ -59,10 +66,7 @@ public class DependencyInjectorStandardTest {
 
     @Test
     public void testgetNetworkTimeInjector() {
-        DependencyStandardInjector injector = new DependencyStandardInjector();
-        injector.init(mActivity);
-
-        Retrofit retrofit = injector.getRetrofit();
+        Retrofit retrofit = mInjector.getRetrofit();
         assertNotNull(retrofit);
         assertEquals(NetworkConstants.SWTOR, retrofit.baseUrl().url().url().toString());
 
@@ -81,10 +85,7 @@ public class DependencyInjectorStandardTest {
 
     @Test
     public void testIWeb() {
-        DependencyStandardInjector injector = new DependencyStandardInjector();
-        injector.init(mActivity);
-
-        IWeb iweb = injector.getNetworkTimeWebsevice();
+        IWeb iweb = mInjector.getNetworkTimeWebsevice();
 
         assertNotNull(iweb);
 
@@ -93,16 +94,12 @@ public class DependencyInjectorStandardTest {
 
     @Test
     public void testGetSharedPreferences() {
-        DependencyInjector injector = new DependencyStandardInjector();
-
-        DependencyInjectorFactory.flush();
-        DependencyInjectorFactory.init(mActivity, injector);
 
         SharedPreferences sharedPreferences = DependencyInjectorFactory
                 .getDependencyInjector()
                 .getDefaultSharedPreferences();
 
         assertNotNull(sharedPreferences);
-        assertEquals(injector.getDefaultSharedPreferences(), sharedPreferences);
+        assertEquals(mInjector.getDefaultSharedPreferences(), sharedPreferences);
     }
 }

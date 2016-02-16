@@ -120,8 +120,6 @@ public class LoadingActivityTestImplementation {
 
         //test that after checkDependecy(), the app manager is then init
         assertTrue(appManager.isInit());
-        assertFalse(activity.isFinishing());
-
 
         //test that when having a key in the database, we do not start the activity
         TestUtil.purgeShadowActivityStartActivity(shadowActivity);

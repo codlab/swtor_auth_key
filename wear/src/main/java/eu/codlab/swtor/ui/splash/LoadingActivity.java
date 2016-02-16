@@ -2,6 +2,7 @@ package eu.codlab.swtor.ui.splash;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -14,11 +15,15 @@ import eu.codlab.swtor.ui.main.ShowCodeActivity;
 
 public class LoadingActivity extends AbstractKeysActivity implements IAppListener {
 
+    private Handler mHandler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("Current", Build.VERSION.SDK_INT + " current sdk int");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
+
+        mHandler = new Handler();
     }
 
     @Override
@@ -42,9 +47,7 @@ public class LoadingActivity extends AbstractKeysActivity implements IAppListene
         if (appManager.isInit()) {
             IDatabaseProvider database = getDependencyInjector().getDatabaseProvider();
             if (!database.hasValues()) {
-                Toast.makeText(this,
-                        R.string.please_configure_on_phone,
-                        Toast.LENGTH_SHORT).show();
+                mHandler.post(createLooperMessage());
 
                 finish();
             } else {
@@ -58,5 +61,16 @@ public class LoadingActivity extends AbstractKeysActivity implements IAppListene
     @Override
     public void onAppInitialized() {
         checkDependency();
+    }
+
+    private Runnable createLooperMessage() {
+        return new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(LoadingActivity.this,
+                        R.string.please_configure_on_phone,
+                        Toast.LENGTH_SHORT).show();
+            }
+        };
     }
 }

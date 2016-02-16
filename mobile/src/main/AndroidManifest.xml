@@ -37,7 +37,24 @@
             android:name="io.fabric.ApiKey"
             android:value="a28e99cb06f914cb4242b1a0c75e627ef72db534" />
 
-        <service android:name="eu.codlab.crashlytics_wear.WearDataListenerService" />
+        <service android:name="eu.codlab.crashlytics_wear.WearDataListenerService">
+            <intent-filter>
+                <action android:name="com.google.android.gms.wearable.BIND_LISTENER" />
+            </intent-filter>
+
+            <intent-filter>
+                <!-- listeners receive events that match the action and data filters -->
+                <action android:name="com.google.android.gms.wearable.DATA_CHANGED" />
+                <action android:name="com.google.android.gms.wearable.MESSAGE_RECEIVED" />
+                <action android:name="com.google.android.gms.wearable.CAPABILITY_CHANGED" />
+                <action android:name="com.google.android.gms.wearable.CHANNEL_EVENT" />
+
+                <data
+                    android:host="*"
+                    android:pathPrefix="@string/wear_error_path"
+                    android:scheme="wear" />
+            </intent-filter>
+        </service>
 
     </application>
 

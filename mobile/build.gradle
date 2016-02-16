@@ -56,11 +56,13 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
 
     compile project(':common')
+
     wearApp project(':wear')
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:2.0.0-beta'
     testCompile 'org.robolectric:robolectric:3.0'
     testCompile 'org.robolectric:shadows-support-v4:3.0'
+    testCompile 'org.robolectric:shadows-play-services:3.0'
     testCompile 'com.github.codlab:TestCore:0.2.4'
 
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
@@ -79,8 +81,9 @@ dependencies {
     compile 'com.google.android.gms:play-services-wearable:8.4.0'
     compile 'com.android.support:design:23.1.1'
     compile 'me.zhanghai.android.materialprogressbar:library:1.1.4'
-    compile 'com.github.codlab:MaterialTutorial:1.5.6'
+    compile 'com.github.codlab:MaterialTutorial:1.5.7'
     compile 'com.github.codlab:crashlytics_wear:1.1-mobile'
+    compile 'com.github.codlab:intercom:0.2.1'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.github.aardouin:AspectForAndroid:1.0'
     compile 'com.getbase:floatingactionbutton:1.10.1'

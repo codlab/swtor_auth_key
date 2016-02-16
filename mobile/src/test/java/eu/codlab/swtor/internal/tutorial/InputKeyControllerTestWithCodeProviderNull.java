@@ -22,20 +22,23 @@ public class InputKeyControllerTestWithCodeProviderNull {
     public final String OK = "RULAB3CHR3KDHFC3";
     public Context _context;
 
+    private InputKeyController mController;
+
     @Before
     public void init() {
         _context = Mockito.mock(Context.class);
 
         DependencyInjectorFactory.init(_context, new DependencyInjectorImplementationWithCodeProviderNull());
+
+        mController = new InputKeyController();
+        mController.setContent(null);
     }
 
     @Test
     public void testGenerateCodeNull() {
-        InputKeyController controller = new InputKeyController();
-
         String code = "";
-        controller.setContent(code);
-        String generated = controller.generateCode();
+        mController.setContent(code);
+        String generated = mController.generateCode();
 
         assertNull(generated);
         assertNull(DependencyInjectorFactory.getDependencyInjector().getCodeProvider(code));
@@ -43,26 +46,22 @@ public class InputKeyControllerTestWithCodeProviderNull {
 
     @Test
     public void testValidNext() {
-        InputKeyController controller = new InputKeyController();
-
         String code = "";
-        controller.setContent(code);
+        mController.setContent(code);
 
-        assertNotNull(controller.getContent());
-        assertEquals(controller.getContent(), code);
+        assertNotNull(mController.getContent());
+        assertEquals(mController.getContent(), code);
 
-        boolean valid = controller.isValid();
+        boolean valid = mController.isValid();
 
         assertFalse(valid);
-        assertNull(controller.generateCode());
+        assertNull(mController.generateCode());
     }
 
     @Test
     public void testValidImproperContentLength() {
-        InputKeyController controller = new InputKeyController();
-
         String content = "";
-        boolean valid = controller.isValid();
+        boolean valid = mController.isValid();
 
         assertNotEquals(16, content.length());
         assertFalse(valid);

@@ -20,57 +20,54 @@ public class InputKeyControllerTest {
     public final String OK = "RULAB3CHR3KDHFC3";
     public Context _context;
 
+    private InputKeyController mController;
+
     @Before
     public void init() {
         _context = Mockito.mock(Context.class);
 
         DependencyInjectorFactory.init(_context, new DependencyInjectorImplementation());
+
+        mController = new InputKeyController();
     }
 
     @Test
     public void testFailContentNull() {
-        InputKeyController controller = new InputKeyController();
-        controller.setContent(null);
+        mController.setContent(null);
 
-        assertFalse(controller.isValid());
+        assertFalse(mController.isValid());
     }
 
     @Test
     public void testIsValid() {
-        InputKeyController controller = new InputKeyController();
-        controller.setContent(GenerateCodeTest.CODE_OK);
+        mController.setContent(GenerateCodeTest.CODE_OK);
 
-        assertTrue(controller.isValid());
+        assertTrue(mController.isValid());
     }
 
     @Test
     public void testIsValidFalse() {
-        InputKeyController controller = new InputKeyController();
-        controller.setContent("RULAB3CH+?'DHF__");
+        mController.setContent("RULAB3CH+?'DHF__");
 
-        assertFalse(controller.isValid());
+        assertFalse(mController.isValid());
     }
 
     @Test
     public void testFailContent() {
-        InputKeyController controller = new InputKeyController();
-        controller.setContent("something");
+        mController.setContent("something");
 
-        assertFalse(controller.isValid());
+        assertFalse(mController.isValid());
     }
 
     @Test
     public void testOkContent() {
-        InputKeyController controller = new InputKeyController();
-        controller.setContent(OK);
+        mController.setContent(OK);
 
-        assertTrue(controller.isValid());
+        assertTrue(mController.isValid());
     }
 
     @Test
     public void testOnTryValidate() {
-        InputKeyController controller = new InputKeyController();
-
-        assertFalse(controller.onTryValidate());
+        assertFalse(mController.onTryValidate());
     }
 }

@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
 
+import com.google.android.gms.common.ConnectionResult;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,6 +19,7 @@ import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 import org.robolectric.internal.ShadowExtractor;
 import org.robolectric.shadows.ShadowNotificationManager;
+import org.robolectric.shadows.gms.ShadowGooglePlayServicesUtil;
 import org.robolectric.util.ServiceController;
 
 import java.lang.reflect.Field;
@@ -36,6 +39,8 @@ import eu.codlab.swtor.internal.database.impl.Key;
 import eu.codlab.swtor.internal.database.provider.DatabaseProvider;
 import eu.codlab.swtor.internal.injector.DependencyStandardInjector;
 import eu.codlab.swtor.internal.tutorial.InputKeyController;
+import eu.codlab.utils.PlayServicesShadowZZC;
+import eu.codlab.utils.PlayServicesShadowZZJ;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -47,7 +52,8 @@ import static org.junit.Assert.assertTrue;
  * Created by kevinleperf on 10/02/16.
  */
 @RunWith(RobolectricGradleTestRunner.class)
-@Config(sdk = 21, constants = BuildConfig.class)
+@Config(sdk = 17, constants = BuildConfig.class,
+        shadows = {PlayServicesShadowZZC.class, PlayServicesShadowZZJ.class})
 public class NotificationKeyServiceTest {
 
     private ServiceController<NotificationKeyService> mServiceController;
@@ -57,6 +63,7 @@ public class NotificationKeyServiceTest {
 
     @Before
     public void setUp() {
+        ShadowGooglePlayServicesUtil.setIsGooglePlayServicesAvailable(ConnectionResult.SUCCESS);
         mServiceController = Robolectric.buildService(NotificationKeyService.class);
         mNotificationKeyService = mServiceController.create().get();
 
@@ -69,7 +76,8 @@ public class NotificationKeyServiceTest {
 
     @After
     public void tearDown() {
-        mNotificationKeyService.stopSelf();
+        if (mNotificationKeyService != null)
+            mNotificationKeyService.stopSelf();
     }
 
     @Test
