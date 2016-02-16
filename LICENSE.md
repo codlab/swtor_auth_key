@@ -1,8 +1,3 @@
-# swtor_auth_key
-Open Source Star Wars the Old Republic Authentication Key
-
-# Licence
-
    Copyright 2016 Kevin Le Perf @Codlab
 
    Licensed under the Apache License, Version 2.0 (the "License");
