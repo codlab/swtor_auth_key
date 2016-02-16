@@ -63,13 +63,17 @@ public class LoadingActivity extends AbstractKeysActivity implements IAppListene
         checkDependency();
     }
 
+    private void showConfigurationError() {
+        Toast.makeText(LoadingActivity.this,
+                R.string.please_configure_on_phone,
+                Toast.LENGTH_SHORT).show();
+    }
+
     private Runnable createLooperMessage() {
         return new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(LoadingActivity.this,
-                        R.string.please_configure_on_phone,
-                        Toast.LENGTH_SHORT).show();
+                showConfigurationError();
             }
         };
     }

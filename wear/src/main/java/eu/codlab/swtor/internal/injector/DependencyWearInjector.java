@@ -12,8 +12,6 @@ import eu.codlab.common.dependency.DependencyInjector;
 import eu.codlab.common.dependency.listeners.IAppManager;
 import eu.codlab.common.dependency.listeners.IDatabaseProvider;
 import eu.codlab.common.dependency.listeners.IWeb;
-import eu.codlab.common.network.NetworkConstants;
-import eu.codlab.common.network.ToStringConverterFactory;
 import eu.codlab.common.security.CodeProvider;
 import eu.codlab.common.security.CodeProviderFactory;
 import eu.codlab.common.security.TimeProvider;
@@ -51,7 +49,7 @@ public class DependencyWearInjector implements DependencyInjector {
         mIWeb = createIWeb();
     }
 
-    Retrofit getRetrofit(){
+    Retrofit getRetrofit() {
         return mRetrofit;
     }
 
@@ -97,7 +95,7 @@ public class DependencyWearInjector implements DependencyInjector {
         return mTimeProvider;
     }
 
-    private IWeb createIWeb(){
+    private IWeb createIWeb() {
         return new IWeb() {
             @NonNull
             @Override

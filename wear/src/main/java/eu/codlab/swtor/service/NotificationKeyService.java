@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v7.app.NotificationCompat;
-import android.util.Log;
 
 import de.greenrobot.event.EventBus;
 import de.greenrobot.event.Subscribe;
@@ -66,8 +65,6 @@ public class NotificationKeyService extends Service {
         updateNotification();
 
         mTimeProvider.onResume();
-
-        Log.d("Wear", "onCreate");
     }
 
     @Override
@@ -110,7 +107,6 @@ public class NotificationKeyService extends Service {
                     .getDatabaseProvider()
                     .updateKey(key);
 
-            Log.d("Wear", "having key " + key.getSecret());
             mInputKeyController.setContent(key.getSecret());
             updateNotification();
         }
@@ -126,14 +122,11 @@ public class NotificationKeyService extends Service {
                 .getDependencyInjector()
                 .getDatabaseProvider()
                 .getLastKey();
-        Log.d("Wear", "initKey " + key);
 
         onEvent(new DatabaseEvent(key));
     }
 
     private void updateNotification() {
-        Log.d("Wear", "updateNotification " + mInputKeyController.isValid()
-                + " " + mInputKeyController.generateCode());
         if (mInputKeyController.isValid()) {
             foreground(mInputKeyController.generateCode());
         }
@@ -150,7 +143,6 @@ public class NotificationKeyService extends Service {
     }
 
     private Notification createNotification(String code) {
-        Log.d("Wear", "createNotification");
         return new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_notification)
                 .setContentTitle(getString(R.string.notification_title))

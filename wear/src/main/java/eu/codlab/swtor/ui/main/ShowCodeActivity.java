@@ -82,7 +82,7 @@ public class ShowCodeActivity extends AbstractKeysActivity {
         getDependencyInjector().getTimeProvider()
                 .onResume();
 
-        Log.d("Wear","onResume");
+        Log.d("Wear", "onResume");
         Intent intent = new Intent(this, NotificationKeyService.class);
         startService(intent);
     }

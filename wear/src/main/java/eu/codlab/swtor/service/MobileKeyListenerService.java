@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
-import com.google.android.gms.common.api.GoogleApiClient;
-
 import eu.codlab.intercom.AbstractWearListenerService;
 import eu.codlab.swtor.utils.Constants;
 
