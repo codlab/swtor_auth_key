@@ -8,17 +8,10 @@ buildscript {
     dependencies {
         classpath 'org.ajoberstar:gradle-jacoco:0.3.0'
         classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:1.2"
-        classpath 'com.github.plastiv:sdk-manager-plugin:b04aea1cddf87e78db9a4372794d678f9e568c48'
     }
 }
-apply plugin: 'android-sdk-manager'
 apply plugin: 'com.android.library'
 apply plugin: 'jacoco'
-
-
-sdkManager {
-    minSdkToolsVersion '24.4.1'
-}
 
 android {
     compileSdkVersion 23
