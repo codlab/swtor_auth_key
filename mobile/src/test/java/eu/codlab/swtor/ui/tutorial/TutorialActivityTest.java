@@ -7,7 +7,10 @@ import com.alexandrepiveteau.library.tutorial.ui.fragments.TutorialFragment;
 
 import org.junit.Test;
 
+import eu.codlab.common.dependency.DependencyInjector;
+import eu.codlab.common.dependency.DependencyInjectorFactory;
 import eu.codlab.swtor.R;
+import eu.codlab.swtor.internal.injector.DependencyStandardInjector;
 import eu.codlab.swtor.utils.Constants;
 
 import static org.junit.Assert.assertEquals;
@@ -42,6 +45,7 @@ public class TutorialActivityTest {
     @Test
     public void testgetTutorialFragmentFor() {
         TutorialActivity activity = new TutorialActivity();
+        DependencyInjectorFactory.init(activity, new DependencyStandardInjector());
 
         AbstractTutorialValidationFragment fragment = null;
         AbstractTutorialValidationFragment select = activity.getTutorialFragmentFor(4);
