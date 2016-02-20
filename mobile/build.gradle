@@ -10,11 +10,9 @@ buildscript {
         classpath 'io.fabric.tools:gradle:1.21.4'
         classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:1.2"
         classpath 'com.uphyca.gradle:gradle-android-aspectj-plugin:0.9.14'
-        classpath 'com.github.JakeWharton:sdk-manager-plugin:220bf7a88a7072df3ed16dc8466fb144f2817070'
     }
 }
 
-apply plugin: 'android-sdk-manager'
 apply plugin: 'com.android.application'
 apply plugin: 'com.uphyca.android-aspectj'
 apply plugin: 'io.fabric'
