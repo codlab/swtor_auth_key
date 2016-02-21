@@ -97,7 +97,7 @@ public class ShowCodeActivityTest {
                 }
 
                 @Override
-                public boolean onTryValidate() {
+                public boolean onTryValidate(com.alexandrepiveteau.library.tutorial.ui.activities.TutorialActivity parent) {
                     return false;
                 }
             };

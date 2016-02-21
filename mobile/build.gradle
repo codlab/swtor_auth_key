@@ -81,7 +81,7 @@ dependencies {
     compile 'com.google.android.gms:play-services-wearable:8.4.0'
     compile 'com.android.support:design:23.1.1'
     compile 'me.zhanghai.android.materialprogressbar:library:1.1.4'
-    compile 'com.github.codlab:MaterialTutorial:1.5.7'
+    compile 'com.github.codlab:MaterialTutorial:1.5.8'
     compile 'com.github.codlab:crashlytics_wear:1.1-mobile'
     compile 'com.github.codlab:intercom:0.2.1'
     compile 'com.jakewharton:butterknife:7.0.1'

@@ -9,6 +9,7 @@ import org.mockito.Mockito;
 import eu.codlab.common.dependency.DependencyInjectorFactory;
 import eu.codlab.swtor.GenerateCodeTest;
 import eu.codlab.swtor.internal.tutorial.non_test.DependencyInjectorImplementation;
+import eu.codlab.swtor.ui.tutorial.TutorialActivity;
 
 import static junit.framework.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -68,6 +69,6 @@ public class InputKeyControllerTest {
 
     @Test
     public void testOnTryValidate() {
-        assertFalse(mController.onTryValidate());
+        assertFalse(mController.onTryValidate(new TutorialActivity()));
     }
 }

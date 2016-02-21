@@ -115,7 +115,7 @@ public class InputKeyFragmentTestImplementation {
 
     @Test
     public void testOnTryValidate() {
-        assertFalse(mFragment.onTryValidate());
+        assertFalse(mFragment.onTryValidate(mActivity));
     }
 
     @Test

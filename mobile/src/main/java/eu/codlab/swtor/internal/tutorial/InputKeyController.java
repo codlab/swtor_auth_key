@@ -1,5 +1,8 @@
 package eu.codlab.swtor.internal.tutorial;
 
+import android.support.annotation.NonNull;
+
+import com.alexandrepiveteau.library.tutorial.ui.activities.TutorialActivity;
 import com.alexandrepiveteau.library.tutorial.ui.fragments.ITutorialValidationFragment;
 
 import eu.codlab.common.dependency.DependencyInjectorFactory;
@@ -31,6 +34,20 @@ public class InputKeyController implements ITutorialValidationFragment {
                 && code != null;
     }
 
+    @Override
+    public boolean onTryValidate(@NonNull TutorialActivity parent) {
+        if (isValid()) {
+            Key key = new Key();
+            key.setName("");
+            key.setSecret(getContent());
+
+            DependencyInjectorFactory.getDependencyInjector().getDatabaseProvider()
+                    .updateKey(key);
+        }
+
+        return false;
+    }
+
     public String getContent() {
         return mContent;
     }
@@ -46,20 +63,5 @@ public class InputKeyController implements ITutorialValidationFragment {
             return null;
 
         return provider.generateCode();
-    }
-
-    @Override
-    public boolean onTryValidate() {
-
-        if (isValid()) {
-            Key key = new Key();
-            key.setName("");
-            key.setSecret(getContent());
-
-            DependencyInjectorFactory.getDependencyInjector().getDatabaseProvider()
-                    .updateKey(key);
-        }
-
-        return false;
     }
 }

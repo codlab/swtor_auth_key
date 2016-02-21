@@ -139,7 +139,7 @@ public class SelectCodeFragmentTestImplementation {
         FlowManager.init(mActivity);
 
         TestUtil.purgeShadowActivityStartActivity(mShadowActivity);
-        assertFalse(mFragment.onTryValidate());
+        assertFalse(mFragment.onTryValidate(mActivity));
 
         assertTrue(mFragment.isValid());
 
@@ -158,7 +158,7 @@ public class SelectCodeFragmentTestImplementation {
         testIsNotValid();
 
         TestUtil.purgeShadowActivityStartActivity(mShadowActivity);
-        assertFalse(mFragment.onTryValidate());
+        assertFalse(mFragment.onTryValidate(mActivity));
 
         assertFalse(mFragment.isValid());
 

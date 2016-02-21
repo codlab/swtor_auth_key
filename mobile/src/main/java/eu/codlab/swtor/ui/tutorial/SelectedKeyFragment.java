@@ -2,7 +2,6 @@ package eu.codlab.swtor.ui.tutorial;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,10 +94,10 @@ public class SelectedKeyFragment extends AbstractTutorialValidationFragment {
     }
 
     @Override
-    public boolean onTryValidate() {
-        boolean result = mInputKeyController.onTryValidate();
-        if (isValid()) {
-            ShowCodeActivity.startAndFinish((AppCompatActivity) getActivity());
+    public boolean onTryValidate(com.alexandrepiveteau.library.tutorial.ui.activities.TutorialActivity parent) {
+        boolean result = mInputKeyController.onTryValidate(parent);
+        if (parent != null && isValid()) {
+            ShowCodeActivity.startAndFinish(parent);
         }
 
         return result;
